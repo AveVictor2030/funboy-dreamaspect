@@ -309,7 +309,7 @@
   <div class="page-header">
     <div class="page-eyebrow">Brand Voice &amp; Caption Generator</div>
     <div class="page-title">Write Like FUNBOY</div>
-    <div class="page-sub">Generate on-brand captions for ads and organic &mdash; powered by AI trained on FUNBOY's voice.</div>
+    <div class="page-sub">Generate on-brand captions for organic and paid ads — powered by AI trained on FUNBOY's voice.</div>
   </div>
   <div class="page">
     <div class="voice-grid">
@@ -333,7 +333,7 @@
             <option value="collection">Collection Drop</option>
           </select>
           <label>Product / context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-          <textarea id="context" placeholder="e.g. Fabric Float restock, spring weekend, golf husbands audience..." rows="3"></textarea>
+          <textarea id="context" placeholder="e.g. Fabric Sunbed launch, spring pool weekend, golf husband audience..." rows="3"></textarea>
           <button class="gen-btn" id="gen-btn" onclick="generateCaption()" data-tip="AI writes a caption using FUNBOY's brand voice">Generate Caption</button>
         </div>
         <div style="height:.9rem"></div>
@@ -384,9 +384,9 @@
 <!-- ASSETS -->
 <div id="assets" class="section">
   <div class="page-header">
-    <div class="page-eyebrow">Funboy Assets Database</div>
+    <div class="page-eyebrow">FUNBOY Assets Database</div>
     <div class="page-title">Content Tracker</div>
-    <div class="page-sub">Synced from Notion &middot; sorted by due date</div>
+    <div class="page-sub">Live from Notion &middot; sorted by due date</div>
   </div>
   <div class="page">
     <div class="count-bar">
@@ -397,21 +397,21 @@
     </div>
     <div class="filters">
       <button class="filter-btn on" onclick="filterStatus('all',this)" data-tip="Show every asset regardless of status">All</button>
-      <button class="filter-btn" onclick="filterStatus('has-date',this)" data-tip="Only assets with a confirmed posting date">Has Posting Date</button>
-      <button class="filter-btn" onclick="filterStatus('no-date',this)" data-tip="Assets not yet scheduled — needs a posting date">No Posting Date</button>
+      <button class="filter-btn" onclick="filterStatus('has-date',this)" data-tip="Only assets with a confirmed posting date">Has a Posting Date</button>
+      <button class="filter-btn" onclick="filterStatus('no-date',this)" data-tip="Assets without a posting date yet">No Posting Date</button>
       <button class="filter-btn" onclick="filterStatus('in progress',this)" data-tip="Currently being shot, edited, or produced">In Progress</button>
       <button class="filter-btn" onclick="filterStatus('review',this)" data-tip="Waiting on founder or client approval">In Review</button>
       <button class="filter-btn" onclick="filterStatus('idea',this)" data-tip="Ideas, approved concepts, and research">Ideas</button>
       <button class="filter-btn" onclick="filterStatus('complete',this)" data-tip="Posted, scheduled, or submitted to ad tracker">Complete</button>
-      <button class="filter-btn" onclick="filterStatus('video',this)" data-tip="Reels, TikToks, and video-format assets only">Video only</button>
+      <button class="filter-btn" onclick="filterStatus('video',this)" data-tip="Reels, TikToks, and video-format assets only">Video Only</button>
       <div class="type-switcher">
         <button class="type-sw active" id="sw-all" onclick="setSwitcher('all',this)" data-tip="Show all assets">All</button>
         <button class="type-sw" id="sw-organic" onclick="setSwitcher('organic',this)" data-tip="Instagram & TikTok organic posts only">Organic</button>
         <button class="type-sw" id="sw-paid" onclick="setSwitcher('paid',this)" data-tip="Assets submitted to the Meta ad tracker">Paid Ads</button>
       </div>
     </div>
-    <div class="switcher-explainer" id="switcher-explainer-all">Showing <strong>all assets</strong> — use the switcher to filter by organic or paid.</div>
-    <div class="switcher-explainer" id="switcher-explainer-organic" style="display:none">Showing <strong>Organic only</strong> — Instagram &amp; TikTok posts. Excludes anything submitted to the Meta ad tracker.</div>
+    <div class="switcher-explainer" id="switcher-explainer-all">Showing <strong>all assets</strong> — use the switcher above to filter by organic or paid.</div>
+    <div class="switcher-explainer" id="switcher-explainer-organic" style="display:none">Showing <strong>Organic only</strong> — Instagram &amp; TikTok posts only. Excludes anything in the Meta ad tracker.</div>
     <div class="switcher-explainer" id="switcher-explainer-paid" style="display:none">Showing <strong>Paid Ads only</strong> — assets with status <em>content added to ad-tracker</em>. These are submitted to Meta for paid promotion.</div>
     <div id="assets-container" class="table-wrap"></div>
   </div>
@@ -421,8 +421,8 @@
 <div id="reports" class="section">
   <div class="page-header">
     <div class="page-eyebrow">Performance Reports &mdash; BETA</div>
-    <div class="page-title">Bi-Weekly Report</div>
-    <div class="page-sub">Every 2 weeks &middot; March 2026 onwards</div>
+    <div class="page-title">Bi-weekly Report</div>
+    <div class="page-sub">Every 2 weeks &middot; starting March 2026</div>
   </div>
   <div class="page">
 
@@ -434,7 +434,7 @@
     <div class="report-period">
       <button class="period-btn on" onclick="setPeriod('mar1',this)">Cycle 1 &nbsp;Mar 1&ndash;14</button>
       <button class="period-btn" onclick="setPeriod('mar15',this)">Cycle 2 &nbsp;Mar 15&ndash;28</button>
-      <span class="period-label" id="period-label">Bi-weekly cycle 1 &middot; Mar 1&ndash;14, 2026</span>
+      <span class="period-label" id="period-label">Bi-weekly cycle 1 &middot; Mar 1–14, 2026</span>
     </div>
 
     <div class="report-grid" id="kpi-cards"></div>
@@ -801,15 +801,7 @@ async function generateCaption(){
   btn.disabled=true;btn.textContent='Generating...';
   out.innerHTML='<div class="spinner" style="margin:1.2rem auto"></div>';
   document.getElementById('copy-out-btn').style.display='none';
-  const pl={launch:'product launch',restock:'restock',lifestyle:'lifestyle/vibe post',sale:'sale or promo',occasion:'holiday or occasion',collection:'collection drop'};
-  const cl={organic:'organic Instagram/TikTok caption',ad:'paid ad caption',story:'Story caption (very short, punchy)',product:'product page copy'};
-  const system=`You are FUNBOY's copywriter. FUNBOY is a luxury inflatable lifestyle brand.
-Voice: playfully premium, aspirational leisure, effortlessly chic. Lead with lifestyle not product. Max 2-3 emojis. Never cheap or generic.
-Phrases to riff on: "There's something about summer..." / "Luxury meets leisure" / "Blow up to glow up" / "High design. Low lift." / "Welcome to the future of leisure"
-Rules: never lead with product name. For ads add urgency. For organic add soft CTA or question. For stories: max 3 lines.
-Write ONE caption only. No preamble, no options.`;
   try{
-    const prompt='Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\\n\\nContext: '+context:'');
     await new Promise((resolve,reject)=>{
       const cbName='cap_'+Date.now();
       const script=document.createElement('script');
@@ -828,7 +820,13 @@ Write ONE caption only. No preamble, no options.`;
         resolve();
       };
       script.onerror=()=>reject(new Error('Script load failed'));
-      script.src=APPS_SCRIPT_URL+'?action=caption&token='+encodeURIComponent(APPS_SCRIPT_TOKEN)+'&prompt='+encodeURIComponent(prompt)+'&system='+encodeURIComponent(system)+'&callback='+cbName;
+      script.src=APPS_SCRIPT_URL
+        +'?action=caption'
+        +'&token='+encodeURIComponent(APPS_SCRIPT_TOKEN)
+        +'&ct='+encodeURIComponent(ct)
+        +'&purpose='+encodeURIComponent(purpose)
+        +'&context='+encodeURIComponent(context)
+        +'&callback='+cbName;
       document.body.appendChild(script);
     });
   }catch(e){out.innerHTML='<span style="color:var(--rose)">Generation failed: '+e.message+'</span>';}
@@ -848,7 +846,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbyMKY7xAFlmZL2lrmkzDA3roAEDnLyAapAwqKKXxY7ikx4BdlMQME6Ge4sGAxbMG6s4/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbx6yjlr1cVJt9lqmoM2-AckbAsYM8vZOAX_QPv2MtJS_j6pbRAJkKuPJbpm0yeGcrOb/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
