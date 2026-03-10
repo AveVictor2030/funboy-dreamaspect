@@ -423,21 +423,21 @@
     <div class="cal-header">
       <div class="cal-title" id="cal-month-label">March 2026</div>
       <div style="display:flex;align-items:center;gap:.75rem;">
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;">
-          <div class="type-switcher">
-            <button class="type-sw active" id="cal-sw-all" onclick="setCalSwitcher('all',this)" data-tip="Show all scheduled posts">All</button>
-            <button class="type-sw" id="cal-sw-organic" onclick="setCalSwitcher('organic',this)" data-tip="Organic Instagram & TikTok posts only">Organic</button>
-            <button class="type-sw" id="cal-sw-paid" onclick="setCalSwitcher('paid',this)" data-tip="Paid ads submitted to Meta ad tracker">Paid Ads</button>
-          </div>
-          <div class="cal-switcher-explainer" id="cal-expl-all">All content — organic &amp; paid</div>
-          <div class="cal-switcher-explainer" id="cal-expl-organic" style="display:none">Organic posts only</div>
-          <div class="cal-switcher-explainer" id="cal-expl-paid" style="display:none">Ad tracker only</div>
+        <div class="type-switcher">
+          <button class="type-sw active" id="cal-sw-all" onclick="setCalSwitcher('all',this)" data-tip="Show all scheduled posts">All</button>
+          <button class="type-sw" id="cal-sw-organic" onclick="setCalSwitcher('organic',this)" data-tip="Organic Instagram & TikTok posts only">Organic</button>
+          <button class="type-sw" id="cal-sw-paid" onclick="setCalSwitcher('paid',this)" data-tip="Paid ads submitted to Meta ad tracker">Paid Ads</button>
         </div>
         <div class="cal-nav">
           <button class="cal-nav-btn" onclick="calNav(-1)" data-tip="Previous month">&larr;</button>
           <button class="cal-nav-btn" onclick="calNav(1)" data-tip="Next month">&rarr;</button>
         </div>
       </div>
+    </div>
+    <div style="margin-bottom:.75rem;">
+      <div class="cal-switcher-explainer" id="cal-expl-all">Showing all content — organic &amp; paid</div>
+      <div class="cal-switcher-explainer" id="cal-expl-organic" style="display:none">Organic posts only</div>
+      <div class="cal-switcher-explainer" id="cal-expl-paid" style="display:none">Ad tracker only</div>
     </div>
     <div class="cal-grid" id="cal-grid"></div>
   </div>
@@ -526,12 +526,12 @@ function renderAssets(list, showDueDate){
   });
   if(!sorted.length){document.getElementById('assets-container').innerHTML='<p style="padding:2rem;color:var(--muted)">No assets match.</p>';return;}
   const dateColHeader = showDueDate ? 'Due Date' : 'Posting Date';
-  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Status</th><th>Type</th><th>${dateColHeader}</th><th>Product</th></tr></thead><tbody>`;
+  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Product</th><th>Status</th><th>Type</th><th>${dateColHeader}</th></tr></thead><tbody>`;
   for(const a of sorted){
     const dateVal = showDueDate ? a.dueDate : (a.postingDate || a.dueDate);
     const href = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? a.finishedAssetLink : a.url;
     const linkLabel = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? `${a.name} <span style="font-size:.6rem;opacity:.5;font-weight:600;text-transform:uppercase;letter-spacing:.05em">↗ asset</span>` : a.name;
-    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td><span class="due-date ${dueCls(dateVal)}">${fmtDate(dateVal)}</span></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td></tr>`;
+    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td><span class="due-date ${dueCls(dateVal)}">${fmtDate(dateVal)}</span></td></tr>`;
   }
   h+='</tbody></table>';
   document.getElementById('assets-container').innerHTML=h;
