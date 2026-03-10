@@ -334,6 +334,10 @@
           </select>
           <label>Product / context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
           <textarea id="context" placeholder="e.g. Fabric Float restock, spring weekend, golf husbands audience..." rows="3"></textarea>
+          <div style="margin-bottom:.9rem;">
+            <label>Anthropic API Key <span style="font-weight:400;color:var(--muted)">(paste once — not stored)</span></label>
+            <input type="password" id="api-key" placeholder="sk-ant-..." style="width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.55rem .7rem;font-family:'DM Mono',monospace;font-size:.78rem;background:var(--off);color:var(--ink);outline:none;"/>
+          </div>
           <button class="gen-btn" id="gen-btn" onclick="generateCaption()" data-tip="AI writes a caption using FUNBOY's brand voice">Generate Caption</button>
         </div>
         <div style="height:.9rem"></div>
@@ -809,7 +813,9 @@ Phrases to riff on: "There's something about summer..." / "Luxury meets leisure"
 Rules: never lead with product name. For ads add urgency. For organic add soft CTA or question. For stories: max 3 lines.
 Write ONE caption only. No preamble, no options.`;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5-20251001',max_tokens:400,system,messages:[{role:'user',content:'Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\n\nContext: '+context:'')}]})});
+    const apiKey = document.getElementById('api-key').value.trim();
+    if(!apiKey){out.textContent='Please enter your Anthropic API key above.';btn.disabled=false;btn.textContent='Generate Caption';return;}
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5-20251001',max_tokens:400,system,messages:[{role:'user',content:'Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\n\nContext: '+context:'')}]})});
     const data=await res.json();
     const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||data.error?.message||'Something went wrong.';
     out.textContent=text;
