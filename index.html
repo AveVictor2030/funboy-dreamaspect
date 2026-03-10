@@ -157,6 +157,17 @@
   .no-data-block p{font-size:.8rem;color:var(--muted);line-height:1.6;}
 
 
+
+  /* PASSWORD GATE */
+  #password-gate{position:fixed;inset:0;background:var(--ink);z-index:9999;display:flex;align-items:center;justify-content:center;}
+  .pw-box{text-align:center;width:320px;}
+  .pw-logo{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.6rem;color:var(--white);letter-spacing:.15em;text-transform:uppercase;margin-bottom:2rem;}
+  .pw-input{width:100%;padding:.75rem 1rem;border-radius:3px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.95rem;text-align:center;letter-spacing:.1em;outline:none;transition:border-color .15s;}
+  .pw-input:focus{border-color:var(--amber);}
+  .pw-input::placeholder{color:rgba(255,255,255,.3);letter-spacing:.05em;}
+  .pw-btn{margin-top:.75rem;width:100%;padding:.75rem;border-radius:3px;background:var(--terra);color:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .15s;}
+  .pw-btn:hover{background:var(--amber);}
+  .pw-error{color:var(--rose);font-size:.75rem;margin-top:.6rem;min-height:1rem;font-weight:600;}
   /* CALENDAR */
   .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
   .cal-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.01em;}
@@ -186,6 +197,16 @@
 </style>
 </head>
 <body>
+
+
+<div id="password-gate">
+  <div class="pw-box">
+    <div class="pw-logo">FUNBOY</div>
+    <input class="pw-input" type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPassword()"/>
+    <button class="pw-btn" onclick="checkPassword()">Enter</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
 
 <div class="topbar"><span>FUNBOY Internal Portal</span></div>
 
@@ -379,6 +400,23 @@
 <div class="bottom-stripe"></div>
 
 <script>
+
+// ── PASSWORD GATE ──
+const PORTAL_PASSWORD = 'FUNBOY JET';
+function checkPassword(){
+  const val = document.getElementById('pw-input').value;
+  if(val === PORTAL_PASSWORD){
+    document.getElementById('password-gate').style.display='none';
+    sessionStorage.setItem('fb_auth','1');
+  } else {
+    document.getElementById('pw-error').textContent='Incorrect password. Try again.';
+    document.getElementById('pw-input').value='';
+  }
+}
+if(sessionStorage.getItem('fb_auth')==='1'){
+  document.getElementById('password-gate').style.display='none';
+}
+
 // ── NAV ──
 function show(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
