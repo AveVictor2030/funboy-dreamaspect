@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FUNBOY Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --terra:#B8522A; --amber:#E8A020; --white:#FFFFFF;
+    --off:#FAF7F3; --sand:#F2EBE0; --ink:#1C1C1C;
+    --muted:#8A8070; --border:rgba(28,28,28,.1);
+    --teal:#3A9E8F; --rose:#D85A4A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--ink);overflow-x:hidden;}
+
+  .topbar{background:var(--ink);height:28px;display:flex;align-items:center;justify-content:center;}
+  .topbar span{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);}
+
+  nav{background:var(--terra);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+  .logo{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.3rem;color:var(--white);letter-spacing:.12em;text-transform:uppercase;}
+  .tabs{display:flex;gap:.2rem;}
+  .tab{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.42rem 1.1rem;border-radius:2px;transition:all .15s;}
+  .tab:hover{color:var(--white);background:rgba(255,255,255,.1);}
+  .tab.active{background:var(--white);color:var(--terra);}
+
+  .section{display:none;}
+  .section.active{display:block;animation:up .3s ease both;}
+  @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  .page-header{background:var(--amber);padding:2rem 2.5rem 1.75rem;border-bottom:3px solid rgba(0,0,0,.1);}
+  .page-eyebrow{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.45rem;}
+  .page-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.9rem;line-height:1.1;color:var(--white);letter-spacing:-.01em;}
+  .page-sub{font-size:.83rem;color:rgba(255,255,255,.75);margin-top:.35rem;}
+
+  .page{max-width:1060px;margin:0 auto;padding:1.75rem 2.5rem 4rem;}
+
+  .count-bar{display:flex;gap:0;margin-bottom:1.5rem;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .count-item{flex:1;padding:.85rem 1rem;text-align:center;border-right:1px solid var(--border);}
+  .count-item:last-child{border-right:none;}
+  .count-num{font-family:'DM Sans',sans-serif;font-size:1.5rem;font-weight:800;line-height:1;color:var(--ink);}
+  .count-num.amber{color:var(--amber);} .count-num.terra{color:var(--terra);} .count-num.teal{color:var(--teal);}
+  .count-lbl{font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;font-weight:700;}
+
+  .filters{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.1rem;}
+  .filter-btn{padding:.28rem .8rem;border-radius:2px;border:1.5px solid var(--border);background:var(--white);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .13s;color:var(--muted);}
+  .filter-btn:hover{border-color:var(--terra);color:var(--terra);}
+  .filter-btn.on{background:var(--terra);border-color:var(--terra);color:var(--white);}
+
+  .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .asset-table{width:100%;border-collapse:collapse;}
+  .asset-table th{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:.65rem 1rem;background:var(--sand);border-bottom:1px solid var(--border);text-align:left;}
+  .asset-table td{padding:.68rem 1rem;border-bottom:1px solid var(--border);font-size:.83rem;vertical-align:middle;}
+  .asset-table tr:last-child td{border-bottom:none;}
+  .asset-table tr:hover td{background:#FDFAF6;}
+
+  .status-badge{display:inline-block;padding:.2rem .6rem;border-radius:2px;font-size:.66rem;font-weight:700;white-space:nowrap;letter-spacing:.04em;text-transform:uppercase;}
+  .s-idea       {background:#F0EEEC;color:#888;}
+  .s-approved   {background:#F0EEEC;color:var(--ink);border:1px solid #ccc;}
+  .s-shot       {background:#F0EEEC;color:var(--terra);border:1px solid var(--terra);}
+  .s-production {background:#F0EEEC;color:var(--ink);border:1px solid #ccc;}
+  .s-editing    {background:#F0EEEC;color:var(--ink);border:1px solid #bbb;}
+  .s-review     {background:var(--ink);color:var(--white);}
+  .s-accepted   {background:var(--terra);color:var(--white);}
+  .s-complete   {background:var(--teal);color:var(--white);}
+  .s-research   {background:#F0EEEC;color:#888;}
+  .s-blocked    {background:var(--rose);color:var(--white);}
+
+  .type-pill{display:inline-block;padding:.14rem .48rem;border-radius:2px;font-size:.64rem;font-weight:700;margin:.1rem .1rem 0 0;letter-spacing:.03em;text-transform:uppercase;border:1px solid #ddd;}
+  .t-video,.t-stills,.t-graphic,.t-organic{background:#fff;color:var(--ink);}
+  .t-ad{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  .due-date{font-family:'DM Mono',monospace;font-size:.72rem;}
+  .due-overdue{color:var(--rose);font-weight:700;}
+  .due-soon{color:var(--amber);font-weight:700;}
+  .due-ok{color:var(--muted);}
+
+  .asset-link{color:var(--terra);text-decoration:none;font-weight:600;}
+  .asset-link:hover{text-decoration:underline;}
+
+  .loading{text-align:center;padding:3rem;color:var(--muted);font-size:.85rem;}
+  .spinner{width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--terra);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* VOICE */
+  .voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  @media(max-width:700px){.voice-grid{grid-template-columns:1fr;}}
+  .panel{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.5rem;}
+  .panel-title{font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid var(--border);}
+  label{font-size:.79rem;font-weight:700;display:block;margin-bottom:.28rem;letter-spacing:.02em;}
+  select,textarea{width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.55rem .7rem;font-family:'DM Sans',sans-serif;font-size:.83rem;background:var(--off);color:var(--ink);outline:none;transition:border-color .15s;margin-bottom:.9rem;}
+  select:focus,textarea:focus{border-color:var(--terra);background:var(--white);}
+  textarea{resize:vertical;min-height:70px;}
+  .gen-btn{width:100%;padding:.75rem;border-radius:3px;background:var(--terra);color:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:all .15s;}
+  .gen-btn:hover{background:var(--ink);}
+  .gen-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .output-panel{background:var(--sand);border-radius:4px;padding:1.1rem 1.2rem;min-height:100px;font-size:.86rem;line-height:1.75;color:var(--ink);white-space:pre-wrap;position:relative;border-left:4px solid var(--amber);}
+  .output-placeholder{color:var(--muted);font-style:italic;}
+  .copy-out{position:absolute;top:.65rem;right:.65rem;background:var(--white);border:1px solid var(--border);border-radius:2px;padding:.2rem .55rem;font-size:.68rem;font-weight:700;cursor:pointer;color:var(--muted);transition:all .13s;letter-spacing:.06em;text-transform:uppercase;}
+  .copy-out:hover{background:var(--terra);color:var(--white);border-color:var(--terra);}
+  .phrases{display:flex;flex-wrap:wrap;gap:.38rem;}
+  .phrase{background:var(--sand);border:1.5px solid var(--border);padding:.28rem .75rem;border-radius:2px;font-size:.74rem;font-weight:600;cursor:pointer;transition:all .13s;color:var(--ink);}
+  .phrase:hover{background:var(--terra);color:var(--white);border-color:var(--terra);}
+  .phrase.copied{background:var(--teal);color:var(--white);border-color:var(--teal);}
+  .pillars{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;}
+  .pillar{background:var(--sand);border-radius:4px;padding:.65rem .8rem;border-left:3px solid var(--amber);}
+  .pillar h4{font-size:.77rem;font-weight:700;margin-bottom:.15rem;}
+  .pillar p{font-size:.72rem;color:#666;line-height:1.5;}
+
+  /* REPORTS */
+  .beta-banner{background:var(--ink);border-radius:6px;padding:1rem 1.4rem;display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;}
+  .beta-tag{background:var(--amber);color:var(--ink);font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .6rem;border-radius:2px;white-space:nowrap;margin-top:.1rem;flex-shrink:0;}
+  .beta-banner p{font-size:.8rem;color:rgba(255,255,255,.75);line-height:1.6;}
+  .beta-banner strong{color:var(--white);}
+
+  .report-period{display:flex;align-items:center;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap;}
+  .period-btn{padding:.32rem .85rem;border-radius:2px;border:1.5px solid var(--border);background:var(--white);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .13s;color:var(--muted);}
+  .period-btn:hover{border-color:var(--terra);color:var(--terra);}
+  .period-btn.on{background:var(--terra);border-color:var(--terra);color:var(--white);}
+  .period-label{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted);margin-left:auto;}
+
+  .report-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem;}
+  @media(max-width:800px){.report-grid{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.2rem;}
+  .stat-num{font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:800;line-height:1;margin-bottom:.25rem;}
+  .stat-lbl{font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;}
+  .stat-note{font-size:.71rem;color:var(--muted);margin-top:.35rem;line-height:1.4;}
+
+  .report-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  @media(max-width:700px){.report-row{grid-template-columns:1fr;}}
+
+  .chart-wrap{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:1.3rem 1.5rem;}
+  .chart-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;font-weight:700;color:var(--muted);margin-bottom:1rem;}
+
+  .bar-chart{display:flex;flex-direction:column;gap:.55rem;}
+  .bar-row{display:flex;align-items:center;gap:.75rem;}
+  .bar-name{font-size:.75rem;font-weight:600;min-width:100px;text-align:right;color:var(--ink);}
+  .bar-track{flex:1;height:22px;background:var(--sand);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:.5rem;transition:width .5s ease;}
+  .bar-fill span{font-size:.68rem;font-weight:700;color:#fff;white-space:nowrap;}
+  .bf-terra{background:var(--terra);}
+  .bf-amber{background:var(--amber);}
+  .bf-ink{background:var(--ink);}
+  .bf-teal{background:var(--teal);}
+  .bf-rose{background:var(--rose);}
+
+  .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+  .plat-card{background:var(--sand);border-radius:4px;padding:.8rem 1rem;display:flex;align-items:center;gap:.7rem;}
+  .plat-icon{font-size:1.3rem;flex-shrink:0;}
+  .plat-name{font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+  .plat-num{font-size:1.1rem;font-weight:800;line-height:1;}
+  .plat-sub{font-size:.67rem;color:var(--muted);}
+
+  .no-data-block{background:var(--sand);border-radius:6px;padding:2rem;text-align:center;border:1.5px dashed var(--border);}
+  .no-data-block .nd-icon{font-size:1.8rem;opacity:.35;margin-bottom:.6rem;}
+  .no-data-block p{font-size:.8rem;color:var(--muted);line-height:1.6;}
+
+
+
+  /* PASSWORD GATE */
+  #password-gate{position:fixed;inset:0;background:var(--ink);z-index:9999;display:flex;align-items:center;justify-content:center;}
+  .pw-box{text-align:center;width:320px;}
+  .pw-logo{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.6rem;color:var(--white);letter-spacing:.15em;text-transform:uppercase;margin-bottom:2rem;}
+  .pw-input{width:100%;padding:.75rem 1rem;border-radius:3px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:var(--white);font-family:'DM Sans',sans-serif;font-size:.95rem;text-align:center;letter-spacing:.1em;outline:none;transition:border-color .15s;}
+  .pw-input:focus{border-color:var(--amber);}
+  .pw-input::placeholder{color:rgba(255,255,255,.3);letter-spacing:.05em;}
+  .pw-btn{margin-top:.75rem;width:100%;padding:.75rem;border-radius:3px;background:var(--terra);color:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:background .15s;}
+  .pw-btn:hover{background:var(--amber);}
+  .pw-error{color:var(--rose);font-size:.75rem;margin-top:.6rem;min-height:1rem;font-weight:600;}
+  /* CALENDAR */
+  .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+  .cal-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.01em;}
+  .cal-nav{display:flex;gap:.4rem;}
+  .cal-nav-btn{background:var(--white);border:1.5px solid var(--border);border-radius:2px;padding:.3rem .7rem;cursor:pointer;font-size:.8rem;font-weight:700;color:var(--muted);transition:all .13s;}
+  .cal-nav-btn:hover{border-color:var(--terra);color:var(--terra);}
+
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .cal-dow{background:var(--sand);text-align:center;padding:.5rem 0;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .cal-cell{background:var(--white);min-height:90px;padding:.4rem .45rem;position:relative;}
+  .cal-cell.other-month{background:var(--off);}
+  .cal-cell.today{background:#FFFBF5;}
+  .cal-day{font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;}
+  .cal-cell.today .cal-day{color:var(--terra);font-weight:800;}
+
+  .cal-chip{font-size:.63rem;font-weight:700;border-radius:2px;padding:.18rem .45rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default;display:block;line-height:1.3;}
+  .chip-drop   {background:#D4EDDA;color:#1A6830;}
+  .chip-teaser {background:#FFF3CD;color:#856404;}
+  .chip-restock{background:#F8D7DA;color:#721C24;}
+  .chip-ad     {background:#E8E8E8;color:#333;}
+  .chip-other  {background:#E8E8E8;color:#555;}
+  .chip-status{display:block;font-size:.58rem;opacity:.7;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:.1rem;}
+
+  .cal-legend{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .legend-chip{display:flex;align-items:center;gap:.4rem;font-size:.73rem;font-weight:600;}
+  .legend-swatch{width:12px;height:12px;border-radius:2px;}
+  .bottom-stripe{height:10px;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 16px,var(--amber) 16px,var(--amber) 32px,var(--white) 32px,var(--white) 48px,#3A9E8F 48px,#3A9E8F 64px);position:fixed;bottom:0;left:0;right:0;z-index:40;}
+</style>
+</head>
+<body>
+
+
+<div id="password-gate">
+  <div class="pw-box">
+    <div class="pw-logo">FUNBOY</div>
+    <input class="pw-input" type="password" id="pw-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPassword()"/>
+    <button class="pw-btn" onclick="checkPassword()">Enter</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<div class="topbar"><span>FUNBOY Internal Portal</span></div>
+
+<nav>
+  <div class="logo">FUNBOY</div>
+  <div class="tabs">
+    <button class="tab active" onclick="show('voice',this)">Brand Voice</button>
+    <button class="tab" onclick="show('assets',this)">Assets</button>
+    <button class="tab" onclick="show('reports',this)" style="display:none">Reports</button>
+    <button class="tab" onclick="show('calendar',this)">Calendar</button>
+  </div>
+</nav>
+
+<!-- BRAND VOICE -->
+<div id="voice" class="section active">
+  <div class="page-header">
+    <div class="page-eyebrow">Brand Voice &amp; Caption Generator</div>
+    <div class="page-title">Write Like FUNBOY</div>
+    <div class="page-sub">Generate on-brand captions for ads and organic &mdash; powered by AI trained on FUNBOY's voice.</div>
+  </div>
+  <div class="page">
+    <div class="voice-grid">
+      <div>
+        <div class="panel">
+          <div class="panel-title">Caption Generator</div>
+          <label>Content type</label>
+          <select id="ct">
+            <option value="organic">Organic (Instagram / TikTok)</option>
+            <option value="ad">Paid Ad</option>
+            <option value="story">Story / Vertical</option>
+            <option value="product">Product Page Copy</option>
+          </select>
+          <label>Post purpose</label>
+          <select id="purpose">
+            <option value="launch">Product Launch</option>
+            <option value="restock">Restock / Back in Stock</option>
+            <option value="lifestyle">Lifestyle / Vibe</option>
+            <option value="sale">Sale / Promo</option>
+            <option value="occasion">Holiday / Occasion</option>
+            <option value="collection">Collection Drop</option>
+          </select>
+          <label>Product / context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <textarea id="context" placeholder="e.g. Fabric Float restock, spring weekend, golf husbands audience..." rows="3"></textarea>
+          <button class="gen-btn" id="gen-btn" onclick="generateCaption()">Generate Caption</button>
+        </div>
+        <div style="height:.9rem"></div>
+        <div class="panel" style="position:relative">
+          <div class="panel-title">Output</div>
+          <div class="output-panel" id="output"><span class="output-placeholder">Your caption will appear here...</span></div>
+          <button class="copy-out" id="copy-out-btn" onclick="copyOutput()" style="display:none">Copy</button>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="panel-title">Signature Phrases &mdash; tap to copy</div>
+          <div class="phrases">
+            <span class="phrase" onclick="copyPhrase(this)">There's something about summer...</span>
+            <span class="phrase" onclick="copyPhrase(this)">Allow us to reintroduce...</span>
+            <span class="phrase" onclick="copyPhrase(this)">Welcome to the future of leisure.</span>
+            <span class="phrase" onclick="copyPhrase(this)">Luxury meets leisure</span>
+            <span class="phrase" onclick="copyPhrase(this)">Blow up to glow up.</span>
+            <span class="phrase" onclick="copyPhrase(this)">High design. Low lift.</span>
+            <span class="phrase" onclick="copyPhrase(this)">Made for the group that never wants to leave</span>
+            <span class="phrase" onclick="copyPhrase(this)">Endless summer, wherever you are.</span>
+            <span class="phrase" onclick="copyPhrase(this)">La dolce vita lifestyle</span>
+            <span class="phrase" onclick="copyPhrase(this)">Instant bar. Endless vibes.</span>
+            <span class="phrase" onclick="copyPhrase(this)">Double the comfort, double the fun.</span>
+            <span class="phrase" onclick="copyPhrase(this)">The restock is live!</span>
+            <span class="phrase" onclick="copyPhrase(this)">Sure to sell out.</span>
+            <span class="phrase" onclick="copyPhrase(this)">Engineered for adventure.</span>
+            <span class="phrase" onclick="copyPhrase(this)">Be the best host ever.</span>
+          </div>
+        </div>
+        <div style="height:.9rem"></div>
+        <div class="panel">
+          <div class="panel-title">Voice Pillars</div>
+          <div class="pillars">
+            <div class="pillar"><h4>Playfully Premium</h4><p>Fun is the brand. Quality is the promise.</p></div>
+            <div class="pillar"><h4>Aspirational Leisure</h4><p>Sell the lifestyle first. Product is the answer.</p></div>
+            <div class="pillar"><h4>Effortlessly Chic</h4><p>Malibu, country club, la dolce vita.</p></div>
+            <div class="pillar"><h4>Family &amp; Hosting</h4><p>Celebrate togetherness and shared moments.</p></div>
+            <div class="pillar"><h4>Smart &amp; Witty</h4><p>Puns earn their place. Wit serves the product.</p></div>
+            <div class="pillar"><h4>Occasion-Led</h4><p>Always anchor to a moment or season.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ASSETS -->
+<div id="assets" class="section">
+  <div class="page-header">
+    <div class="page-eyebrow">Funboy Assets Database</div>
+    <div class="page-title">Content Tracker</div>
+    <div class="page-sub">Synced from Notion &middot; sorted by due date</div>
+  </div>
+  <div class="page">
+    <div class="count-bar">
+      <div class="count-item"><div class="count-num" id="cnt-total">-</div><div class="count-lbl">Total</div></div>
+      <div class="count-item"><div class="count-num amber" id="cnt-inprog">-</div><div class="count-lbl">In Progress</div></div>
+      <div class="count-item"><div class="count-num terra" id="cnt-review">-</div><div class="count-lbl">In Review</div></div>
+      <div class="count-item"><div class="count-num teal" id="cnt-done">-</div><div class="count-lbl">Complete</div></div>
+    </div>
+    <div class="filters">
+      <button class="filter-btn on" onclick="filterStatus('all',this)">All</button>
+      <button class="filter-btn" onclick="filterStatus('in progress',this)">In Progress</button>
+      <button class="filter-btn" onclick="filterStatus('review',this)">In Review</button>
+      <button class="filter-btn" onclick="filterStatus('idea',this)">Ideas</button>
+      <button class="filter-btn" onclick="filterStatus('complete',this)">Complete</button>
+      <button class="filter-btn" onclick="filterStatus('ad',this)">Ads only</button>
+      <button class="filter-btn" onclick="filterStatus('video',this)">Video only</button>
+    </div>
+    <div id="assets-container" class="table-wrap"></div>
+  </div>
+</div>
+
+<!-- REPORTS -->
+<div id="reports" class="section">
+  <div class="page-header">
+    <div class="page-eyebrow">Performance Reports &mdash; BETA</div>
+    <div class="page-title">Bi-Weekly Report</div>
+    <div class="page-sub">Every 2 weeks &middot; March 2026 onwards</div>
+  </div>
+  <div class="page">
+
+    <div class="beta-banner">
+      <div class="beta-tag">Beta</div>
+      <p><strong>Reports are a work in progress — planned release April 2026.</strong> We are improving this section. Right now only confirmed data from Notion is shown: assets with status <em>posted</em>, <em>added to ad-tracker</em>, or <em>scheduled for organic</em>. Engagement metrics (reach, saves, views per post) will be added once Instagram and TikTok analytics are connected. Nothing here is estimated.</p>
+    </div>
+
+    <div class="report-period">
+      <button class="period-btn on" onclick="setPeriod('mar1',this)">Cycle 1 &nbsp;Mar 1&ndash;14</button>
+      <button class="period-btn" onclick="setPeriod('mar15',this)">Cycle 2 &nbsp;Mar 15&ndash;28</button>
+      <span class="period-label" id="period-label">Bi-weekly cycle 1 &middot; Mar 1&ndash;14, 2026</span>
+    </div>
+
+    <div class="report-grid" id="kpi-cards"></div>
+
+    <div class="report-row">
+      <div class="chart-wrap">
+        <div class="chart-title">Completed by Media Type</div>
+        <div class="bar-chart" id="bar-output"></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Platform / Destination</div>
+        <div class="platform-grid" id="platform-grid"></div>
+      </div>
+    </div>
+
+    <div class="report-row">
+      <div class="chart-wrap">
+        <div class="chart-title">Output by Product SKU</div>
+        <div class="bar-chart" id="bar-sku"></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Top Performers</div>
+        <div id="top-performers"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CALENDAR -->
+<div id="calendar" class="section">
+  <div class="page-header">
+    <div class="page-eyebrow">Content Calendar</div>
+    <div class="page-title">Posting Schedule</div>
+    <div class="page-sub">What's dropping and when &mdash; by due date</div>
+  </div>
+  <div class="page">
+    <div class="cal-legend">
+      <div class="legend-chip"><div class="legend-swatch" style="background:#D4EDDA"></div>Drop</div>
+      <div class="legend-chip"><div class="legend-swatch" style="background:#FFF3CD"></div>Teaser</div>
+      <div class="legend-chip"><div class="legend-swatch" style="background:#F8D7DA"></div>Restock</div>
+      <div class="legend-chip"><div class="legend-swatch" style="background:#E8E8E8"></div>Ad / Other</div>
+    </div>
+    <div class="cal-header">
+      <div class="cal-title" id="cal-month-label">March 2026</div>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calNav(-1)">&larr;</button>
+        <button class="cal-nav-btn" onclick="calNav(1)">&rarr;</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+</div>
+
+
+<div class="bottom-stripe"></div>
+
+<script>
+
+// ── PASSWORD GATE ──
+const PORTAL_PASSWORD = 'FUNBOY JET';
+function checkPassword(){
+  const val = document.getElementById('pw-input').value;
+  if(val === PORTAL_PASSWORD){
+    document.getElementById('password-gate').style.display='none';
+    sessionStorage.setItem('fb_auth','1');
+  } else {
+    document.getElementById('pw-error').textContent='Incorrect password. Try again.';
+    document.getElementById('pw-input').value='';
+  }
+}
+if(sessionStorage.getItem('fb_auth')==='1'){
+  document.getElementById('password-gate').style.display='none';
+}
+
+// ── NAV ──
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── ASSETS ──
+// "Complete" = posted | content added to ad-tracker | content scheduled for organic | accepted / sent for review
+const COMPLETE_STATUSES=['posted','content added to ad-tracker','content scheduled for organic','accepted / sent for review'];
+
+const ASSETS=[
+  // COMPLETE
+  {name:'Country Club Golf Cart Restock (Reel + Graphic)',status:'posted',mediaType:['organic'],dueDate:'2026-03-05',product:['golf cart'],url:'https://www.notion.so/318f02fc538d808b9272c4d4989ab589'},
+  {name:'Country Club Golf Cart Restock — Graphic Post',status:'posted',mediaType:['graphic post','organic'],dueDate:'2026-03-05',product:['golf cart'],url:'https://www.notion.so/319f02fc538d80b8a70cff69097e843d'},
+  {name:'Country Club Video',status:'posted',mediaType:['video'],dueDate:'2026-03-07',product:['golf cart'],url:'https://www.notion.so/31bf02fc538d8084a88ace21e5056aba'},
+  {name:'Summer Moodboard Teaser',status:'posted',mediaType:['stills'],dueDate:'2026-03-07',product:['Fabric'],url:'https://www.notion.so/317f02fc538d806aa2bbfc0ca40ac1f0'},
+  {name:'Leisure Island collection restock',status:'posted',mediaType:['video'],dueDate:'2026-03-02',product:['Leisure Island'],url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571'},
+  {name:'Teaser Fabric (graphic post)',status:'content scheduled for organic',mediaType:['graphic post'],dueDate:'2026-03-08',product:['Fabric'],url:'https://www.notion.so/319f02fc538d8026a969fe7bc4e0577c'},
+  {name:'Easter Ads Stills',status:'content added to ad-tracker',mediaType:['stills','ad'],dueDate:null,product:['Easter Collection'],url:'https://www.notion.so/31bf02fc538d80fda572d42956c25e48',finishedAssetLink:'https://www.dropbox.com/scl/fo/tijis4hs28t8jgp8e4pyd/AN0LP0NUOR8xzDl6S1x8LO8?rlkey=drulgnxrwecqbyeu1vtfwmcxd&st=i93f5nxn&dl=0'},
+  {name:'COLOR THEMED CAROUSEL',status:'accepted / sent for review',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric','Tubes'],url:'https://www.notion.so/317f02fc538d806bb999f1849fffee4c'},
+  {name:'Fabric unpacking with Finn',status:'accepted / sent for review',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric'],url:'https://www.notion.so/319f02fc538d80c0937fc2fdf054fa04'},
+  // IN REVIEW
+  {name:'Fabrics + Golf Cart PRODUCT FOCUSED ADS',status:'in-review',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric','golf cart'],url:'https://www.notion.so/317f02fc538d80c18390e8b16b969dc0'},
+  {name:'Founders Max + Celeste introduction',status:'in-review',mediaType:['ad','organic','video'],dueDate:'2026-03-06',product:['Fabric'],url:'https://www.notion.so/317f02fc538d8080b01ce9c7df8b3b13'},
+  {name:'POOL DAY WITH BESTIES',status:'in-review',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric'],url:'https://www.notion.so/317f02fc538d809bb3aee4caabe459e6'},
+  {name:'Teaser 2 fabric (reel)',status:'in-review',mediaType:['video'],dueDate:'2026-03-06',product:['Fabric'],url:'https://www.notion.so/319f02fc538d80c38637dc6032e49adb'},
+  {name:'Talking Ad by Julia',status:'in-review',mediaType:['ad','video'],dueDate:'2026-03-06',product:['Fabric'],url:'https://www.notion.so/317f02fc538d803bb737fe9dd79fb167'},
+  {name:'Stahl House shoot Stills (ads)',status:'in-review',mediaType:['stills'],dueDate:'2026-03-06',product:['Fabric'],url:'https://www.notion.so/317f02fc538d80538149d5cff528ccee'},
+  // IN PROGRESS - EDITING
+  {name:'DROP Fabric 3/14 — Carousel',status:'in progress: editing',mediaType:['ad','graphic post','video'],dueDate:'2026-03-14',product:['Fabric'],url:'https://www.notion.so/318f02fc538d80e6b512f1015358e951'},
+  {name:'SUMMER NIGHTS',status:'in progress: editing',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric'],url:'https://www.notion.so/317f02fc538d807cabc0db5d5155763f'},
+  {name:'MODEL CHILLING ON A FLOATIE',status:'in progress: editing',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric'],url:'https://www.notion.so/317f02fc538d80778444e7f651cb06c8'},
+  {name:'Tubes + Tanning Pool',status:'in progress: editing',mediaType:['ad','organic','stills'],dueDate:'2026-03-06',product:['Tanning Bed','Tubes'],url:'https://www.notion.so/317f02fc538d80ff86dbec25a5a24d4a'},
+  // IN PROGRESS - PRODUCTION
+  {name:'AESTHETIC MEMES',status:'in progress: production',mediaType:['organic','stills'],dueDate:'2026-03-10',product:[],url:'https://www.notion.so/317f02fc538d8076bc8de1498c0fd558'},
+  {name:'Stahl House BTS',status:'in progress: production',mediaType:['video'],dueDate:'2026-03-14',product:['Fabric'],url:'https://www.notion.so/31bf02fc538d80f79c68c1f3b5f7057f'},
+  {name:'PCH Shoot BTS',status:'in progress: editing',mediaType:['video','organic'],dueDate:'2026-03-14',product:['Tubes','Tanning Bed'],url:'https://www.notion.so/317f02fc538d80309b05d23e5c4921da'},
+  {name:'Tan lines teaser graphic post',status:'in progress: production',mediaType:['graphic post'],dueDate:'2026-03-22',product:['Tanning Bed'],url:'https://www.notion.so/319f02fc538d80f3a01cd7c5b0cf2d7b'},
+  {name:'Easter Collection ads',status:'in progress: production',mediaType:['ad','stills'],dueDate:'2026-03-21',product:['Easter Collection'],url:'https://www.notion.so/319f02fc538d80129b71d00fe5a17880'},
+  {name:'Tubes loading graphics',status:'in progress: production',mediaType:['graphic post'],dueDate:'2026-03-17',product:['Tubes'],url:'https://www.notion.so/319f02fc538d80a0b259c0e37e9cac5b'},
+  {name:'Tanning bed ads (Olivia)',status:'in progress: production',mediaType:['ad','video'],dueDate:null,product:['Tanning Bed'],url:'https://www.notion.so/317f02fc538d80f5890dca3e9cf932e4'},
+  {name:'Clear Chaise Award',status:'in progress: production',mediaType:['stills','graphic post'],dueDate:'2026-03-12',product:['Clear Chaise'],url:'https://www.notion.so/319f02fc538d80d49a2afd89bf481bf3'},
+  {name:'Talking Ad by Julia',status:'in progress: production',mediaType:['ad','video'],dueDate:'2026-03-18',product:['Fabric'],url:'https://www.notion.so/317f02fc538d803bb737fe9dd79fb167'},
+  {name:'POOL DAY WITH BESTIES',status:'in progress: production',mediaType:['video','organic'],dueDate:'2026-03-18',product:['Fabric'],url:'https://www.notion.so/317f02fc538d809bb3aee4caabe459e6'},
+  {name:'SUMMER NIGHTS',status:'in progress: production',mediaType:['video','organic'],dueDate:'2026-03-20',product:[],url:'https://www.notion.so/317f02fc538d807cabc0db5d5155763f'},
+  // ADDED TO SHOT LIST
+  {name:'Product details explanation (redesign explainer)',status:'added to shot list',mediaType:['ad','graphic post'],dueDate:'2026-03-10',product:['Fabric'],url:'https://www.notion.so/317f02fc538d80919848e75e169eddc3'},
+  {name:'Top down drone shot Photo + Video',status:'added to shot list',mediaType:['video','stills'],dueDate:'2026-03-10',product:['Fabric'],url:'https://www.notion.so/317f02fc538d800b8221de38b91c89b1'},
+  {name:'step-by-step Fabric Sunbed setup by Max (Meta glasses)',status:'added to shot list',mediaType:['ad','organic','video'],dueDate:'2026-03-10',product:['Fabric'],url:'https://www.notion.so/317f02fc538d80d987dae0459de6c949'},
+  {name:'step-by-step Fabric Sunbed setup with a model',status:'added to shot list',mediaType:['ad','organic','video'],dueDate:'2026-03-10',product:['Fabric'],url:'https://www.notion.so/317f02fc538d8098b30df9df5abe395c'},
+  {name:'ASMR moments from the setup',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',product:['Fabric'],url:'https://www.notion.so/317f02fc538d8037a0ecf4217df2e6df'},
+  // APPROVED IDEAS
+  {name:'Take out dirty Fabric to SPA — clean it',status:'approved idea',mediaType:['video'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/31bf02fc538d8026a9adceb8c8206611'},
+  {name:'Teaser: guess what we launch (orange-peeling)',status:'approved idea',mediaType:['video'],dueDate:'2026-03-12',product:['Tubes'],url:'https://www.notion.so/319f02fc538d80608a78e7dfbffd9118'},
+  {name:'TEASER: Do Not Disturb (Leisure Island) 3/23',status:'approved idea',mediaType:['video'],dueDate:'2026-03-23',product:['Leisure Island'],url:'https://www.notion.so/317f02fc538d80309303c5d7b445ff8b'},
+  {name:'Tan lines — The New Way To Tan 3/24',status:'approved idea',mediaType:['video'],dueDate:'2026-03-24',product:['Tanning Bed'],url:'https://www.notion.so/317f02fc538d808eae83eb522ac3b8ab'},
+  {name:'DROP: NEW TUBE',status:'approved idea',mediaType:['video','stills'],dueDate:'2026-03-17',product:['Tubes'],url:'https://www.notion.so/319f02fc538d8043b1c1f1e6ad9e5849'},
+  {name:'Leisure Island collection restock (upcoming)',status:'approved idea',mediaType:['video','organic'],dueDate:'2026-03-23',product:['Leisure Island'],url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571'},
+  {name:'SPRING BREAK essentials',status:'approved idea',mediaType:['video','stills'],dueDate:'2026-03-20',product:[],url:'https://www.notion.so/319f02fc538d80c4b211f70b4ee13b96'},
+  {name:'DOG ON A FLOATIE',status:'approved idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80f9a6d0ef1c95418f7c'},
+  {name:'Coachella Pool Party',status:'approved idea',mediaType:['video'],dueDate:'2026-03-17',product:[],url:'https://www.notion.so/317f02fc538d803b8a27c7d5b837bd58'},
+  // RESEARCH
+  {name:'Research: positive comments (Founders)',status:'research',mediaType:['organic'],dueDate:null,product:[],url:'https://www.notion.so/d75aa54dc8db4349ad7a6861e3b9fdbc'},
+  {name:'LAUNCH: TARGET',status:'research',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/319f02fc538d80389adfe7226afcd5b6'},
+  {name:'mini mic with founders',status:'research',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/319f02fc538d801abf35ff8c6c0d5577'},
+  {name:'CGI Target video',status:'research',mediaType:['video','ad'],dueDate:null,product:[],url:'https://www.notion.so/319f02fc538d8023a393e0a531104026'},
+  {name:'giveaway',status:'research',mediaType:['organic'],dueDate:null,product:[],url:'https://www.notion.so/319f02fc538d80a3a4dcf46ce0dcd874'},
+  // IDEAS
+  {name:"April's Fool",status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/319f02fc538d80039127d13ef08807f8'},
+  {name:'PRODUCT COLORS',status:'idea',mediaType:['video'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/317f02fc538d80f79c03d118631bd6f7'},
+  {name:'Color Coordinated; Burned Orange',status:'idea',mediaType:['stills'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/317f02fc538d80fa8c4ec9c38a261acd'},
+  {name:'HI-FI PHOTOS COLLAGES',status:'idea',mediaType:['stills'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d800a9789c2724e3da4f6'},
+  {name:'YOUR BF HAS A POOL',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d8080a6facef1e0a2d937'},
+  {name:'2026 installation tips Re-do',status:'idea',mediaType:['video'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/317f02fc538d80229f00e4daad6ad2f1'},
+  {name:'add some color to your summer',status:'idea',mediaType:['graphic post','video'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/317f02fc538d802abcf8c0163a2e2302'},
+  {name:'Postcard',status:'idea',mediaType:['stills'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d805f8f3ccc8297e754f2'},
+  {name:'POOL DAYS AESTHETIC',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80e2b8acce84fb00aa5e'},
+  {name:'SUMMER MOVIE NIGHT',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80a690b0f4494d2084d7'},
+  {name:'Branded playing cards',status:'idea',mediaType:['stills'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d8011b315de10b223bef5'},
+  {name:'TOP DOWN DRONE SHOT',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d808eae9fcac29e5819db'},
+  {name:'Decor with Me',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80019510f144114985a3'},
+  {name:'SUP swimming with dogs',status:'idea',mediaType:['video'],dueDate:null,product:['SUP'],url:'https://www.notion.so/319f02fc538d80ec8ddefa2d27610983'},
+  {name:'Product B-rolls Ads',status:'idea',mediaType:['video','ad'],dueDate:null,product:['Fabric'],url:'https://www.notion.so/317f02fc538d80789cc3e5972da1be77'},
+  {name:'Outfit Check Ads',status:'idea',mediaType:['video','ad'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80ad8ee7d991ca14f447'},
+  {name:"It's Over, I told my wife",status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/317f02fc538d80e4844bca33bba6a45f'},
+  {name:'Tanning Pool vs Towel',status:'idea',mediaType:['video'],dueDate:null,product:['Tanning Bed'],url:'https://www.notion.so/317f02fc538d80b7a467eb307dc78577'},
+  {name:'Max calling customers to ask...',status:'idea',mediaType:['video'],dueDate:null,product:[],url:'https://www.notion.so/31bf02fc538d80caa2a8dd18356a56bd'},
+];
+
+const STATUS_MAP={
+  'idea':['s-idea','idea'],
+  'approved idea':['s-approved','approved'],
+  'research':['s-research','research'],
+  'blocked':['s-blocked','blocked'],
+  'added to shot list':['s-shot','shot list'],
+  'in progress: production':['s-production','production'],
+  'in progress: editing':['s-editing','editing'],
+  'in-review':['s-review','in review'],
+  'accepted / sent for review':['s-complete','complete'],
+  'content added to ad-tracker':['s-complete','complete'],
+  'content scheduled for organic':['s-complete','complete'],
+  'posted':['s-complete','complete'],
+};
+const TYPE_MAP={'video':'t-video','stills':'t-stills','graphic post':'t-graphic','organic':'t-organic','ad':'t-ad'};
+
+function isComplete(status){return COMPLETE_STATUSES.includes(status);}
+function dueCls(d){if(!d)return'due-ok';const diff=(new Date(d)-new Date())/86400000;return diff<0?'due-overdue':diff<=3?'due-soon':'due-ok';}
+function fmtDate(d){if(!d)return'-';return new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+function statusBadge(s){const[cls,lbl]=STATUS_MAP[s]||['s-idea',s];return`<span class="status-badge ${cls}">${lbl}</span>`;}
+function typePills(arr){return arr.map(t=>`<span class="type-pill ${TYPE_MAP[t]||'t-organic'}">${t}</span>`).join('');}
+
+function renderAssets(list){
+  const sorted=[...list].sort((a,b)=>{
+    // complete goes to bottom, then sort by due date
+    const ac=isComplete(a.status),bc=isComplete(b.status);
+    if(ac&&!bc)return 1;if(!ac&&bc)return-1;
+    if(!a.dueDate&&!b.dueDate)return 0;
+    if(!a.dueDate)return 1;if(!b.dueDate)return-1;
+    return new Date(a.dueDate)-new Date(b.dueDate);
+  });
+  if(!sorted.length){document.getElementById('assets-container').innerHTML='<p style="padding:2rem;color:var(--muted)">No assets match.</p>';return;}
+  let h='<table class="asset-table"><thead><tr><th>Asset Name</th><th>Status</th><th>Type</th><th>Due</th><th>Product</th></tr></thead><tbody>';
+  for(const a of sorted){
+    h+=`<tr><td><a class="asset-link" href="${a.url}" target="_blank">${a.name}</a></td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td><span class="due-date ${dueCls(a.dueDate)}">${fmtDate(a.dueDate)}</span></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td></tr>`;
+  }
+  h+='</tbody></table>';
+  document.getElementById('assets-container').innerHTML=h;
+  document.getElementById('cnt-total').textContent=list.length;
+  document.getElementById('cnt-inprog').textContent=list.filter(a=>a.status.includes('progress')||a.status==='added to shot list').length;
+  document.getElementById('cnt-review').textContent=list.filter(a=>a.status==='in-review').length;
+  document.getElementById('cnt-done').textContent=list.filter(a=>isComplete(a.status)).length;
+}
+
+function filterStatus(f,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  let r=ASSETS;
+  if(f==='in progress')r=ASSETS.filter(a=>a.status.includes('progress')||a.status==='added to shot list');
+  else if(f==='review')r=ASSETS.filter(a=>a.status==='in-review');
+  else if(f==='idea')r=ASSETS.filter(a=>['idea','approved idea','research'].includes(a.status));
+  else if(f==='complete')r=ASSETS.filter(a=>isComplete(a.status));
+  else if(f==='ad')r=ASSETS.filter(a=>a.mediaType.includes('ad'));
+  else if(f==='video')r=ASSETS.filter(a=>a.mediaType.includes('video'));
+  renderAssets(r);
+}
+
+// ── REPORTS — only real data from Mar 2026 ──
+// "Complete" assets in the Mar 1-14 window:
+// posted: Country Club Golf Cart Restock (organic), Country Club Video (video),
+//         Summer Moodboard Teaser (stills), Leisure Island restock (video)
+// content scheduled for organic: Teaser Fabric graphic post (graphic post)
+// content added to ad-tracker: Easter Ads Stills (stills/ad)
+// accepted/sent for review: COLOR THEMED CAROUSEL (ad+organic+video), Fabric unpacking with Finn (ad+organic+video)
+// Total complete = 8 items
+
+const PERIODS={
+  mar15:{
+    label:'Mar 15–28, 2026',
+    cycle:'Bi-weekly cycle 2',
+    kpis:[
+      {num:'—',lbl:'Assets Complete',note:'Period not yet finished'},
+      {num:'—',lbl:'Ads Submitted',note:'Period not yet finished'},
+      {num:'—',lbl:'Organic Posts',note:'Period not yet finished'},
+      {num:'—',lbl:'Videos Produced',note:'Period not yet finished'},
+    ],
+    output:[],
+    platforms:[],
+    skus:[],
+    topPerformers:null,
+    empty:true,
+  },
+  mar1:{
+    label:'Mar 1–14, 2026',
+    cycle:'Bi-weekly cycle 1',
+    kpis:[
+      {num:'8',lbl:'Assets Complete',note:'posted + ad-tracker + scheduled + sent for review'},
+      {num:'3',lbl:'Ads Submitted',note:'Easter Stills, Color Themed Carousel, Fabric unpacking'},
+      {num:'3',lbl:'Organic Posts',note:'Country Club Restock, Teaser Fabric, Fabric unpacking'},
+      {num:'5',lbl:'Videos Produced',note:'Country Club, Leisure Island, Color Carousel, Fabric unpacking (2 versions)'},
+    ],
+    output:[
+      {name:'Video',val:5,max:8,cls:'bf-terra'},
+      {name:'Stills',val:2,max:8,cls:'bf-amber'},
+      {name:'Graphic',val:2,max:8,cls:'bf-ink'},
+      {name:'Organic',val:3,max:8,cls:'bf-teal'},
+    ],
+    platforms:[
+      {icon:'📸',name:'Instagram',posts:3,note:'Feed + Stories'},
+      {icon:'🎵',name:'TikTok',posts:0,note:'No posts this cycle'},
+      {icon:'📣',name:'Meta Ads',posts:3,note:'Submitted to ad-tracker'},
+      {icon:'📅',name:'Scheduled',posts:1,note:'Teaser Fabric graphic'},
+    ],
+    skus:[
+      {name:'Fabric',val:4,max:8,cls:'bf-terra'},
+      {name:'Golf Cart',val:2,max:8,cls:'bf-amber'},
+      {name:'Leisure Island',val:1,max:8,cls:'bf-ink'},
+      {name:'Easter',val:1,max:8,cls:'bf-teal'},
+    ],
+    topPerformers:null, // no engagement data yet
+  }
+};
+
+function setPeriod(key,btn){
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderReports(key);
+}
+
+function renderReports(key){
+  const d=PERIODS[key];
+  document.getElementById('period-label').textContent=d.cycle+' \u00b7 '+d.label;
+
+  if(d.empty){
+    ['kpi-cards','bar-output','bar-sku','platform-grid','top-performers'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.innerHTML='<div class="no-data-block"><div class="nd-icon">🗓️</div><p>This period has not ended yet.<br>Data will appear here once the cycle closes on '+d.label.split('–')[1]+'.</p></div>';
+    });
+    return;
+  }
+  document.getElementById('kpi-cards').innerHTML=d.kpis.map(k=>`
+    <div class="stat-card">
+      <div class="stat-num">${k.num}</div>
+      <div class="stat-lbl">${k.lbl}</div>
+      <div class="stat-note">${k.note}</div>
+    </div>`).join('');
+
+  function bar(elId,items){
+    document.getElementById(elId).innerHTML=items.map(r=>`
+      <div class="bar-row">
+        <div class="bar-name">${r.name}</div>
+        <div class="bar-track">
+          <div class="bar-fill ${r.cls}" style="width:${Math.round(r.val/r.max*100)}%">
+            <span>${r.val}</span>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+  bar('bar-output',d.output);
+  bar('bar-sku',d.skus);
+
+  document.getElementById('platform-grid').innerHTML=d.platforms.map(p=>`
+    <div class="plat-card">
+      <div class="plat-icon">${p.icon}</div>
+      <div>
+        <div class="plat-name">${p.name}</div>
+        <div class="plat-num">${p.posts}</div>
+        <div class="plat-sub">${p.note}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('top-performers').innerHTML=`
+    <div class="no-data-block">
+      <div class="nd-icon">📊</div>
+      <p>Engagement data not yet available.<br>Connect Instagram &amp; TikTok analytics to show reach, saves, and views per post automatically.</p>
+    </div>`;
+}
+
+
+// ── CALENDAR ──
+let calYear = 2026, calMonth = 2; // 0-indexed, March = 2
+
+function chipClass(name, pillar) {
+  const n = (name || '').toLowerCase();
+  const p = (pillar || '').toLowerCase();
+  if (n.includes('drop') || n.includes('launch') || n.includes('restock') && n.includes('new')) return 'chip-drop';
+  if (p.includes('teaser') || p.includes('whisper') || n.includes('teaser')) return 'chip-teaser';
+  if (n.includes('restock') || p.includes('restock')) return 'chip-restock';
+  if (n.includes('ad') || n.includes('ads')) return 'chip-ad';
+  return 'chip-other';
+}
+
+function renderCalendar() {
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent = monthNames[calMonth] + ' ' + calYear;
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const today = new Date();
+
+  // Build asset map: date string → array of assets
+  const assetMap = {};
+  ASSETS.forEach(a => {
+    if (!a.dueDate) return;
+    const d = a.dueDate.slice(0, 10);
+    if (!assetMap[d]) assetMap[d] = [];
+    assetMap[d].push(a);
+  });
+
+  const dows = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  // leading empty cells
+  const startOffset = firstDay; // Sun=0
+  for (let i = 0; i < startOffset; i++) html += '<div class="cal-cell other-month"></div>';
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const isToday = today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===day;
+    const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+    const items = assetMap[dateStr] || [];
+
+    let chips = '';
+    items.slice(0,3).forEach(a => {
+      const cls = chipClass(a.name, a.pillar);
+      const href = a.finishedAssetLink || a.url;
+      const statusMap = {
+        'posted':'posted','content added to ad-tracker':'ad-tracker',
+        'content scheduled for organic':'scheduled','accepted / sent for review':'sent for review',
+        'in-review':'in review','in progress: editing':'editing',
+        'in progress: production':'production','added to shot list':'shot list',
+        'approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'
+      };
+      const statusLabel = statusMap[a.status] || a.status || '';
+      chips += `<a class="cal-chip ${cls}" href="${href}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
+    });
+    if (items.length > 3) chips += `<div class="cal-chip chip-other">+${items.length - 3} more</div>`;
+
+    html += `<div class="cal-cell${isToday?' today':''}"><div class="cal-day">${day}</div>${chips}</div>`;
+  }
+
+  // trailing cells
+  const totalCells = startOffset + daysInMonth;
+  const trailing = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+  for (let i = 0; i < trailing; i++) html += '<div class="cal-cell other-month"></div>';
+
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function calNav(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+// ── CAPTION GENERATOR ──
+async function generateCaption(){
+  const ct=document.getElementById('ct').value;
+  const purpose=document.getElementById('purpose').value;
+  const context=document.getElementById('context').value.trim();
+  const btn=document.getElementById('gen-btn');
+  const out=document.getElementById('output');
+  btn.disabled=true;btn.textContent='Generating...';
+  out.innerHTML='<div class="spinner" style="margin:1.2rem auto"></div>';
+  document.getElementById('copy-out-btn').style.display='none';
+  const pl={launch:'product launch',restock:'restock',lifestyle:'lifestyle/vibe post',sale:'sale or promo',occasion:'holiday or occasion',collection:'collection drop'};
+  const cl={organic:'organic Instagram/TikTok caption',ad:'paid ad caption',story:'Story caption (very short, punchy)',product:'product page copy'};
+  const system=`You are FUNBOY's copywriter. FUNBOY is a luxury inflatable lifestyle brand.
+Voice: playfully premium, aspirational leisure, effortlessly chic. Lead with lifestyle not product. Max 2-3 emojis. Never cheap or generic.
+Phrases to riff on: "There's something about summer..." / "Luxury meets leisure" / "Blow up to glow up" / "High design. Low lift." / "Welcome to the future of leisure"
+Rules: never lead with product name. For ads add urgency. For organic add soft CTA or question. For stories: max 3 lines.
+Write ONE caption only. No preamble, no options.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system,messages:[{role:'user',content:'Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\n\nContext: '+context:'')}]})});
+    const data=await res.json();
+    const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'Something went wrong.';
+    out.textContent=text;
+    document.getElementById('copy-out-btn').style.display='block';
+  }catch(e){out.innerHTML='<span style="color:var(--rose)">Generation failed.</span>';}
+  btn.disabled=false;btn.textContent='Generate Caption';
+}
+function copyOutput(){
+  navigator.clipboard.writeText(document.getElementById('output').textContent).then(()=>{
+    const b=document.getElementById('copy-out-btn');b.textContent='Copied!';
+    setTimeout(()=>b.textContent='Copy',1500);
+  });
+}
+function copyPhrase(el){
+  navigator.clipboard.writeText(el.textContent.trim()).then(()=>{
+    el.classList.add('copied');const o=el.textContent;el.textContent='Copied';
+    setTimeout(()=>{el.classList.remove('copied');el.textContent=o;},1400);
+  });
+}
+
+// ── LIVE FETCH from Google Sheet (published as CSV) ──
+// Replace SHEET_CSV_URL with your sheet's published CSV URL
+const SHEET_CSV_URL = 'YOUR_GOOGLE_SHEET_CSV_URL_HERE';
+
+async function loadLiveAssets() {
+  try {
+    const res = await fetch(SHEET_CSV_URL);
+    const text = await res.text();
+    const lines = text.trim().split('\n').slice(1); // skip header
+    const live = lines.map(line => {
+      const cols = line.split(',').map(c => c.replace(/^"|"$/g,'').trim());
+      return {
+        name      : cols[0],
+        status    : cols[1],
+        mediaType : cols[2] ? cols[2].split(',').map(s=>s.trim()).filter(Boolean) : [],
+        dueDate   : cols[3] || null,
+        product   : cols[4] ? cols[4].split(',').map(s=>s.trim()).filter(Boolean) : [],
+        url       : cols[7] || '#',
+      };
+    }).filter(a => a.name);
+    renderAssets(live);
+  } catch(e) {
+    // Fallback to baked-in data if sheet not yet configured
+    renderAssets(ASSETS);
+renderCalendar();
+  }
+}
+
+// Use live data if Sheet URL is configured, otherwise use baked-in
+if (SHEET_CSV_URL !== 'YOUR_GOOGLE_SHEET_CSV_URL_HERE') {
+  loadLiveAssets();
+} else {
+  renderAssets(ASSETS);
+renderCalendar();
+}
+renderReports('mar1');
+</script>
+</body>
+</html>
