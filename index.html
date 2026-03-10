@@ -216,7 +216,7 @@
 <nav>
   <div class="logo">FUNBOY</div>
   <div class="tabs">
-    <button class="tab active" onclick="show('calendar',this)">Calendar</button>
+    <button class="tab active" onclick="show('calendar',this)">Content Calendar</button>
     <button class="tab" onclick="show('assets',this)">Assets</button>
     <button class="tab" onclick="show('voice',this)">Brand Voice</button>
     <button class="tab" onclick="show('reports',this)" style="display:none">Reports</button>
@@ -714,8 +714,9 @@ function renderCalendar() {
   // Build asset map: date string → array of assets
   const assetMap = {};
   ASSETS.forEach(a => {
-    if (!a.dueDate) return;
-    const d = a.dueDate.slice(0, 10);
+    const calDate = a.postingDate;
+    if (!calDate) return;
+    const d = calDate.slice(0, 10);
     if (!assetMap[d]) assetMap[d] = [];
     assetMap[d].push(a);
   });
