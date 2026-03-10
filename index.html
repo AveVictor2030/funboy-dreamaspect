@@ -724,7 +724,6 @@ function renderCalendar() {
     let chips = '';
     items.slice(0,3).forEach(a => {
       const cls = chipClass(a.name, a.pillar);
-      const href = a.finishedAssetLink || a.url;
       const statusMap = {
         'posted':'posted','content added to ad-tracker':'ad-tracker',
         'content scheduled for organic':'scheduled','accepted / sent for review':'sent for review',
@@ -733,7 +732,12 @@ function renderCalendar() {
         'approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'
       };
       const statusLabel = statusMap[a.status] || a.status || '';
-      chips += `<a class="cal-chip ${cls}" href="${href}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
+      const hasLink = a.finishedAssetLink && a.finishedAssetLink !== '';
+      if(hasLink){
+        chips += `<a class="cal-chip ${cls}" href="${a.finishedAssetLink}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
+      } else {
+        chips += `<div class="cal-chip ${cls}" title="${a.name}" style="cursor:default">${a.name}<span class="chip-status">${statusLabel}</span></div>`;
+      }
     });
     if (items.length > 3) chips += `<div class="cal-chip chip-other">+${items.length - 3} more</div>`;
 
