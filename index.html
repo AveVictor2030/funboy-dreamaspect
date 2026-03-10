@@ -334,10 +334,6 @@
           </select>
           <label>Product / context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
           <textarea id="context" placeholder="e.g. Fabric Float restock, spring weekend, golf husbands audience..." rows="3"></textarea>
-          <div style="margin-bottom:.9rem;">
-            <label>Anthropic API Key <span style="font-weight:400;color:var(--muted)">(paste once — not stored)</span></label>
-            <input type="password" id="api-key" placeholder="sk-ant-..." style="width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.55rem .7rem;font-family:'DM Mono',monospace;font-size:.78rem;background:var(--off);color:var(--ink);outline:none;"/>
-          </div>
           <button class="gen-btn" id="gen-btn" onclick="generateCaption()" data-tip="AI writes a caption using FUNBOY's brand voice">Generate Caption</button>
         </div>
         <div style="height:.9rem"></div>
@@ -813,14 +809,29 @@ Phrases to riff on: "There's something about summer..." / "Luxury meets leisure"
 Rules: never lead with product name. For ads add urgency. For organic add soft CTA or question. For stories: max 3 lines.
 Write ONE caption only. No preamble, no options.`;
   try{
-    const apiKey = document.getElementById('api-key').value.trim();
-    if(!apiKey){out.textContent='Please enter your Anthropic API key above.';btn.disabled=false;btn.textContent='Generate Caption';return;}
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5-20251001',max_tokens:400,system,messages:[{role:'user',content:'Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\n\nContext: '+context:'')}]})});
-    const data=await res.json();
-    const text=data.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||data.error?.message||'Something went wrong.';
-    out.textContent=text;
-    document.getElementById('copy-out-btn').style.display='block';
-  }catch(e){out.innerHTML='<span style="color:var(--rose)">'+e.message+'</span>';}
+    const prompt='Write a '+cl[ct]+' for a '+pl[purpose]+'.'+(context?'\\n\\nContext: '+context:'');
+    await new Promise((resolve,reject)=>{
+      const cbName='cap_'+Date.now();
+      const script=document.createElement('script');
+      const timer=setTimeout(()=>{
+        delete window[cbName];
+        if(script.parentNode)document.body.removeChild(script);
+        reject(new Error('Timeout — try again'));
+      },20000);
+      window[cbName]=function(data){
+        clearTimeout(timer);
+        delete window[cbName];
+        if(script.parentNode)document.body.removeChild(script);
+        if(data.error){reject(new Error(data.error));return;}
+        out.textContent=data.text||'Something went wrong.';
+        document.getElementById('copy-out-btn').style.display='block';
+        resolve();
+      };
+      script.onerror=()=>reject(new Error('Script load failed'));
+      script.src=APPS_SCRIPT_URL+'?action=caption&token='+encodeURIComponent(APPS_SCRIPT_TOKEN)+'&prompt='+encodeURIComponent(prompt)+'&system='+encodeURIComponent(system)+'&callback='+cbName;
+      document.body.appendChild(script);
+    });
+  }catch(e){out.innerHTML='<span style="color:var(--rose)">Generation failed: '+e.message+'</span>';}
   btn.disabled=false;btn.textContent='Generate Caption';
 }
 function copyOutput(){
@@ -837,7 +848,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwHFsCDMxr1gLTnuEqIEmwykaYlqOgUdY_eIvRjlFLcwAdxIdx7R9s8Rvemm9-ea-su/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbyMKY7xAFlmZL2lrmkzDA3roAEDnLyAapAwqKKXxY7ikx4BdlMQME6Ge4sGAxbMG6s4/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
