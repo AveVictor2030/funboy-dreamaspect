@@ -852,7 +852,11 @@ async function loadLiveAssets() {
         delete window[callbackName];
         if (script.parentNode) document.body.removeChild(script);
         if (data.error) { reject(new Error(data.error)); return; }
-        const live = (Array.isArray(data) ? data : []).map(a => ({
+        const raw = Array.isArray(data) ? data : [];
+        console.log('Live sync received', raw.length, 'assets');
+        console.log('Sample assetTypes:', raw.slice(0,5).map(a => a.name + ' -> ' + a.assetType));
+        console.log('Ad count:', raw.filter(a => a.assetType === 'ad').length);
+        const live = raw.map(a => ({
           name              : a.name || '',
           status            : a.status || '',
           mediaType         : a.mediaType ? a.mediaType.split(',').map(s=>s.trim()).filter(Boolean) : [],
@@ -863,7 +867,7 @@ async function loadLiveAssets() {
           shootDay          : a.shootDay || '',
           url               : a.url || '#',
           finishedAssetLink : a.finishedAssetLink || '',
-          assetType         : a.assetType || '',
+          assetType         : a.assetType || 'organic',
         })).filter(a => a.name);
         ASSETS.length = 0;
         live.forEach(a => ASSETS.push(a));
