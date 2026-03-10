@@ -35,6 +35,7 @@
   .page-sub{font-size:.83rem;color:rgba(255,255,255,.75);margin-top:.35rem;}
 
   .page{max-width:1060px;margin:0 auto;padding:1.75rem 2.5rem 4rem;}
+  #calendar .page{max-width:100%;padding:1.75rem 1.5rem 4rem;}
 
   .count-bar{display:flex;gap:0;margin-bottom:1.5rem;background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
   .count-item{flex:1;padding:.85rem 1rem;text-align:center;border-right:1px solid var(--border);}
@@ -175,7 +176,8 @@
   .cal-nav-btn{background:var(--white);border:1.5px solid var(--border);border-radius:2px;padding:.3rem .7rem;cursor:pointer;font-size:.8rem;font-weight:700;color:var(--muted);transition:all .13s;}
   .cal-nav-btn:hover{border-color:var(--terra);color:var(--terra);}
 
-  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;width:100%;}
+  .cal-chip{font-size:.63rem;font-weight:700;border-radius:2px;padding:.18rem .45rem;margin-bottom:.2rem;overflow:hidden;text-overflow:ellipsis;cursor:default;display:block;line-height:1.3;word-break:break-word;white-space:normal;}
   .cal-dow{background:var(--sand);text-align:center;padding:.5rem 0;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
   .cal-cell{background:var(--white);min-height:90px;padding:.4rem .45rem;position:relative;}
   .cal-cell.other-month{background:var(--off);}
@@ -214,15 +216,15 @@
 <nav>
   <div class="logo">FUNBOY</div>
   <div class="tabs">
-    <button class="tab active" onclick="show('voice',this)">Brand Voice</button>
+    <button class="tab active" onclick="show('calendar',this)">Calendar</button>
     <button class="tab" onclick="show('assets',this)">Assets</button>
+    <button class="tab" onclick="show('voice',this)">Brand Voice</button>
     <button class="tab" onclick="show('reports',this)" style="display:none">Reports</button>
-    <button class="tab" onclick="show('calendar',this)">Calendar</button>
   </div>
 </nav>
 
 <!-- BRAND VOICE -->
-<div id="voice" class="section active">
+<div id="voice" class="section">
   <div class="page-header">
     <div class="page-eyebrow">Brand Voice &amp; Caption Generator</div>
     <div class="page-title">Write Like FUNBOY</div>
@@ -314,6 +316,8 @@
     </div>
     <div class="filters">
       <button class="filter-btn on" onclick="filterStatus('all',this)">All</button>
+      <button class="filter-btn" onclick="filterStatus('has-date',this)">Has Posting Date</button>
+      <button class="filter-btn" onclick="filterStatus('no-date',this)">No Posting Date</button>
       <button class="filter-btn" onclick="filterStatus('in progress',this)">In Progress</button>
       <button class="filter-btn" onclick="filterStatus('review',this)">In Review</button>
       <button class="filter-btn" onclick="filterStatus('idea',this)">Ideas</button>
@@ -373,7 +377,7 @@
 </div>
 
 <!-- CALENDAR -->
-<div id="calendar" class="section">
+<div id="calendar" class="section active">
   <div class="page-header">
     <div class="page-eyebrow">Content Calendar</div>
     <div class="page-title">Posting Schedule</div>
@@ -437,7 +441,7 @@ const ASSETS=[
   {name:'Country Club Golf Cart Restock — Graphic Post',status:'posted',mediaType:['graphic post','organic'],dueDate:'2026-03-05',product:['golf cart'],url:'https://www.notion.so/319f02fc538d80b8a70cff69097e843d'},
   {name:'Country Club Video',status:'posted',mediaType:['video'],dueDate:'2026-03-07',product:['golf cart'],url:'https://www.notion.so/31bf02fc538d8084a88ace21e5056aba'},
   {name:'Summer Moodboard Teaser',status:'posted',mediaType:['stills'],dueDate:'2026-03-07',product:['Fabric'],url:'https://www.notion.so/317f02fc538d806aa2bbfc0ca40ac1f0'},
-  {name:'Leisure Island collection restock',status:'posted',mediaType:['video'],dueDate:'2026-03-02',product:['Leisure Island'],url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571'},
+  {name:'Leisure Island collection restock',status:'posted',mediaType:['video'],dueDate:'2026-03-02',product:['Leisure Island'],url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571',finishedAssetLink:'https://www.dropbox.com/scl/fo/a0mopx590deh407jnbbup/APXxja-65kClX1ayZpASozE?rlkey=pajr6kecgn3suix6or2bis11y&st=sgivki9d&dl=0'},
   {name:'Teaser Fabric (graphic post)',status:'content scheduled for organic',mediaType:['graphic post'],dueDate:'2026-03-08',product:['Fabric'],url:'https://www.notion.so/319f02fc538d8026a969fe7bc4e0577c'},
   {name:'Easter Ads Stills',status:'content added to ad-tracker',mediaType:['stills','ad'],dueDate:null,product:['Easter Collection'],url:'https://www.notion.so/31bf02fc538d80fda572d42956c25e48',finishedAssetLink:'https://www.dropbox.com/scl/fo/tijis4hs28t8jgp8e4pyd/AN0LP0NUOR8xzDl6S1x8LO8?rlkey=drulgnxrwecqbyeu1vtfwmcxd&st=i93f5nxn&dl=0'},
   {name:'COLOR THEMED CAROUSEL',status:'accepted / sent for review',mediaType:['ad','organic','video'],dueDate:'2026-03-09',product:['Fabric','Tubes'],url:'https://www.notion.so/317f02fc538d806bb999f1849fffee4c'},
@@ -532,7 +536,7 @@ function fmtDate(d){if(!d)return'-';return new Date(d+'T12:00:00').toLocaleDateS
 function statusBadge(s){const[cls,lbl]=STATUS_MAP[s]||['s-idea',s];return`<span class="status-badge ${cls}">${lbl}</span>`;}
 function typePills(arr){return arr.map(t=>`<span class="type-pill ${TYPE_MAP[t]||'t-organic'}">${t}</span>`).join('');}
 
-function renderAssets(list){
+function renderAssets(list, showDueDate){
   const sorted=[...list].sort((a,b)=>{
     // complete goes to bottom, then sort by due date
     const ac=isComplete(a.status),bc=isComplete(b.status);
@@ -542,9 +546,13 @@ function renderAssets(list){
     return new Date(a.dueDate)-new Date(b.dueDate);
   });
   if(!sorted.length){document.getElementById('assets-container').innerHTML='<p style="padding:2rem;color:var(--muted)">No assets match.</p>';return;}
-  let h='<table class="asset-table"><thead><tr><th>Asset Name</th><th>Status</th><th>Type</th><th>Due</th><th>Product</th></tr></thead><tbody>';
+  const dateColHeader = showDueDate ? 'Due Date' : 'Posting Date';
+  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Status</th><th>Type</th><th>${dateColHeader}</th><th>Product</th></tr></thead><tbody>`;
   for(const a of sorted){
-    h+=`<tr><td><a class="asset-link" href="${a.url}" target="_blank">${a.name}</a></td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td><span class="due-date ${dueCls(a.dueDate)}">${fmtDate(a.dueDate)}</span></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td></tr>`;
+    const dateVal = showDueDate ? a.dueDate : (a.postingDate || a.dueDate);
+    const href = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? a.finishedAssetLink : a.url;
+    const linkLabel = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? `${a.name} <span style="font-size:.6rem;opacity:.5;font-weight:600;text-transform:uppercase;letter-spacing:.05em">↗ asset</span>` : a.name;
+    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td><span class="due-date ${dueCls(dateVal)}">${fmtDate(dateVal)}</span></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td></tr>`;
   }
   h+='</tbody></table>';
   document.getElementById('assets-container').innerHTML=h;
@@ -558,13 +566,16 @@ function filterStatus(f,btn){
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   let r=ASSETS;
+  let showDueDate=false;
   if(f==='in progress')r=ASSETS.filter(a=>a.status.includes('progress')||a.status==='added to shot list');
   else if(f==='review')r=ASSETS.filter(a=>a.status==='in-review');
   else if(f==='idea')r=ASSETS.filter(a=>['idea','approved idea','research'].includes(a.status));
   else if(f==='complete')r=ASSETS.filter(a=>isComplete(a.status));
   else if(f==='ad')r=ASSETS.filter(a=>a.mediaType.includes('ad'));
   else if(f==='video')r=ASSETS.filter(a=>a.mediaType.includes('video'));
-  renderAssets(r);
+  else if(f==='has-date')r=ASSETS.filter(a=>a.dueDate);
+  else if(f==='no-date'){r=ASSETS.filter(a=>!a.dueDate);showDueDate=true;}
+  renderAssets(r, showDueDate);
 }
 
 // ── REPORTS — only real data from Mar 2026 ──
@@ -732,11 +743,12 @@ function renderCalendar() {
         'approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'
       };
       const statusLabel = statusMap[a.status] || a.status || '';
-      const hasLink = a.finishedAssetLink && a.finishedAssetLink !== '';
+      const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim() !== '';
+      const chipHref = hasLink ? a.finishedAssetLink : a.url;
       if(hasLink){
-        chips += `<a class="cal-chip ${cls}" href="${a.finishedAssetLink}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
+        chips += `<a class="cal-chip ${cls}" href="${chipHref}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel} ↗</span></a>`;
       } else {
-        chips += `<div class="cal-chip ${cls}" title="${a.name}" style="cursor:default">${a.name}<span class="chip-status">${statusLabel}</span></div>`;
+        chips += `<a class="cal-chip ${cls}" href="${chipHref}" target="_blank" title="${a.name}" style="opacity:.85">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
       }
     });
     if (items.length > 3) chips += `<div class="cal-chip chip-other">+${items.length - 3} more</div>`;
@@ -810,12 +822,16 @@ async function loadLiveAssets() {
     const live = lines.map(line => {
       const cols = line.split(',').map(c => c.replace(/^"|"$/g,'').trim());
       return {
-        name      : cols[0],
-        status    : cols[1],
-        mediaType : cols[2] ? cols[2].split(',').map(s=>s.trim()).filter(Boolean) : [],
-        dueDate   : cols[3] || null,
-        product   : cols[4] ? cols[4].split(',').map(s=>s.trim()).filter(Boolean) : [],
-        url       : cols[7] || '#',
+        name              : cols[0],
+        status            : cols[1],
+        mediaType         : cols[2] ? cols[2].split(',').map(s=>s.trim()).filter(Boolean) : [],
+        dueDate           : cols[3] || null,
+        postingDate       : cols[4] || null,
+        product           : cols[5] ? cols[5].split(',').map(s=>s.trim()).filter(Boolean) : [],
+        pillar            : cols[6] || '',
+        shootDay          : cols[7] || '',
+        url               : cols[8] || '#',
+        finishedAssetLink : cols[9] || '',
       };
     }).filter(a => a.name);
     renderAssets(live);
