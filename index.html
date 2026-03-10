@@ -720,6 +720,9 @@ const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzWMhyvQUo7bA
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
+  // Always render baked-in data immediately so calendar/assets are never blank
+  applyFilters();
+  renderCalendar();
   try {
     await new Promise((resolve, reject) => {
       const callbackName = 'fb_' + Date.now();
@@ -728,7 +731,7 @@ async function loadLiveAssets() {
         delete window[callbackName];
         if (script.parentNode) document.body.removeChild(script);
         reject(new Error('JSONP timeout'));
-      }, 10000);
+      }, 7000);
       window[callbackName] = function(data) {
         clearTimeout(timeout);
         delete window[callbackName];
@@ -758,9 +761,7 @@ async function loadLiveAssets() {
       document.body.appendChild(script);
     });
   } catch(e) {
-    console.warn('Live fetch failed, using baked-in data:', e.message);
-    applyFilters();
-    renderCalendar();
+    console.warn('Live fetch failed, baked-in data already rendered:', e.message);
   }
 }
 
