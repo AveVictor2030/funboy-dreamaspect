@@ -610,6 +610,9 @@ const ASSETS=[
 
 ];
 
+// Permanent snapshot of baked-in data — never overwritten, used as calendar fallback
+const BAKED_ASSETS = ASSETS.map(a => Object.assign({}, a));
+
 const STATUS_MAP={
   'idea':['s-idea','idea'],
   'approved idea':['s-approved','approved'],
@@ -847,7 +850,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxgSWkBxGCpV_u6RcAEzsh2bot1o_kLHP8vHl9GSkannWY0epAwDlc7rftKhsvynXwP/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwbVYuV6s0HobLZ9CZBpXSIIcbenuFP95cwGKhHQHhy5fYDV1ztVd1XeXVncdwK5RzP/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
@@ -885,24 +888,30 @@ async function loadLiveAssets() {
           finishedAssetLink : a.finishedAssetLink || '',
           assetType         : a.assetType || 'organic',
         })).filter(a => a.name);
-        // Only overwrite ASSETS if live data has postingDate populated
-        // If none have postingDates, Apps Script isn't returning that field — preserve baked-in calendar
-        const hasPostingDates = live.some(a => a.postingDate);
-        if (hasPostingDates) {
-          ASSETS.length = 0;
-          live.forEach(a => ASSETS.push(a));
-        } else {
-          // Merge live status/fields into baked-in, keeping baked-in postingDates intact
-          live.forEach(liveAsset => {
-            const idx = ASSETS.findIndex(b => b.url === liveAsset.url);
-            if (idx >= 0) {
-              const savedDate = ASSETS[idx].postingDate;
-              Object.assign(ASSETS[idx], liveAsset);
-              if (!liveAsset.postingDate) ASSETS[idx].postingDate = savedDate;
-            }
+        // Always merge live into baked-in snapshot so postingDates are never lost
+        // Live data from Notion has the freshest status — baked-in has reliable postingDates as fallback
+        ASSETS.length = 0;
+        live.forEach(liveAsset => {
+          const baked = BAKED_ASSETS.find(b => b.url === liveAsset.url);
+          ASSETS.push({
+            name              : liveAsset.name,
+            status            : liveAsset.status,
+            mediaType         : liveAsset.mediaType,
+            dueDate           : liveAsset.dueDate   || (baked && baked.dueDate)   || null,
+            postingDate       : liveAsset.postingDate || (baked && baked.postingDate) || null,
+            product           : liveAsset.product,
+            pillar            : liveAsset.pillar,
+            shootDay          : liveAsset.shootDay,
+            url               : liveAsset.url,
+            finishedAssetLink : liveAsset.finishedAssetLink,
+            assetType         : liveAsset.assetType,
           });
-          console.warn('Live sync: no postingDates from Notion — calendar using baked-in dates');
-        }
+        });
+        // Add any baked-in assets not returned by Notion (new ones added to baked data)
+        BAKED_ASSETS.forEach(baked => {
+          if (!ASSETS.find(a => a.url === baked.url)) ASSETS.push(baked);
+        });
+        console.log('Live sync merged:', ASSETS.length, 'assets, posting dates:', ASSETS.filter(a=>a.postingDate).length);
         applyFilters();
         renderCalendar();
         resolve();
