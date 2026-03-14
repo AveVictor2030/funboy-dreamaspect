@@ -820,7 +820,15 @@ function renderShoots() {
       .map(t => `<span class="type-pill ${TYPE_MAP[t]||'t-organic'}">${t}</span>`).join('');
 
     // Only show button if link exists AND points to Dropbox/external (not just Notion)
-    const isRealLink = (url) => url && url.trim() && !url.trim().startsWith('https://www.notion.so');
+    // A "real" link must be a full https:// URL pointing to an actual file host
+    // Rejects: empty, notion.so links, bare domains like "dreamaspect.co", random text
+    const VALID_HOSTS = ['dropbox.com','canva.com','drive.google.com','docs.google.com','vimeo.com','youtube.com','youtu.be','wetransfer.com','frame.io'];
+    const isRealLink = (url) => {
+      if (!url || !url.trim()) return false;
+      const u = url.trim().toLowerCase();
+      if (!u.startsWith('https://')) return false;
+      return VALID_HOSTS.some(h => u.includes(h));
+    };
     const footageLinkHtml = isRealLink(a.footageLink)
       ? `<a class="footage-link" href="${a.footageLink}" target="_blank">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.9L15 14"/><rect x="1" y="6" width="15" height="12" rx="2" ry="2"/></svg>
@@ -902,7 +910,8 @@ function renderCalendar() {
     items.slice(0,3).forEach(a => {
       const cls = chipClass(a.name, a.pillar);
       const statusLabel = statusMap[a.status] || a.status || '';
-      const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim() !== '' && !a.finishedAssetLink.includes('notion.so');
+      const CHIP_VALID_HOSTS = ['dropbox.com','canva.com','drive.google.com','docs.google.com','vimeo.com','youtube.com','youtu.be','wetransfer.com','frame.io'];
+      const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim().startsWith('https://') && CHIP_VALID_HOSTS.some(h => a.finishedAssetLink.toLowerCase().includes(h));
       const chipHref = hasLink ? a.finishedAssetLink : a.url;
       const typeCls = a.assetType === 'ad' ? 'chip-paid' : 'chip-organic';
       const doneFlag = hasLink ? ' ✅' : '';
