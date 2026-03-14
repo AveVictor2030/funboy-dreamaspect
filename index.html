@@ -247,7 +247,7 @@
   .cal-chip{font-size:.63rem;font-weight:700;border-radius:2px;padding:.18rem .45rem;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default;display:block;line-height:1.3;}
   .chip-drop   {background:#D5EDE4;color:#075B3E;}
   .chip-teaser {background:#FFF3CD;color:#856404;}
-  .chip-restock{background:#F5D5D8;color:#7A1528;}
+  .chip-restock{background:#FFF0D6;color:#9A5A00;}
   .chip-ad     {background:#E8E8E8;color:#333;}
   .chip-other  {background:#E8E8E8;color:#555;}
   .chip-organic{border-left:3px solid #3A9E8F;}
@@ -261,6 +261,28 @@
   .switcher-explainer strong{color:var(--ink);}
   .switcher-explainer em{font-style:normal;font-family:'DM Mono',monospace;font-size:.68rem;background:#eee;padding:.1rem .3rem;border-radius:2px;}
   .cal-switcher-explainer{font-size:.67rem;color:var(--muted);font-style:italic;text-align:right;}
+
+  /* SHOOTS */
+  .shoot-tabs{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.25rem;}
+  .shoot-tab-btn{padding:.32rem .9rem;border-radius:2px;border:1.5px solid var(--border);background:var(--white);font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .13s;color:var(--muted);}
+  .shoot-tab-btn:hover{border-color:var(--terra);color:var(--terra);}
+  .shoot-tab-btn.active{background:var(--ink);border-color:var(--ink);color:var(--white);}
+  .shoot-day-section{margin-bottom:2rem;}
+  .shoot-day-header{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:var(--ink);border-radius:4px 4px 0 0;margin-bottom:0;}
+  .shoot-day-title{font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--white);}
+  .shoot-day-count{font-size:.72rem;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;}
+  .shoot-asset-table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;}
+  .shoot-asset-table th{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:.65rem 1rem;background:var(--sand);border-bottom:1px solid var(--border);text-align:left;}
+  .shoot-asset-table td{padding:.68rem 1rem;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:middle;}
+  .shoot-asset-table tr:last-child td{border-bottom:none;}
+  .shoot-asset-table tr:hover td{background:#FDFAF6;}
+  .footage-link{display:inline-flex;align-items:center;gap:.35rem;color:var(--teal);font-weight:700;font-size:.75rem;text-decoration:none;padding:.22rem .65rem;border:1.5px solid var(--teal);border-radius:2px;transition:all .15s;white-space:nowrap;}
+  .footage-link:hover{background:var(--teal);color:var(--white);}
+  .footage-link svg{flex-shrink:0;}
+  .footage-link-amber{color:var(--amber);border-color:var(--amber);}
+  .footage-link-amber:hover{background:var(--amber);color:var(--white);}
+  .no-link-indicator{color:#CCC;font-size:1rem;display:inline-block;text-align:center;width:20px;line-height:1;}
+
   .bottom-stripe{height:12px;background:repeating-linear-gradient(180deg,var(--amber) 0,var(--amber) 4px,#F5EDE4 4px,#F5EDE4 8px,var(--orange) 8px,var(--orange) 12px);position:fixed;bottom:0;left:0;right:0;z-index:40;}
 
   /* TOOLTIPS */
@@ -303,6 +325,7 @@
     <button class="tab" onclick="show('assets',this)">Assets</button>
     <button class="tab" onclick="show('voice',this)">Brand Voice</button>
     <button class="tab" onclick="show('reports',this)" style="display:none">Reports</button>
+    <button class="tab" onclick="show('shoots',this)">Shoots</button>
   </div>
 </nav>
 
@@ -466,6 +489,20 @@
   </div>
 </div>
 
+
+<!-- SHOOTS -->
+<div id="shoots" class="section">
+  <div class="page-header">
+    <div class="page-eyebrow">Content by Shoot Day</div>
+    <div class="page-title">Footage Library</div>
+    <div class="page-sub">Browse all assets and footage links organized by shoot day</div>
+  </div>
+  <div class="page">
+    <div class="shoot-tabs" id="shoot-tabs"></div>
+    <div id="shoot-content"></div>
+  </div>
+</div>
+
 <!-- CALENDAR -->
 <div id="calendar" class="section active">
   <div class="page-header">
@@ -533,6 +570,7 @@ function show(id,btn){
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  if (id === 'shoots') renderShoots();
 }
 
 // ── ASSETS ──
@@ -540,77 +578,77 @@ const COMPLETE_STATUSES=['posted','content added to ad-tracker','content schedul
 
 const ASSETS=[
   // ── Posting dates sourced directly from Notion "Posting Date" field ──
-  {name:'Leisure Island collection restock',status:'posted',mediaType:['video'],dueDate:'2026-03-02',postingDate:'2026-03-03',product:['Leisure Island'],assetType:'organic reel',finishedAssetLink:'https://www.dropbox.com/scl/fo/a0mopx590deh407jnbbup/APXxja-65kClX1ayZpASozE?rlkey=pajr6kecgn3suix6or2bis11y&st=sgivki9d&dl=0',url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571'},
-  {name:'Country Club Golf Cart (Reel) Restock',status:'posted',mediaType:['video','carousel'],dueDate:'2026-03-05',postingDate:'2026-03-05',product:['golf cart'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/318f02fc538d808b9272c4d4989ab589'},
+  {name:'Leisure Island collection restock',status:'posted',mediaType:['video'],dueDate:'2026-03-02',postingDate:'2026-03-03',product:['Leisure Island'],assetType:'organic reel',finishedAssetLink:'https://www.dropbox.com/scl/fo/a0mopx590deh407jnbbup/APXxja-65kClX1ayZpASozE?rlkey=pajr6kecgn3suix6or2bis11y&st=sgivki9d&dl=0',shootDay:'',footageLink:'',url:'https://www.notion.so/318f02fc538d8050aeccc40f834b7571'},
+  {name:'Country Club Golf Cart (Reel) Restock',status:'posted',mediaType:['video','carousel'],dueDate:'2026-03-05',postingDate:'2026-03-05',product:['golf cart'],assetType:'organic reel',finishedAssetLink:'',shootDay:'content library',footageLink:'',url:'https://www.notion.so/318f02fc538d808b9272c4d4989ab589'},
   
-  {name:'Fabric "save the date" teaser',status:'posted',mediaType:['graphic post'],dueDate:'2026-03-08',postingDate:'2026-03-08',product:['Fabric'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d80c7b1d0faf75539f8e1'},
+  {name:'Fabric "save the date" teaser',status:'posted',mediaType:['graphic post'],dueDate:'2026-03-08',postingDate:'2026-03-08',product:['Fabric'],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/31ff02fc538d80c7b1d0faf75539f8e1'},
   
-  {name:'DROP Fabric 3/14 — Reel',status:'accepted / sent for review',mediaType:['video','graphic post'],dueDate:'2026-03-09',postingDate:'2026-03-10',product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/318f02fc538d80e6b512f1015358e951'},
-  {name:'Clear Chaise Award',status:'blocked',mediaType:['stills','graphic post'],dueDate:'2026-03-10',postingDate:'2026-03-15',product:['Clear Chaise'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80d49a2afd89bf481bf3'},
-  {name:'SPRING BREAK essentials',status:'in progress: production',mediaType:['video','stills'],dueDate:'2026-03-11',postingDate:'2026-03-19',product:[],assetType:'organic carousel',finishedAssetLink:'https://www.dropbox.com/scl/fi/47k7a1nysd2axoz982xrl/fabric-teaser-revised.png?rlkey=hoqkivthhacz8zogt5lcw0vud&st=mk70igjd&dl=0',url:'https://www.notion.so/319f02fc538d80c4b211f70b4ee13b96'},
-  {name:'POOL DAY WITH BESTIES',status:'in-review',mediaType:['video','carousel'],dueDate:'2026-03-09',postingDate:'2026-03-20',product:['Fabric'],assetType:'organic reel',finishedAssetLink:'https://www.dropbox.com/scl/fo/ccmpuqgr93idr4nzymwfu/AHtA9YENaXzHVmtdMMhrvGM?rlkey=jmgccejsfrd5ofnje29qw0luu&st=uou9krft&dl=0',url:'https://www.notion.so/317f02fc538d809bb3aee4caabe459e6'},
-  {name:'DROP: NEW TUBE',status:'added to shot list',mediaType:['video','stills'],dueDate:'2026-03-11',postingDate:'2026-03-21',product:['Tubes'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d8043b1c1f1e6ad9e5849'},
-  {name:'Tan lines teaser graphic post',status:'in progress: production',mediaType:['graphic post'],dueDate:null,postingDate:'2026-03-22',product:['Tanning Bed','Tubes'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80f3a01cd7c5b0cf2d7b'},
-  {name:'DROP/LAUNCH Tanning pool',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-11',postingDate:'2026-03-24',product:['Tanning Bed'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d8013bfb5e5aebd0dba10'},
-  {name:'PCH Shoot BTS',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-11',postingDate:'2026-03-24',product:['Tubes','Tanning Bed'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80309b05d23e5c4921da'},
-  {name:'AESTHETIC MEMES',status:'in progress: editing',mediaType:['stills','carousel'],dueDate:'2026-03-09',postingDate:'2026-03-27',product:['Fabric'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d8076bc8de1498c0fd558'},
+  {name:'DROP Fabric 3/14 — Reel',status:'accepted / sent for review',mediaType:['video','graphic post'],dueDate:'2026-03-09',postingDate:'2026-03-10',product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'Stahl House 2/26',footageLink:'',url:'https://www.notion.so/318f02fc538d80e6b512f1015358e951'},
+  {name:'Clear Chaise Award',status:'blocked',mediaType:['stills','graphic post'],dueDate:'2026-03-10',postingDate:'2026-03-15',product:['Clear Chaise'],assetType:'organic post',finishedAssetLink:'',shootDay:'BH March 30th',footageLink:'',url:'https://www.notion.so/319f02fc538d80d49a2afd89bf481bf3'},
+  {name:'SPRING BREAK essentials',status:'in progress: production',mediaType:['video','stills'],dueDate:'2026-03-11',postingDate:'2026-03-19',product:[],assetType:'organic carousel',finishedAssetLink:'',shootDay:'BH March 30th',footageLink:'',url:'https://www.notion.so/319f02fc538d80c4b211f70b4ee13b96'},
+  {name:'POOL DAY WITH BESTIES',status:'in-review',mediaType:['video','carousel'],dueDate:'2026-03-09',postingDate:'2026-03-20',product:['Fabric'],assetType:'organic reel',finishedAssetLink:'https://www.dropbox.com/scl/fo/ccmpuqgr93idr4nzymwfu/AHtA9YENaXzHVmtdMMhrvGM?rlkey=jmgccejsfrd5ofnje29qw0luu&st=uou9krft&dl=0',shootDay:'Stahl House 2/26',footageLink:'',url:'https://www.notion.so/317f02fc538d809bb3aee4caabe459e6'},
+  {name:'DROP: NEW TUBE',status:'added to shot list',mediaType:['video','stills'],dueDate:'2026-03-11',postingDate:'2026-03-21',product:['Tubes'],assetType:'organic post',finishedAssetLink:'',shootDay:'WeHo March 3/11',footageLink:'',url:'https://www.notion.so/319f02fc538d8043b1c1f1e6ad9e5849'},
+  {name:'Tan lines teaser graphic post',status:'in progress: production',mediaType:['graphic post'],dueDate:null,postingDate:'2026-03-22',product:['Tanning Bed','Tubes'],assetType:'organic post',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'',url:'https://www.notion.so/319f02fc538d80f3a01cd7c5b0cf2d7b'},
+  {name:'DROP/LAUNCH Tanning pool',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-11',postingDate:'2026-03-24',product:['Tanning Bed'],assetType:'organic reel',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'',url:'https://www.notion.so/319f02fc538d8013bfb5e5aebd0dba10'},
+  {name:'PCH Shoot BTS',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-11',postingDate:'2026-03-24',product:['Tubes','Tanning Bed'],assetType:'organic reel',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'https://www.dropbox.com/scl/fo/qm4ouztzmrns7gizqj6zb/AIq2kMDPE5HXxW6ykQB7zNo?rlkey=zj6h7eyzghexpbrgr62d5dd0t&st=e90cfgqz&dl=0',url:'https://www.notion.so/317f02fc538d80309b05d23e5c4921da'},
+  {name:'AESTHETIC MEMES',status:'in progress: editing',mediaType:['stills','carousel'],dueDate:'2026-03-09',postingDate:'2026-03-27',product:['Fabric'],assetType:'organic post',finishedAssetLink:'',shootDay:'ad-hoc',footageLink:'',url:'https://www.notion.so/317f02fc538d8076bc8de1498c0fd558'},
 
 
   // ── NO POSTING DATE (show in Assets tab "No Posting Date" filter, sorted by due date) ──
   // --- Has due date ---
-  {name:'Product details explanation',status:'added to shot list',mediaType:['graphic post'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80919848e75e169eddc3'},
-  {name:'Top down drone shot Photo + Video',status:'added to shot list',mediaType:['video','stills'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d800b8221de38b91c89b1'},
-  {name:'step-by-step Fabric Sunbed setup by Max (Meta glasses)',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80d987dae0459de6c949'},
-  {name:'step-by-step Fabric Sunbed setup with a model',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d8098b30df9df5abe395c'},
-  {name:'ASMR moments from the setup',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d8037a0ecf4217df2e6df'},
+  {name:'Product details explanation',status:'added to shot list',mediaType:['graphic post'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80919848e75e169eddc3'},
+  {name:'Top down drone shot Photo + Video',status:'added to shot list',mediaType:['video','stills'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d800b8221de38b91c89b1'},
+  {name:'step-by-step Fabric Sunbed setup by Max (Meta glasses)',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80d987dae0459de6c949'},
+  {name:'step-by-step Fabric Sunbed setup with a model',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d8098b30df9df5abe395c'},
+  {name:'ASMR moments from the setup',status:'added to shot list',mediaType:['video'],dueDate:'2026-03-10',postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d8037a0ecf4217df2e6df'},
   // --- No due date ---
-  {name:'Tanning Pool vs Towel',status:'in progress: editing',mediaType:['stills'],dueDate:null,postingDate:null,product:['Tanning Bed'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80b7a467eb307dc78577'},
-  {name:'Easter Ads Stills',status:'content added to ad-tracker',mediaType:['stills'],dueDate:null,postingDate:null,product:['Easter Collection'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/tijis4hs28t8jgp8e4pyd/AN0LP0NUOR8xzDl6S1x8LO8?rlkey=drulgnxrwecqbyeu1vtfwmcxd&st=i93f5nxn&dl=0',url:'https://www.notion.so/31bf02fc538d80fda572d42956c25e48'},
-  {name:'TEASER: Do Not Disturb (new Palm Leisure Island) 3/23',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Leisure Island'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80309303c5d7b445ff8b'},
-  {name:'Take out dirty Fabric to SPA – clean it',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/31bf02fc538d8026a9adceb8c8206611'},
-  {name:'DOG ON A FLOATIE',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80f9a6d0ef1c95418f7c'},
-  {name:'2026 installation tips Re-do',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80229f00e4daad6ad2f1'},
-  {name:'LAUNCH: TARGET',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80389adfe7226afcd5b6'},
-  {name:'Research: positive comments (Founders)',status:'research',mediaType:['organic'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/d75aa54dc8db4349ad7a6861e3b9fdbc'},
-  {name:'mini mic with founders',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d801abf35ff8c6c0d5577'},
-  {name:'giveaway',status:'research',mediaType:['organic'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80a3a4dcf46ce0dcd874'},
-  {name:'Q&A interactive with founders',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d806bac8bc277bbc17faa'},
-  {name:'lip sync trend',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d809c9e3fca56cfe9ba24'},
-  {name:"Who's floating your floaties (kids photos)",status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d80cb9b40e2fd4a2a96b6'},
-  {name:'Short hi-fi video sketches',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80489cebdc992abdfb07'},
-  {name:'Branded playing cards',status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d8011b315de10b223bef5'},
-  {name:'Postcard',status:'idea',mediaType:['graphic post'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d805f8f3ccc8297e754f2'},
-  {name:'Color Coordinated; Burned Orange',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80fa8c4ec9c38a261acd'},
-  {name:'HI-FI PHOTOS COLLAGES',status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d800a9789c2724e3da4f6'},
-  {name:"It's Over, I told my wife",status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80e4844bca33bba6a45f'},
-  {name:'add some color to your summer',status:'idea',mediaType:['graphic post','video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d802abcf8c0163a2e2302'},
-  {name:'SUMMER MOVIE NIGHT',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80a690b0f4494d2084d7'},
-  {name:'WHEN THE GIRLS ARE BACK TOGETHER',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80d78fd3f3085883a917'},
-  {name:'TOP DOWN DRONE SHOT',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d808eae9fcac29e5819db'},
-  {name:'YOUR BF HAS A POOL',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d8080a6facef1e0a2d937'},
-  {name:'POOL DAYS AESTHETIC',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80e2b8acce84fb00aa5e'},
-  {name:'PRODUCT COLORS',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80f79c03d118631bd6f7'},
-  {name:'Decor with Me',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80019510f144114985a3'},
-  {name:'SUP swimming with dogs',status:'idea',mediaType:['video','stills'],dueDate:null,postingDate:null,product:['SUP'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80ec8ddefa2d27610983'},
-  {name:'Product B-rolls Ads',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80789cc3e5972da1be77'},
-  {name:'Outfit Check Ads',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80ad8ee7d991ca14f447'},
-  {name:'Max calling customers to ask..',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',url:'https://www.notion.so/31bf02fc538d80caa2a8dd18356a56bd'},
+  {name:'Tanning Pool vs Towel',status:'in progress: editing',mediaType:['stills'],dueDate:null,postingDate:null,product:['Tanning Bed'],assetType:'ad',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'https://www.dropbox.com/scl/fo/vy0rc6qjpjzkvgt38ugar/AIGJ_xuS1mMX7hargHgkdcQ?rlkey=6zivjcbgmckxgjb9archyxivb&st=3mmegtz4&dl=0',url:'https://www.notion.so/317f02fc538d80b7a467eb307dc78577'},
+  {name:'Easter Ads Stills',status:'content added to ad-tracker',mediaType:['stills'],dueDate:null,postingDate:null,product:['Easter Collection'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/tijis4hs28t8jgp8e4pyd/AN0LP0NUOR8xzDl6S1x8LO8?rlkey=drulgnxrwecqbyeu1vtfwmcxd&st=i93f5nxn&dl=0',shootDay:'content library',footageLink:'',url:'https://www.notion.so/31bf02fc538d80fda572d42956c25e48'},
+  {name:'TEASER: Do Not Disturb (new Palm Leisure Island) 3/23',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Leisure Island'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80309303c5d7b445ff8b'},
+  {name:'Take out dirty Fabric to SPA – clean it',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'BH March 30th',footageLink:'',url:'https://www.notion.so/31bf02fc538d8026a9adceb8c8206611'},
+  {name:'DOG ON A FLOATIE',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'BH March 30th',footageLink:'',url:'https://www.notion.so/317f02fc538d80f9a6d0ef1c95418f7c'},
+  {name:'2026 installation tips Re-do',status:'approved idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'BH March 30th',footageLink:'',url:'https://www.notion.so/317f02fc538d80229f00e4daad6ad2f1'},
+  {name:'LAUNCH: TARGET',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'Target',footageLink:'',url:'https://www.notion.so/319f02fc538d80389adfe7226afcd5b6'},
+  {name:'Research: positive comments (Founders)',status:'research',mediaType:['organic'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'ad-hoc',footageLink:'',url:'https://www.notion.so/d75aa54dc8db4349ad7a6861e3b9fdbc'},
+  {name:'mini mic with founders',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/319f02fc538d801abf35ff8c6c0d5577'},
+  {name:'giveaway',status:'research',mediaType:['organic'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/319f02fc538d80a3a4dcf46ce0dcd874'},
+  {name:'Q&A interactive with founders',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/319f02fc538d806bac8bc277bbc17faa'},
+  {name:'lip sync trend',status:'research',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/319f02fc538d809c9e3fca56cfe9ba24'},
+  {name:"Who's floating your floaties (kids photos)",status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/31ff02fc538d80cb9b40e2fd4a2a96b6'},
+  {name:'Short hi-fi video sketches',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80489cebdc992abdfb07'},
+  {name:'Branded playing cards',status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d8011b315de10b223bef5'},
+  {name:'Postcard',status:'idea',mediaType:['graphic post'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d805f8f3ccc8297e754f2'},
+  {name:'Color Coordinated; Burned Orange',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'WeHo March 3/11',footageLink:'',url:'https://www.notion.so/317f02fc538d80fa8c4ec9c38a261acd'},
+  {name:'HI-FI PHOTOS COLLAGES',status:'idea',mediaType:['stills'],dueDate:null,postingDate:null,product:[],assetType:'organic post',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d800a9789c2724e3da4f6'},
+  {name:"It's Over, I told my wife",status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80e4844bca33bba6a45f'},
+  {name:'add some color to your summer',status:'idea',mediaType:['graphic post','video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d802abcf8c0163a2e2302'},
+  {name:'SUMMER MOVIE NIGHT',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80a690b0f4494d2084d7'},
+  {name:'WHEN THE GIRLS ARE BACK TOGETHER',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80d78fd3f3085883a917'},
+  {name:'TOP DOWN DRONE SHOT',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d808eae9fcac29e5819db'},
+  {name:'YOUR BF HAS A POOL',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d8080a6facef1e0a2d937'},
+  {name:'POOL DAYS AESTHETIC',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80e2b8acce84fb00aa5e'},
+  {name:'PRODUCT COLORS',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80f79c03d118631bd6f7'},
+  {name:'Decor with Me',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80019510f144114985a3'},
+  {name:'SUP swimming with dogs',status:'idea',mediaType:['video','stills'],dueDate:null,postingDate:null,product:['SUP'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/319f02fc538d80ec8ddefa2d27610983'},
+  {name:'Product B-rolls Ads',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:['Fabric'],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80789cc3e5972da1be77'},
+  {name:'Outfit Check Ads',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/317f02fc538d80ad8ee7d991ca14f447'},
+  {name:'Max calling customers to ask..',status:'idea',mediaType:['video'],dueDate:null,postingDate:null,product:[],assetType:'organic reel',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/31bf02fc538d80caa2a8dd18356a56bd'},
 
   // ── ADS (asset type = "ad" in Notion) ──
-  {name:'Easter Collection ads',status:'content added to ad-tracker',mediaType:['video'],dueDate:'2026-03-05',postingDate:'2026-03-05',product:['Easter Collection'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/oxhfo5u20pbv0bno355be/ABSI_q9MWTGYlVmoqZG4y2M?rlkey=f0000upnrf4p3hzwx7xyorpvw&e=2&st=3mgujvfd&dl=0',url:'https://www.notion.so/319f02fc538d80129b71d00fe5a17880'},
+  {name:'Easter Collection ads',status:'content added to ad-tracker',mediaType:['video'],dueDate:'2026-03-05',postingDate:'2026-03-05',product:['Easter Collection'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/oxhfo5u20pbv0bno355be/ABSI_q9MWTGYlVmoqZG4y2M?rlkey=f0000upnrf4p3hzwx7xyorpvw&e=2&st=3mgujvfd&dl=0',shootDay:'content library',footageLink:'https://www.dropbox.com/scl/fo/oxhfo5u20pbv0bno355be/ABSI_q9MWTGYlVmoqZG4y2M?rlkey=f0000upnrf4p3hzwx7xyorpvw&e=2&st=3mgujvfd&dl=0',url:'https://www.notion.so/319f02fc538d80129b71d00fe5a17880'},
 
-  {name:'Talking Ad by Julia',status:'content added to ad-tracker',mediaType:['video'],dueDate:'2026-03-06',postingDate:'2026-03-10',product:['Fabric'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',url:'https://www.notion.so/317f02fc538d803bb737fe9dd79fb167'},
-  {name:"Julia's ads #2 batch",status:'accepted / sent for review',mediaType:['video'],dueDate:null,postingDate:'2026-03-10',product:['Fabric'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',url:'https://www.notion.so/31ff02fc538d80989a10fe86504850fb'},
+  {name:'Talking Ad by Julia',status:'content added to ad-tracker',mediaType:['video'],dueDate:'2026-03-06',postingDate:'2026-03-10',product:['Fabric'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',shootDay:'Stahl House 2/26',footageLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',url:'https://www.notion.so/317f02fc538d803bb737fe9dd79fb167'},
+  {name:"Julia's ads #2 batch",status:'accepted / sent for review',mediaType:['video'],dueDate:null,postingDate:'2026-03-10',product:['Fabric'],assetType:'ad',finishedAssetLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',shootDay:'Stahl House 2/26',footageLink:'https://www.dropbox.com/scl/fo/ym5zngrz9pdouec0ppaxi/AJlVR4xsNfhxeKC1BP92ja4?rlkey=q8f86jv25iok6ksdkgky8eozs&st=u1z493lz&dl=0',url:'https://www.notion.so/31ff02fc538d80989a10fe86504850fb'},
 
-  {name:'Stahl House shoot Stills (ads)',status:'in-review',mediaType:['stills'],dueDate:'2026-03-10',postingDate:'2026-03-11',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80538149d5cff528ccee'},
-  {name:'Static ads from Stahl shoot',status:'in-review',mediaType:['stills'],dueDate:'2026-03-10',postingDate:'2026-03-11',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d80fc80fbee95ce260d03'},
-  {name:'Max and Celeste fabric',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-12',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d806da825f345c71d18c5'},
-  {name:'BTS Fabric shoot',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-13',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d808e8fd5cc8df1e388ed'},
-  {name:'Fabric unpacking with Finn',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-15',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/319f02fc538d80c0937fc2fdf054fa04'},
-  {name:'BTS tanning pool shot',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-17',product:['Fabric'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d80068b8fecd366eb0949'},
-  {name:'Tubes + Tanning static',status:'in progress: editing',mediaType:['stills'],dueDate:'2026-03-12',postingDate:'2026-03-19',product:['Tanning Bed','Tubes'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/31ff02fc538d8039bd8dd70eff9bc5aa'},
-  {name:'Tubes + Tanning pools video',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-12',postingDate:'2026-03-20',product:['Tanning Bed','Tubes'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d805ebb3be03f430709d4'},
-  {name:"Olivia's ads tanning bed",status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-14',product:['Tanning Bed'],assetType:'ad',finishedAssetLink:'',url:'https://www.notion.so/317f02fc538d80c18390e8b16b969dc0'},
+  {name:'Stahl House shoot Stills (ads)',status:'in-review',mediaType:['stills'],dueDate:'2026-03-10',postingDate:'2026-03-11',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'Stahl House 2/26',footageLink:'https://www.dropbox.com/scl/fo/ae9gr8nt5h2idvdvrrcmb/AEpgp2887NI3fKUaR-E2ETg?rlkey=fel98ugyzsqkqm4e4dx3h8uzq&st=6bhzjmdr&dl=0',url:'https://www.notion.so/317f02fc538d80538149d5cff528ccee'},
+  {name:'Static ads from Stahl shoot',status:'in-review',mediaType:['stills'],dueDate:'2026-03-10',postingDate:'2026-03-11',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/31ff02fc538d80fc80fbee95ce260d03'},
+  {name:'Max and Celeste fabric',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-12',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'Stahl House 2/26',footageLink:'',url:'https://www.notion.so/31ff02fc538d806da825f345c71d18c5'},
+  {name:'BTS Fabric shoot',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-13',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'',footageLink:'',url:'https://www.notion.so/31ff02fc538d808e8fd5cc8df1e388ed'},
+  {name:'Fabric unpacking with Finn',status:'in-review',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-15',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'Stahl House 2/26',footageLink:'',url:'https://www.notion.so/319f02fc538d80c0937fc2fdf054fa04'},
+  {name:'BTS tanning pool shot',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-17',product:['Fabric'],assetType:'ad',finishedAssetLink:'',shootDay:'Stahl House 2/26',footageLink:'',url:'https://www.notion.so/31ff02fc538d80068b8fecd366eb0949'},
+  {name:'Tubes + Tanning static',status:'in progress: editing',mediaType:['stills'],dueDate:'2026-03-12',postingDate:'2026-03-19',product:['Tanning Bed','Tubes'],assetType:'ad',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'https://www.dropbox.com/scl/fo/sam89nhb2eh28hn0qnwaz/ANjTTMRY6AEZUilymmXKasM?rlkey=t71fg17g50r4u3lj84d8nsffs&st=kttsgwnr&dl=0',url:'https://www.notion.so/31ff02fc538d8039bd8dd70eff9bc5aa'},
+  {name:'Tubes + Tanning pools video',status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-12',postingDate:'2026-03-20',product:['Tanning Bed','Tubes'],assetType:'ad',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'https://www.dropbox.com/scl/fo/sam89nhb2eh28hn0qnwaz/ANjTTMRY6AEZUilymmXKasM?rlkey=t71fg17g50r4u3lj84d8nsffs&st=kttsgwnr&dl=0',url:'https://www.notion.so/317f02fc538d805ebb3be03f430709d4'},
+  {name:"Olivia's ads tanning bed",status:'in progress: editing',mediaType:['video'],dueDate:'2026-03-10',postingDate:'2026-03-14',product:['Tanning Bed'],assetType:'ad',finishedAssetLink:'',shootDay:'PCH shoot 2/13',footageLink:'',url:'https://www.notion.so/317f02fc538d80c18390e8b16b969dc0'},
 
 ];
 
@@ -727,6 +765,92 @@ function renderReports(key){
   document.getElementById('top-performers').innerHTML=`<div class="no-data-block"><div class="nd-icon">📊</div><p>Engagement data not yet available.<br>Connect Instagram &amp; TikTok analytics to show reach, saves, and views per post automatically.</p></div>`;
 }
 
+
+// ── SHOOTS ──
+const SHOOT_ORDER = ['Stahl House 2/26','PCH shoot 2/13','WeHo March 3/11','BH March 30th','content library','ad-hoc','Target'];
+let activeShootDay = null;
+
+function renderShoots() {
+  // Group ASSETS by shootDay
+  const groups = {};
+  ASSETS.forEach(a => {
+    const days = a.shootDay ? a.shootDay.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    if (days.length === 0) return;
+    days.forEach(day => {
+      if (!groups[day]) groups[day] = [];
+      groups[day].push(a);
+    });
+  });
+
+  // Build tab buttons sorted by SHOOT_ORDER
+  const allDays = Object.keys(groups);
+  const orderedDays = [...SHOOT_ORDER.filter(d => allDays.includes(d)), ...allDays.filter(d => !SHOOT_ORDER.includes(d))];
+
+  if (!activeShootDay || !orderedDays.includes(activeShootDay)) {
+    activeShootDay = orderedDays[0] || null;
+  }
+
+  // Render tabs
+  const tabsEl = document.getElementById('shoot-tabs');
+  tabsEl.innerHTML = orderedDays.map(day =>
+    `<button class="shoot-tab-btn${day === activeShootDay ? ' active' : ''}" onclick="setShootDay('${day.replace(/'/g,"\'")}')">${day}<span style="margin-left:.4rem;opacity:.6;font-size:.65rem">(${groups[day].length})</span></button>`
+  ).join('');
+
+  // Render active shoot day
+  const assets = groups[activeShootDay] || [];
+  const sorted = [...assets].sort((a,b) => {
+    const order = {'posted':0,'content added to ad-tracker':1,'content scheduled for organic':1,'accepted / sent for review':2,'in-review':3,'in progress: editing':4,'in progress: production':5,'added to shot list':6,'blocked':7,'approved idea':8,'research':9,'idea':10};
+    return (order[a.status]||5) - (order[b.status]||5);
+  });
+
+  const statusLabels = {'posted':'posted','content added to ad-tracker':'ad-tracker','content scheduled for organic':'scheduled','accepted / sent for review':'sent for review','in-review':'in review','in progress: editing':'editing','in progress: production':'production','added to shot list':'shot list','approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'};
+
+  let html = `<div class="shoot-day-section">
+    <div class="shoot-day-header">
+      <div class="shoot-day-title">${activeShootDay}</div>
+      <div class="shoot-day-count">${assets.length} asset${assets.length!==1?'s':''}</div>
+    </div>
+    <table class="shoot-asset-table">
+      <thead><tr><th>Asset</th><th>Status</th><th>Type</th><th>Footage</th><th>Finished Asset</th></tr></thead>
+      <tbody>`;
+
+  sorted.forEach(a => {
+    const [cls, lbl] = STATUS_MAP[a.status] || ['s-idea', a.status];
+    const typePills = (Array.isArray(a.mediaType) ? a.mediaType : (a.mediaType||'').split(',').map(s=>s.trim()).filter(Boolean))
+      .map(t => `<span class="type-pill ${TYPE_MAP[t]||'t-organic'}">${t}</span>`).join('');
+
+    // Only show button if link exists AND points to Dropbox/external (not just Notion)
+    const isRealLink = (url) => url && url.trim() && !url.trim().startsWith('https://www.notion.so');
+    const footageLinkHtml = isRealLink(a.footageLink)
+      ? `<a class="footage-link" href="${a.footageLink}" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.9L15 14"/><rect x="1" y="6" width="15" height="12" rx="2" ry="2"/></svg>
+          View Footage</a>`
+      : `<span class="no-link-indicator" title="No footage link in Notion">—</span>`;
+
+    const finishedLinkHtml = isRealLink(a.finishedAssetLink)
+      ? `<a class="footage-link footage-link-amber" href="${a.finishedAssetLink}" target="_blank">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          View Asset</a>`
+      : `<span class="no-link-indicator" title="No finished asset in Notion">—</span>`;
+
+    html += `<tr>
+      <td><a class="asset-link" href="${a.url}" target="_blank">${a.name}</a></td>
+      <td><span class="status-badge ${cls}">${statusLabels[a.status]||a.status}</span></td>
+      <td>${typePills}</td>
+      <td>${footageLinkHtml}</td>
+      <td>${finishedLinkHtml}</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table></div>';
+  document.getElementById('shoot-content').innerHTML = html;
+}
+
+function setShootDay(day) {
+  activeShootDay = day;
+  renderShoots();
+}
+
 // ── CALENDAR ──
 let calSwitcher = 'all';
 let calYear = 2026, calMonth = 2;
@@ -778,10 +902,11 @@ function renderCalendar() {
     items.slice(0,3).forEach(a => {
       const cls = chipClass(a.name, a.pillar);
       const statusLabel = statusMap[a.status] || a.status || '';
-      const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim() !== '';
+      const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim() !== '' && !a.finishedAssetLink.includes('notion.so');
       const chipHref = hasLink ? a.finishedAssetLink : a.url;
       const typeCls = a.assetType === 'ad' ? 'chip-paid' : 'chip-organic';
-      if(hasLink) chips += `<a class="cal-chip ${cls} ${typeCls}" href="${chipHref}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel} ↗</span></a>`;
+      const doneFlag = hasLink ? ' ✅' : '';
+      if(hasLink) chips += `<a class="cal-chip ${cls} ${typeCls}" href="${chipHref}" target="_blank" title="${a.name}">${a.name}${doneFlag}<span class="chip-status">${statusLabel} ↗</span></a>`;
       else chips += `<a class="cal-chip ${cls} ${typeCls}" href="${chipHref}" target="_blank" title="${a.name}" style="opacity:.85">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
     });
     if (items.length > 3) chips += `<div class="cal-chip chip-other">+${items.length - 3} more</div>`;
@@ -906,9 +1031,10 @@ async function loadLiveAssets() {
             postingDate       : liveAsset.postingDate || (baked && baked.postingDate) || null,
             product           : liveAsset.product,
             pillar            : liveAsset.pillar,
-            shootDay          : liveAsset.shootDay,
+            shootDay          : liveAsset.shootDay || (baked && baked.shootDay) || '',
             url               : liveAsset.url,
-            finishedAssetLink : liveAsset.finishedAssetLink,
+            finishedAssetLink : liveAsset.finishedAssetLink || (baked && baked.finishedAssetLink) || '',
+            footageLink       : liveAsset.footageLink || (baked && baked.footageLink) || '',
             assetType         : liveAsset.assetType,
           });
         });
@@ -919,6 +1045,7 @@ async function loadLiveAssets() {
         console.log('Live sync merged:', ASSETS.length, 'assets, posting dates:', ASSETS.filter(a=>a.postingDate).length);
         applyFilters();
         renderCalendar();
+        if (document.getElementById('shoots').classList.contains('active')) renderShoots();
         resolve();
       };
       script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + callbackName;
