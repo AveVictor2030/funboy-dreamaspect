@@ -250,6 +250,7 @@
   .chip-restock{background:#FFF0D6;color:#9A5A00;}
   .chip-ad     {background:#E8E8E8;color:#333;}
   .chip-other  {background:#E8E8E8;color:#555;}
+  .chip-blocked{background:#FCE4EE;color:#B0265E;border-left:3px solid #D63777;}
   .chip-organic{border-left:3px solid #3A9E8F;}
   .chip-paid   {border-left:3px solid #4A7FC1;}
   .chip-status{display:block;font-size:.58rem;opacity:.7;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:.1rem;}
@@ -871,7 +872,8 @@ function setCalSwitcher(val, btn) {
   renderCalendar();
 }
 
-function chipClass(name, pillar) {
+function chipClass(name, pillar, status) {
+  if (status === 'blocked') return 'chip-blocked';
   const n = (name || '').toLowerCase();
   const p = (pillar || '').toLowerCase();
   if (n.includes('drop') || n.includes('launch') || n.includes('restock') && n.includes('new')) return 'chip-drop';
@@ -908,7 +910,7 @@ function renderCalendar() {
     let chips = '';
     const statusMap = {'posted':'posted','content added to ad-tracker':'ad-tracker','content scheduled for organic':'scheduled','accepted / sent for review':'sent for review','in-review':'in review','in progress: editing':'editing','in progress: production':'production','added to shot list':'shot list','approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'};
     items.slice(0,3).forEach(a => {
-      const cls = chipClass(a.name, a.pillar);
+      const cls = chipClass(a.name, a.pillar, a.status);
       const statusLabel = statusMap[a.status] || a.status || '';
       const CHIP_VALID_HOSTS = ['dropbox.com','canva.com','drive.google.com','docs.google.com','vimeo.com','youtube.com','youtu.be','wetransfer.com','frame.io'];
       const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim().startsWith('https://') && CHIP_VALID_HOSTS.some(h => a.finishedAssetLink.toLowerCase().includes(h));
