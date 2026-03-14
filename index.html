@@ -250,6 +250,8 @@
   .chip-restock{background:#F5D5D8;color:#7A1528;}
   .chip-ad     {background:#E8E8E8;color:#333;}
   .chip-other  {background:#E8E8E8;color:#555;}
+  .chip-organic{border-left:3px solid #3A9E8F;}
+  .chip-paid   {border-left:3px solid #4A7FC1;}
   .chip-status{display:block;font-size:.58rem;opacity:.7;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:.1rem;}
 
   .cal-legend{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
@@ -476,6 +478,8 @@
       <div class="legend-chip"><div class="legend-swatch" style="background:#D4EDDA"></div>Drop</div>
       <div class="legend-chip"><div class="legend-swatch" style="background:#FFF3CD"></div>Teaser</div>
       <div class="legend-chip"><div class="legend-swatch" style="background:#F8D7DA"></div>Restock</div>
+      <div class="legend-chip" style="margin-left:.5rem"><div class="legend-swatch" style="border-left:3px solid #3A9E8F;background:#f5f5f5"></div>Organic</div>
+      <div class="legend-chip"><div class="legend-swatch" style="border-left:3px solid #4A7FC1;background:#f5f5f5"></div>Paid Ad</div>
     </div>
     <div class="cal-header">
       <div class="cal-title" id="cal-month-label">March 2026</div>
@@ -776,8 +780,9 @@ function renderCalendar() {
       const statusLabel = statusMap[a.status] || a.status || '';
       const hasLink = a.finishedAssetLink && a.finishedAssetLink.trim() !== '';
       const chipHref = hasLink ? a.finishedAssetLink : a.url;
-      if(hasLink) chips += `<a class="cal-chip ${cls}" href="${chipHref}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel} ↗</span></a>`;
-      else chips += `<a class="cal-chip ${cls}" href="${chipHref}" target="_blank" title="${a.name}" style="opacity:.85">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
+      const typeCls = a.assetType === 'ad' ? 'chip-paid' : 'chip-organic';
+      if(hasLink) chips += `<a class="cal-chip ${cls} ${typeCls}" href="${chipHref}" target="_blank" title="${a.name}">${a.name}<span class="chip-status">${statusLabel} ↗</span></a>`;
+      else chips += `<a class="cal-chip ${cls} ${typeCls}" href="${chipHref}" target="_blank" title="${a.name}" style="opacity:.85">${a.name}<span class="chip-status">${statusLabel}</span></a>`;
     });
     if (items.length > 3) chips += `<div class="cal-chip chip-other">+${items.length - 3} more</div>`;
     html += `<div class="cal-cell${isToday?' today':''}"><div class="cal-day">${day}</div>${chips}</div>`;
