@@ -277,11 +277,12 @@
   .shoot-asset-table td{padding:.68rem 1rem;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:middle;}
   .shoot-asset-table tr:last-child td{border-bottom:none;}
   .shoot-asset-table tr:hover td{background:#FDFAF6;}
-  .footage-link{display:inline-flex;align-items:center;gap:.35rem;color:var(--teal);font-weight:700;font-size:.75rem;text-decoration:none;padding:.22rem .65rem;border:1.5px solid var(--teal);border-radius:2px;transition:all .15s;white-space:nowrap;}
-  .footage-link:hover{background:var(--teal);color:var(--white);}
+  .footage-link{display:inline-flex;align-items:center;gap:.35rem;font-weight:700;font-size:.75rem;text-decoration:none;padding:.22rem .65rem;border:1.5px solid;border-radius:2px;transition:all .15s;white-space:nowrap;}
   .footage-link svg{flex-shrink:0;}
-  .footage-link-amber{color:var(--amber);border-color:var(--amber);}
-  .footage-link-amber:hover{background:var(--amber);color:var(--white);}
+  .footage-link-yellow{color:#9A6B00;border-color:#E8A020;background:#FFFBF0;}
+  .footage-link-yellow:hover{background:#E8A020;color:var(--white);}
+  .footage-link-green{color:#1A6830;border-color:#3A9E8F;background:#F0FAF7;}
+  .footage-link-green:hover{background:#3A9E8F;color:var(--white);}
   .no-link-indicator{color:#CCC;font-size:1rem;display:inline-block;text-align:center;width:20px;line-height:1;}
   .shoot-channel-filter{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;}
   .shoot-channel-filter span{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:.25rem;}
@@ -711,12 +712,18 @@ function renderAssets(list){
     return ao-bo;
   });
   if(!sorted.length){document.getElementById('assets-container').innerHTML='<p style="padding:2rem;color:var(--muted)">No assets match.</p>';return;}
-  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Product</th><th>Status</th><th>Type</th></tr></thead><tbody>`;
+  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Product</th><th>Status</th><th>Type</th><th>Final Asset</th></tr></thead><tbody>`;
   for(const a of sorted){
     const dateVal = a.dueDate;
     const href = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? a.finishedAssetLink : a.url;
     const linkLabel = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? `${a.name} <span style="font-size:.6rem;opacity:.5;font-weight:600;text-transform:uppercase;letter-spacing:.05em">↗ asset</span>` : a.name;
-    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td></tr>`;
+    const isDropbox = (url) => url && url.trim().toLowerCase().startsWith('https://') && url.toLowerCase().includes('dropbox.com');
+    const finalAssetCell = isDropbox(a.finishedAssetLink)
+      ? `<a class="footage-link footage-link-green" href="${a.finishedAssetLink}" target="_blank" style="font-size:.7rem;padding:.18rem .5rem">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          View</a>`
+      : `<span class="no-link-indicator">—</span>`;
+    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td>${finalAssetCell}</td></tr>`;
   }
   h+='</tbody></table>';
   document.getElementById('assets-container').innerHTML=h;
@@ -863,7 +870,7 @@ function renderShoots() {
       <div class="shoot-day-count">${countLabel}</div>
     </div>
     <table class="shoot-asset-table">
-      <thead><tr><th>Asset</th><th>Channel</th><th>Status</th><th>Type</th><th>Footage</th><th>Finished Asset</th></tr></thead>
+      <thead><tr><th>Asset</th><th>Channel</th><th>Status</th><th>Type</th><th>Final Asset</th><th>Footage</th></tr></thead>
       <tbody>`;
 
   sorted.forEach(a => {
@@ -876,15 +883,15 @@ function renderShoots() {
     // Rejects: empty, notion.so links, bare domains like "dreamaspect.co", random text
     const isRealLink = (url) => url && url.trim().toLowerCase().startsWith('https://') && url.toLowerCase().includes('dropbox.com');
     const footageLinkHtml = isRealLink(a.footageLink)
-      ? `<a class="footage-link" href="${a.footageLink}" target="_blank">
+      ? `<a class="footage-link footage-link-yellow" href="${a.footageLink}" target="_blank">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87v6.26a1 1 0 0 1-1.447.9L15 14"/><rect x="1" y="6" width="15" height="12" rx="2" ry="2"/></svg>
           View Footage</a>`
       : `<span class="no-link-indicator" title="No footage link in Notion">—</span>`;
 
     const finishedLinkHtml = isRealLink(a.finishedAssetLink)
-      ? `<a class="footage-link footage-link-amber" href="${a.finishedAssetLink}" target="_blank">
+      ? `<a class="footage-link footage-link-green" href="${a.finishedAssetLink}" target="_blank">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          View Asset</a>`
+          Final Asset</a>`
       : `<span class="no-link-indicator" title="No finished asset in Notion">—</span>`;
 
     const isAd = a.assetType === 'ad';
@@ -897,8 +904,8 @@ function renderShoots() {
       <td>${channelTag}</td>
       <td><span class="status-badge ${cls}">${statusLabels[a.status]||a.status}</span></td>
       <td>${typePills}</td>
-      <td>${footageLinkHtml}</td>
       <td>${finishedLinkHtml}</td>
+      <td>${footageLinkHtml}</td>
     </tr>`;
   });
 
