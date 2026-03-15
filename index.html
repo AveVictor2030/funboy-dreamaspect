@@ -283,6 +283,13 @@
   .footage-link-amber{color:var(--amber);border-color:var(--amber);}
   .footage-link-amber:hover{background:var(--amber);color:var(--white);}
   .no-link-indicator{color:#CCC;font-size:1rem;display:inline-block;text-align:center;width:20px;line-height:1;}
+  .shoot-channel-filter{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;}
+  .shoot-channel-filter span{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:.25rem;}
+  .ch-btn{padding:.28rem .8rem;border-radius:2px;border:1.5px solid var(--border);background:var(--white);font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:all .13s;color:var(--muted);}
+  .ch-btn:hover{border-color:var(--ink);color:var(--ink);}
+  .ch-btn.active-all{background:var(--ink);border-color:var(--ink);color:var(--white);}
+  .ch-btn.active-organic{background:#3A9E8F;border-color:#3A9E8F;color:var(--white);}
+  .ch-btn.active-paid{background:#4A7FC1;border-color:#4A7FC1;color:var(--white);}
   .channel-tag{display:inline-block;padding:.15rem .5rem;border-radius:2px;font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
   .channel-organic{background:#E6F4F1;color:#1E7A6A;border-left:3px solid #3A9E8F;}
   .channel-paid{background:#EAF0F8;color:#2A5BA8;border-left:3px solid #4A7FC1;}
@@ -327,9 +334,9 @@
   <div class="tabs">
     <button class="tab active" onclick="show('calendar',this)">Content Calendar</button>
     <button class="tab" onclick="show('assets',this)">Assets</button>
+    <button class="tab" onclick="show('shoots',this)">Shoots</button>
     <button class="tab" onclick="show('voice',this)">Brand Voice</button>
     <button class="tab" onclick="show('reports',this)" style="display:none">Reports</button>
-    <button class="tab" onclick="show('shoots',this)">Shoots</button>
   </div>
 </nav>
 
@@ -774,6 +781,7 @@ function renderReports(key){
 // ── SHOOTS ──
 const SHOOT_ORDER = ['Stahl House 2/26','PCH shoot 2/13','WeHo March 3/11','BH March 30th','content library','ad-hoc','Target'];
 let activeShootDay = null;
+let activeChannel = 'all'; // 'all' | 'organic' | 'paid'
 
 function renderShoots() {
   // Group ASSETS by shootDay
@@ -795,25 +803,50 @@ function renderShoots() {
     activeShootDay = orderedDays[0] || null;
   }
 
-  // Render tabs
+  // Render shoot-day tabs
   const tabsEl = document.getElementById('shoot-tabs');
   tabsEl.innerHTML = orderedDays.map(day =>
     `<button class="shoot-tab-btn${day === activeShootDay ? ' active' : ''}" onclick="setShootDay('${day.replace(/'/g,"\'")}')">${day}<span style="margin-left:.4rem;opacity:.6;font-size:.65rem">(${groups[day].length})</span></button>`
   ).join('');
 
-  // Render active shoot day
-  const assets = groups[activeShootDay] || [];
-  const sorted = [...assets].sort((a,b) => {
-    const order = {'posted':0,'content added to ad-tracker':1,'content scheduled for organic':1,'accepted / sent for review':2,'in-review':3,'in progress: editing':4,'in progress: production':5,'added to shot list':6,'blocked':7,'approved idea':8,'research':9,'idea':10};
-    return (order[a.status]||5) - (order[b.status]||5);
+  // Filter by channel
+  const allAssets = groups[activeShootDay] || [];
+  const filtered = activeChannel === 'all' ? allAssets
+    : activeChannel === 'paid' ? allAssets.filter(a => a.assetType === 'ad')
+    : allAssets.filter(a => a.assetType !== 'ad');
+
+  // Sort: if no filter → organic first then paid, then by status within each group
+  // If filtered → just by status
+  const statusOrder = {'posted':0,'content added to ad-tracker':1,'content scheduled for organic':1,'accepted / sent for review':2,'in-review':3,'in progress: editing':4,'in progress: production':5,'added to shot list':6,'blocked':7,'approved idea':8,'research':9,'idea':10};
+  const sorted = [...filtered].sort((a,b) => {
+    if (activeChannel === 'all') {
+      const aIsAd = a.assetType === 'ad' ? 1 : 0;
+      const bIsAd = b.assetType === 'ad' ? 1 : 0;
+      if (aIsAd !== bIsAd) return aIsAd - bIsAd; // organic first
+    }
+    return (statusOrder[a.status]||5) - (statusOrder[b.status]||5);
   });
+
+  // Channel filter counts for this shoot day
+  const organicCount = allAssets.filter(a => a.assetType !== 'ad').length;
+  const paidCount = allAssets.filter(a => a.assetType === 'ad').length;
 
   const statusLabels = {'posted':'posted','content added to ad-tracker':'ad-tracker','content scheduled for organic':'scheduled','accepted / sent for review':'sent for review','in-review':'in review','in progress: editing':'editing','in progress: production':'production','added to shot list':'shot list','approved idea':'approved','research':'research','idea':'idea','blocked':'blocked'};
 
-  let html = `<div class="shoot-day-section">
+  const displayCount = sorted.length;
+  const totalCount = allAssets.length;
+  const countLabel = activeChannel === 'all' ? `${totalCount} asset${totalCount!==1?'s':''}` : `${displayCount} of ${totalCount}`;
+
+  let html = `<div class="shoot-channel-filter">
+    <span>Channel:</span>
+    <button class="ch-btn ${activeChannel==='all'?'active-all':''}" onclick="setChannel('all')">All (${totalCount})</button>
+    <button class="ch-btn ${activeChannel==='organic'?'active-organic':''}" onclick="setChannel('organic')">Organic (${organicCount})</button>
+    <button class="ch-btn ${activeChannel==='paid'?'active-paid':''}" onclick="setChannel('paid')">Paid (${paidCount})</button>
+  </div>
+  <div class="shoot-day-section">
     <div class="shoot-day-header">
       <div class="shoot-day-title">${activeShootDay}</div>
-      <div class="shoot-day-count">${assets.length} asset${assets.length!==1?'s':''}</div>
+      <div class="shoot-day-count">${countLabel}</div>
     </div>
     <table class="shoot-asset-table">
       <thead><tr><th>Asset</th><th>Channel</th><th>Status</th><th>Type</th><th>Footage</th><th>Finished Asset</th></tr></thead>
@@ -867,6 +900,11 @@ function renderShoots() {
 
 function setShootDay(day) {
   activeShootDay = day;
+  renderShoots();
+}
+
+function setChannel(ch) {
+  activeChannel = ch;
   renderShoots();
 }
 
