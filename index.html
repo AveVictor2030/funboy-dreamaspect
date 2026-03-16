@@ -1129,7 +1129,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwMdQdlomYniWj6GxalsEnu7wR64-bYk1sZgUqs0VqiDF9N2r3ptcC4YHNDZYK4Hky8hg/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwPNtCGGxLktTYW8x2EyNBUGg5ndqesBqGzDOnO0mKKZSkWPOIgA6tzTTNM3v024u00ew/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
@@ -1341,8 +1341,15 @@ async function daSend() {
     const html = reply
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')
-      .replace(/^• /gm, '· ')
-      .replace(/\n/g,'<br>');
+      .replace(/### (.*?)(<br>|$)/g,'<b style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">$1</b><br>')
+      .replace(/## (.*?)(<br>|$)/g,'<b>$1</b><br>')
+      .replace(/^[\-\*] /gm,'· ')
+      .replace(/^• /gm,'· ')
+      .replace(/\n/g,'<br>')
+      .replace(/https:\/\/www\.dropbox\.com\S+/g, (url) => {
+        const clean = url.replace(/&amp;/g,'&');
+        return '<a href="' + clean + '" target="_blank" style="display:inline-flex;align-items:center;gap:3px;background:#F0FAF7;border:1px solid #3A9E8F;border-radius:3px;padding:1px 7px;font-size:10.5px;font-weight:700;color:#1A6830;text-decoration:none;margin:1px 0">📦 View on Dropbox</a>';
+      });
     const msgRow = daAddBubble(html, false);
     // Add escalation button below AI reply
     const escalateBtn = document.createElement('button');
