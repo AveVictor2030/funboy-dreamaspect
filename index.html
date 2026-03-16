@@ -617,9 +617,9 @@
   <div class="da-msgs" id="da-msgs"></div>
   <div class="da-pills" id="da-pills">
     <button class="da-pill" onclick="daAsk(this.textContent)">What's posting this week?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Any overdue assets?</button>
     <button class="da-pill" onclick="daAsk(this.textContent)">What's blocked?</button>
     <button class="da-pill" onclick="daAsk(this.textContent)">What was added to Meta ads?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Shoots summary</button>
   </div>
   <div class="da-input-row">
     <input class="da-input" id="da-input" placeholder="Ask about your assets..." onkeydown="if(event.key==='Enter')daSend()"/>
@@ -1124,7 +1124,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxVRpYjZ8WJgcgn8MvqM1__XAhQMi3QcoqLvxU5iUtOIx3zF6vw7Fa5QTsMFbwFkjjHaQ/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzLjGrtZqlI--CxrTQFmJYI0-LYwCfvCNMokVxMA0RLouGVbZEruw6WAEVIs292j8gSxg/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
