@@ -617,14 +617,9 @@
   <div class="da-msgs" id="da-msgs"></div>
   <div class="da-pills" id="da-pills">
     <button class="da-pill" onclick="daAsk(this.textContent)">What's posting this week?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Any assets ready to post?</button>
     <button class="da-pill" onclick="daAsk(this.textContent)">What's blocked?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">What's in final review?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Send me the Fabric Dropbox link</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Stahl House — what's ready?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">What happened at the PCH shoot?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Write a caption for the Fabric drop</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">What ads are submitted to Meta?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What was added to Meta ads?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Shoots summary</button>
   </div>
   <div class="da-input-row">
     <input class="da-input" id="da-input" placeholder="Ask about your assets..." onkeydown="if(event.key==='Enter')daSend()"/>
@@ -1129,7 +1124,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbwPNtCGGxLktTYW8x2EyNBUGg5ndqesBqGzDOnO0mKKZSkWPOIgA6tzTTNM3v024u00ew/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzuKmMthfHAsOB4X4RTOCt_w0ONxlE8eIGOVNQMXlwHFjZklV7_HqTYsaP7dc3jOy2jjg/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
