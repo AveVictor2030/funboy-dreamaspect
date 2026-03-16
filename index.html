@@ -616,12 +616,15 @@
   </div>
   <div class="da-msgs" id="da-msgs"></div>
   <div class="da-pills" id="da-pills">
-    <button class="da-pill" onclick="daAsk(this.textContent)">What's blocked?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Final review</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Ready to post?</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Stahl House summary</button>
-    <button class="da-pill" onclick="daAsk(this.textContent)">Write Fabric caption</button>
     <button class="da-pill" onclick="daAsk(this.textContent)">What's posting this week?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Any assets ready to post?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What's blocked?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What's in final review?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Send me the Fabric Dropbox link</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Stahl House — what's ready?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What happened at the PCH shoot?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Write a caption for the Fabric drop</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What ads are submitted to Meta?</button>
   </div>
   <div class="da-input-row">
     <input class="da-input" id="da-input" placeholder="Ask about your assets..." onkeydown="if(event.key==='Enter')daSend()"/>
@@ -1346,7 +1349,11 @@ async function daSend() {
     escalateBtn.className = 'da-escalate';
     escalateBtn.innerHTML = '🙋 Still need help? &rarr; Notify Dream Aspect';
     const capturedQuestion = text;
-    escalateBtn.onclick = () => daEscalate(capturedQuestion, reply, escalateBtn);
+    escalateBtn.onclick = () => {
+      const name = prompt('So we know who to follow up with — what\'s your name?', '');
+      if (name === null) return; // cancelled
+      daEscalate(capturedQuestion, reply, escalateBtn, name.trim() || 'Unknown');
+    };
     msgRow.querySelector('.da-bubble').appendChild(document.createElement('br'));
     msgRow.querySelector('.da-bubble').appendChild(escalateBtn);
   } catch(e) {
@@ -1360,7 +1367,7 @@ async function daSend() {
 // ── DREAM ASSISTANT ESCALATION ──
 const DA_NOTION_DB_ID = '73830b8093f3449188d032d41b16c631'; // Dream Assistant — Unanswered Questions database
 
-async function daEscalate(question, aiReply, btn) {
+async function daEscalate(question, aiReply, btn, askedBy) {
   btn.innerHTML = '⏳ Notifying team...';
   btn.disabled = true;
   const ts = new Date().toLocaleString('en-US', {month:'short',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
@@ -1376,12 +1383,13 @@ async function daEscalate(question, aiReply, btn) {
       const script = document.createElement('script');
       script.onerror = () => reject(new Error('Network error'));
       script.src = APPS_SCRIPT_URL
-        + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN)
+        + '?token='    + encodeURIComponent(APPS_SCRIPT_TOKEN)
         + '&action=escalate'
         + '&callback=' + callbackName
-        + '&question=' + encodeURIComponent(question)
-        + '&aiReply=' + encodeURIComponent(aiReply.slice(0, 300))
-        + '&ts=' + encodeURIComponent(ts);
+        + '&question='  + encodeURIComponent(question)
+        + '&aiReply='   + encodeURIComponent(aiReply.slice(0, 300))
+        + '&askedBy='   + encodeURIComponent(askedBy || 'Unknown')
+        + '&ts='        + encodeURIComponent(ts);
       document.body.appendChild(script);
     });
     btn.innerHTML = '✅ Dream Aspect notified!';
