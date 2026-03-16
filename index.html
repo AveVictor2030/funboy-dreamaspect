@@ -1313,20 +1313,25 @@ async function daSend() {
   const typing = daTyping();
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 300,
-        system: systemPrompt,
-        messages: daHistory
-      })
+    // Route through Apps Script (JSONP) — direct fetch to Anthropic is blocked in browser
+    const reply = await new Promise((resolve, reject) => {
+      const callbackName = 'da_cb_' + Date.now();
+      const script = document.createElement('script');
+      window[callbackName] = (data) => {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        data.ok ? resolve(data.reply) : reject(new Error(data.error || 'Failed'));
+      };
+      script.onerror = () => reject(new Error('Script load failed'));
+      script.src = APPS_SCRIPT_URL
+        + '?token='    + encodeURIComponent(APPS_SCRIPT_TOKEN)
+        + '&action=dream_assistant'
+        + '&callback=' + callbackName
+        + '&message='  + encodeURIComponent(text)
+        + '&history='  + encodeURIComponent(JSON.stringify(daHistory.slice(-6)));
+      document.body.appendChild(script);
     });
-    const data = await res.json();
-    const reply = data.content && data.content.filter(b => b.type === 'text').map(b => b.text).join('') || 'Something went wrong — try again.';
     daHistory.push({ role: 'assistant', content: reply });
-    // keep history lean
     if (daHistory.length > 12) daHistory = daHistory.slice(-12);
     typing.remove();
     // Convert newlines and basic markdown to HTML
