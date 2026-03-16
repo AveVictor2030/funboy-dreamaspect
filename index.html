@@ -295,6 +295,45 @@
   .channel-organic{background:#E6F4F1;color:#1E7A6A;border-left:3px solid #3A9E8F;}
   .channel-paid{background:#EAF0F8;color:#2A5BA8;border-left:3px solid #4A7FC1;}
 
+
+  /* ── DREAM ASSISTANT ── */
+  .da-fab{position:fixed;bottom:28px;right:24px;z-index:200;width:48px;height:48px;background:var(--ink);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:all .2s;}
+  .da-fab:hover{background:var(--terra);transform:scale(1.08);}
+  .da-fab svg{flex-shrink:0;}
+  .da-panel{position:fixed;bottom:88px;right:24px;z-index:200;width:340px;background:var(--white);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.14);transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:all .22s cubic-bezier(.34,1.56,.64,1);max-height:520px;}
+  .da-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+  .da-head{background:var(--ink);padding:11px 14px;display:flex;align-items:center;gap:9px;flex-shrink:0;}
+  .da-head-avatar{width:26px;height:26px;background:var(--terra);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .da-head-title{color:var(--white);font-size:11px;font-weight:800;letter-spacing:.08em;flex:1;}
+  .da-head-sub{color:rgba(255,255,255,.4);font-size:9px;margin-top:1px;}
+  .da-close{background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;font-size:16px;line-height:1;padding:0;}
+  .da-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;min-height:0;}
+  .da-row{display:flex;gap:7px;align-items:flex-start;}
+  .da-row.user{justify-content:flex-end;}
+  .da-avatar{width:20px;height:20px;background:var(--terra);border-radius:50%;flex-shrink:0;margin-top:1px;}
+  .da-bubble{max-width:260px;padding:8px 11px;font-size:11.5px;line-height:1.55;color:var(--ink);background:var(--sand);border-radius:3px 10px 10px 10px;}
+  .da-bubble.user{background:var(--terra);color:var(--white);border-radius:10px 3px 10px 10px;}
+  .da-bubble b{font-weight:700;}
+  .da-bubble ul{margin:.3rem 0 0 1rem;padding:0;}
+  .da-bubble ul li{margin-bottom:.15rem;}
+  .da-typing{display:flex;gap:3px;align-items:center;padding:4px 2px;}
+  .da-typing span{width:5px;height:5px;background:var(--muted);border-radius:50%;animation:da-bounce .7s infinite;}
+  .da-typing span:nth-child(2){animation-delay:.15s;}
+  .da-typing span:nth-child(3){animation-delay:.3s;}
+  @keyframes da-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .da-pills{padding:7px 10px;border-top:1px solid var(--border);display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;}
+  .da-pill{background:var(--sand);border:none;border-radius:20px;font-size:9.5px;font-weight:700;color:var(--terra);padding:3px 9px;cursor:pointer;font-family:inherit;transition:background .13s;}
+  .da-pill:hover{background:var(--terra);color:var(--white);}
+  .da-input-row{padding:9px;border-top:1px solid var(--border);display:flex;gap:7px;align-items:center;flex-shrink:0;}
+  .da-input{flex:1;border:1.5px solid var(--border);border-radius:20px;padding:7px 13px;font-size:11.5px;font-family:inherit;outline:none;background:var(--off);color:var(--ink);}
+  .da-input:focus{border-color:var(--terra);}
+  .da-send{width:30px;height:30px;background:var(--terra);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .13s;}
+  .da-send:hover{background:var(--ink);}
+  .da-send:disabled{opacity:.4;cursor:not-allowed;}
+  .da-escalate{display:inline-flex;align-items:center;gap:5px;margin-top:6px;background:none;border:1.5px solid #E8A020;border-radius:20px;color:#9A6B00;font-size:10px;font-weight:700;padding:3px 10px;cursor:pointer;font-family:inherit;letter-spacing:.04em;transition:all .15s;}
+  .da-escalate:hover{background:#E8A020;color:white;}
+  .da-escalate.sent{border-color:var(--teal);color:var(--teal);cursor:default;}
+  .da-escalate.sent:hover{background:none;color:var(--teal);}
   .bottom-stripe{height:12px;background:repeating-linear-gradient(180deg,var(--amber) 0,var(--amber) 4px,#F5EDE4 4px,#F5EDE4 8px,var(--orange) 8px,var(--orange) 12px);position:fixed;bottom:0;left:0;right:0;z-index:40;}
 
   /* TOOLTIPS */
@@ -558,6 +597,40 @@
 
 
 <div style="text-align:center;padding:.9rem 0 1.4rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);">Built by Dream Aspect</div>
+
+<!-- ── DREAM ASSISTANT ── -->
+<button class="da-fab" onclick="daToggle()" title="Dream Assistant">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="da-panel" id="da-panel">
+  <div class="da-head">
+    <div class="da-head-avatar">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </div>
+    <div>
+      <div class="da-head-title">DREAM ASSISTANT</div>
+      <div class="da-head-sub">Knows your full pipeline</div>
+    </div>
+    <button class="da-close" onclick="daToggle()">✕</button>
+  </div>
+  <div class="da-msgs" id="da-msgs"></div>
+  <div class="da-pills" id="da-pills">
+    <button class="da-pill" onclick="daAsk(this.textContent)">What's blocked?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Final review</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Ready to post?</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Stahl House summary</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">Write Fabric caption</button>
+    <button class="da-pill" onclick="daAsk(this.textContent)">What's posting this week?</button>
+  </div>
+  <div class="da-input-row">
+    <input class="da-input" id="da-input" placeholder="Ask about your assets..." onkeydown="if(event.key==='Enter')daSend()"/>
+    <button class="da-send" id="da-send" onclick="daSend()">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
 <div class="bottom-stripe"></div>
 
 <script>
@@ -1137,6 +1210,184 @@ if (APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
   renderCalendar();
 }
 renderReports('mar1');
+
+
+// ── DREAM ASSISTANT ──
+let daOpen = false;
+let daHistory = [];
+let daGreeted = false;
+
+function daToggle() {
+  daOpen = !daOpen;
+  document.getElementById('da-panel').classList.toggle('open', daOpen);
+  if (daOpen && !daGreeted) {
+    daGreeted = true;
+    daAddBubble("Hey! I'm your Dream Assistant — I know your full FUNBOY asset pipeline. Ask me anything: what's blocked, what's in review, captions, shoot summaries...", false);
+  }
+  if (daOpen) setTimeout(() => document.getElementById('da-input').focus(), 250);
+}
+
+function daAddBubble(html, isUser) {
+  const msgs = document.getElementById('da-msgs');
+  const row = document.createElement('div');
+  row.className = 'da-row' + (isUser ? ' user' : '');
+  if (!isUser) { const av = document.createElement('div'); av.className='da-avatar'; row.appendChild(av); }
+  const b = document.createElement('div');
+  b.className = 'da-bubble' + (isUser ? ' user' : '');
+  b.innerHTML = html;
+  row.appendChild(b);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  return row;
+}
+
+function daTyping() {
+  const msgs = document.getElementById('da-msgs');
+  const row = document.createElement('div');
+  row.className = 'da-row';
+  const av = document.createElement('div'); av.className='da-avatar'; row.appendChild(av);
+  const b = document.createElement('div');
+  b.className = 'da-bubble';
+  b.innerHTML = '<div class="da-typing"><span></span><span></span><span></span></div>';
+  row.appendChild(b);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  return row;
+}
+
+function daAsk(text) {
+  document.getElementById('da-input').value = text;
+  daSend();
+}
+
+async function daSend() {
+  const input = document.getElementById('da-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  daAddBubble(text, true);
+  const sendBtn = document.getElementById('da-send');
+  sendBtn.disabled = true;
+
+  // Build asset context — include final asset link status so AI can answer link questions
+  const isDropboxLink = (url) => url && url.trim().toLowerCase().startsWith('https://') && url.toLowerCase().includes('dropbox.com');
+  const statusGroups = {};
+  ASSETS.forEach(a => {
+    const s = a.status || 'unknown';
+    if (!statusGroups[s]) statusGroups[s] = [];
+    const hasLink = isDropboxLink(a.finishedAssetLink);
+    const label = a.name
+      + (a.product && a.product.length ? ' [' + a.product.join(', ') + ']' : '')
+      + (hasLink ? ' ✅ FINAL ASSET LINK: ' + a.finishedAssetLink : ' ❌ no final asset link yet');
+    statusGroups[s].push(label);
+  });
+  const assetContext = Object.entries(statusGroups)
+    .map(([s, names]) => s.toUpperCase() + ':\n' + names.map(n => '  - ' + n).join('\n'))
+    .join('\n\n');
+
+  const postingThisWeek = ASSETS.filter(a => {
+    if (!a.postingDate) return false;
+    const d = new Date(a.postingDate + 'T12:00:00');
+    const today = new Date();
+    const diff = (d - today) / 86400000;
+    return diff >= -1 && diff <= 7;
+  }).map(a => a.name + ' — ' + a.postingDate).join('\n');
+
+  const systemPrompt = 'You are Dream Assistant, the AI inside the FUNBOY internal marketing portal. FUNBOY is a luxury inflatable lifestyle brand.' +
+    ' You have full real-time knowledge of the asset pipeline (provided below).' +
+    ' Be concise and direct. Use short bullet lists when listing assets. Max 150 words per reply.' +
+    ' For captions: write ONE caption in FUNBOY voice — playfully premium, aspirational, lifestyle-first. Never generic.' +
+    ' Always reference actual asset names when discussing pipeline status.' +
+    ' IMPORTANT — FINAL ASSET LINKS: When anyone asks about a Dropbox link, final asset, final file, download link, asset link, or whether something is ready/available:' +
+    ' 1. Search the pipeline for that asset by name or product.' +
+    ' 2. If it has ✅ FINAL ASSET LINK — immediately reply with the asset name, its status, and the full Dropbox URL as a clickable link.' +
+    ' 3. If it has ❌ no final asset link — tell them clearly it is not ready yet, and give its current status so they know where it is in the pipeline.' +
+    ' 4. If multiple assets match — list all of them with their link status.' +
+    ' Never say you cannot access links — the links are provided directly in the pipeline data.' +
+    '\n\nCURRENT ASSET PIPELINE:\n' + assetContext +
+    '\n\nPOSTING THIS WEEK:\n' + (postingThisWeek || 'None confirmed') +
+    '\n\nToday is ' + new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'}) + '.';
+
+  daHistory.push({ role: 'user', content: text });
+
+  const typing = daTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: systemPrompt,
+        messages: daHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content && data.content.filter(b => b.type === 'text').map(b => b.text).join('') || 'Something went wrong — try again.';
+    daHistory.push({ role: 'assistant', content: reply });
+    // keep history lean
+    if (daHistory.length > 12) daHistory = daHistory.slice(-12);
+    typing.remove();
+    // Convert newlines and basic markdown to HTML
+    const html = reply
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')
+      .replace(/^• /gm, '· ')
+      .replace(/\n/g,'<br>');
+    const msgRow = daAddBubble(html, false);
+    // Add escalation button below AI reply
+    const escalateBtn = document.createElement('button');
+    escalateBtn.className = 'da-escalate';
+    escalateBtn.innerHTML = '🙋 Still need help? &rarr; Notify Dream Aspect';
+    const capturedQuestion = text;
+    escalateBtn.onclick = () => daEscalate(capturedQuestion, reply, escalateBtn);
+    msgRow.querySelector('.da-bubble').appendChild(document.createElement('br'));
+    msgRow.querySelector('.da-bubble').appendChild(escalateBtn);
+  } catch(e) {
+    typing.remove();
+    daAddBubble('Connection error — check your network and try again.', false);
+  }
+  sendBtn.disabled = false;
+  document.getElementById('da-input').focus();
+}
+
+// ── DREAM ASSISTANT ESCALATION ──
+const DA_NOTION_PAGE_ID = '325f02fc538d81d8a080e542173e1f2a';
+
+async function daEscalate(question, aiReply, btn) {
+  btn.innerHTML = '⏳ Notifying team...';
+  btn.disabled = true;
+  const ts = new Date().toLocaleString('en-US', {month:'short',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
+  try {
+    // Send to Apps Script which logs to Notion + Telegram
+    const callbackName = 'da_esc_' + Date.now();
+    await new Promise((resolve, reject) => {
+      window[callbackName] = (data) => {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        data.ok ? resolve() : reject(new Error(data.error || 'Failed'));
+      };
+      const script = document.createElement('script');
+      script.onerror = () => reject(new Error('Network error'));
+      script.src = APPS_SCRIPT_URL
+        + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN)
+        + '&action=escalate'
+        + '&callback=' + callbackName
+        + '&question=' + encodeURIComponent(question)
+        + '&aiReply=' + encodeURIComponent(aiReply.slice(0, 300))
+        + '&ts=' + encodeURIComponent(ts);
+      document.body.appendChild(script);
+    });
+    btn.innerHTML = '✅ Dream Aspect notified!';
+    btn.classList.add('sent');
+  } catch(e) {
+    btn.innerHTML = '🙋 Still need help? → Notify Dream Aspect';
+    btn.disabled = false;
+    daAddBubble('Could not reach the team right now — try again in a moment.', false);
+  }
+}
+
 </script>
 </body>
 </html>
