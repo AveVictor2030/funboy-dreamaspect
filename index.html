@@ -1028,7 +1028,7 @@ function chipOpacity(status) {
   const fullStatuses = ['in-review','accepted / sent for review','content added to ad-tracker','content scheduled for organic','posted'];
   if (fullStatuses.includes(status)) return '1';
   // Partial for earlier stages
-  if (status === 'in progress: editing') return '0.55';
+  if (status === 'in progress: editing') return '0.6';
   if (status === 'in progress: production') return '0.35';
   if (status === 'added to shot list') return '0.3';
   if (status === 'approved idea') return '0.25';
