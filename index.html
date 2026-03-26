@@ -960,8 +960,9 @@ function chipClass(name, pillar, status) {
 
 function timeInStatus(dateStr) {
   if (!dateStr) return '';
-  const d = new Date(dateStr);
-  if (isNaN(d)) return '';
+  const s = String(dateStr).trim();
+  const d = (s.length <= 10 && /^\d{4}-\d{2}-\d{2}$/.test(s)) ? new Date(s + 'T12:00:00') : new Date(s);
+  if (isNaN(d.getTime())) return '';
   const diff = Math.floor((new Date() - d) / 86400000);
   if (diff === 0) return 'today';
   if (diff === 1) return '1 day';
@@ -1093,12 +1094,12 @@ function copyPhrase(el){
   });
 }
 
-// ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxPU-l1DWpyx_m__jeDENOmFrZlp1BhREzKWU88e8tJZvEgO6SlDVejUwzBJqmUnkt4Yg/exec';
+// ── LIVE FETCH from Apps Script Web App (JSONP) ──
+// Deploy URL: Apps Script → Deploy → Web app → copy /exec link. APPS_SCRIPT_TOKEN must match Script property PORTAL_TOKEN.
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbw2qzHwQB4m-hEr7j1dgBMQK7VZCP0YpibMr4WaeR6llm8fS6Af4SlxPYdJxjnXCbu-xQ/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
-  // Show loading state while fetching from Notion
   const calGrid = document.getElementById('cal-grid');
   if (calGrid) calGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem"><div class="spinner" style="margin:0 auto 1rem"></div>Loading from Notion...</div>';
   const assetsContainer = document.getElementById('assets-container');
@@ -1107,57 +1108,76 @@ async function loadLiveAssets() {
     await new Promise((resolve, reject) => {
       const callbackName = 'fb_' + Date.now();
       const script = document.createElement('script');
-      const timeout = setTimeout(() => {
-        delete window[callbackName];
-        if (script.parentNode) document.body.removeChild(script);
-        reject(new Error('JSONP timeout'));
-      }, 7000);
-      window[callbackName] = function(data) {
+      let settled = false;
+      const finish = function (err) {
+        if (settled) return;
+        settled = true;
         clearTimeout(timeout);
-        delete window[callbackName];
-        if (script.parentNode) document.body.removeChild(script);
-        if (data.error) { reject(new Error(data.error)); return; }
-        const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
-        console.log('Live sync received', raw.length, 'assets');
-        console.log('Sample assetTypes:', raw.slice(0,5).map(a => a.name + ' -> ' + a.assetType));
-        console.log('Ad count:', raw.filter(a => a.assetType === 'ad').length);
-        const live = raw.map(a => ({
-          name              : a.name || '',
-          status            : a.status || '',
-          mediaType         : a.mediaType ? a.mediaType.split(',').map(s=>s.trim()).filter(Boolean) : [],
-          dueDate           : a.dueDate || null,
-          postingDate       : a.postingDate || null,
-          product           : a.product ? a.product.split(',').map(s=>s.trim()).filter(Boolean) : [],
-          pillar            : a.pillar || '',
-          shootDay          : a.shootDay || '',
-          blockingReason    : a.blockingReason || '',
-          statusChangedAt   : a.statusChangedAt || '',
-          url               : a.url || '#',
-          finishedAssetLink : a.finishedAssetLink || '',
-          assetType         : a.assetType || 'organic',
-        })).filter(a => a.name);
-        // Use live data directly — no baked data fallback
-        ASSETS.length = 0;
-        live.forEach(liveAsset => {
-          ASSETS.push(liveAsset);
-        });
-        console.log('Live sync merged:', ASSETS.length, 'assets, posting dates:', ASSETS.filter(a=>a.postingDate).length);
-        applyFilters();
-        renderCalendar();
-        if (document.getElementById('shoots').classList.contains('active')) renderShoots();
-        if (document.getElementById('reports').classList.contains('active')) renderReports();
-        resolve();
+        try { delete window[callbackName]; } catch (x) {}
+        if (script.parentNode) script.parentNode.removeChild(script);
+        if (err) reject(err);
+        else resolve();
       };
-      script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + callbackName;
-      script.onerror = () => reject(new Error('Script load failed'));
+      const timeout = setTimeout(function () {
+        finish(new Error('Request timed out (20s). Check Web App URL, network, or ad blockers.'));
+      }, 20000);
+      window[callbackName] = function (data) {
+        try {
+          if (data == null || typeof data !== 'object') {
+            finish(new Error('Invalid response from Apps Script (not JSON). Redeploy Web App or verify URL).'));
+            return;
+          }
+          if (data.error) {
+            var em = typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
+            finish(new Error(em === 'Unauthorized' ? 'Unauthorized — set APPS_SCRIPT_TOKEN in this file to match Apps Script PORTAL_TOKEN.' : em));
+            return;
+          }
+          const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
+          const live = raw.map(function (a) {
+            return {
+              name              : a.name || '',
+              status            : a.status || '',
+              mediaType         : a.mediaType ? a.mediaType.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
+              dueDate           : a.dueDate || null,
+              postingDate       : a.postingDate || null,
+              product           : a.product ? a.product.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
+              pillar            : a.pillar || '',
+              shootDay          : a.shootDay || '',
+              blockingReason    : a.blockingReason || '',
+              statusChangedAt   : a.statusChangedAt || '',
+              url               : a.url || '#',
+              finishedAssetLink : a.finishedAssetLink || '',
+              footageLink       : a.footageLink || '',
+              assetType         : a.assetType || 'organic',
+            };
+          }).filter(function (a) { return a.name; });
+          ASSETS.length = 0;
+          live.forEach(function (liveAsset) { ASSETS.push(liveAsset); });
+          applyFilters();
+          renderCalendar();
+          var sh = document.getElementById('shoots');
+          if (sh && sh.classList.contains('active') && typeof renderShoots === 'function') renderShoots();
+          var rep = document.getElementById('reports');
+          if (rep && rep.classList.contains('active') && typeof renderReports === 'function') renderReports();
+          finish(null);
+        } catch (inner) {
+          finish(inner);
+        }
+      };
+      script.onerror = function () { finish(new Error('Failed to load script from Google (wrong URL, blocked, or offline).')); };
+      script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
       document.body.appendChild(script);
     });
-  } catch(e) {
+  } catch (e) {
     console.warn('Live fetch failed:', e.message);
-    const calGrid = document.getElementById('cal-grid');
-    if (calGrid) calGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">Could not connect to Notion. <a href="#" onclick="loadLiveAssets();return false" style="color:var(--terra)">Retry</a></div>';
-    const assetsContainer = document.getElementById('assets-container');
-    if (assetsContainer) assetsContainer.innerHTML = '<p style="padding:2rem;color:var(--muted)">Could not sync with Notion. <a href="#" onclick="loadLiveAssets();return false" style="color:var(--terra)">Retry</a></p>';
+    var detail = (e && e.message) ? e.message : String(e);
+    var calGrid2 = document.getElementById('cal-grid');
+    if (calGrid2) calGrid2.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">Could not sync with Notion. <a href="#" class="portal-retry-load" style="color:var(--terra)">Retry</a><div style="margin-top:.75rem;font-size:.72rem;max-width:28rem;margin-left:auto;margin-right:auto;word-break:break-word">' + detail.replace(/</g, '&lt;') + '</div></div>';
+    var assetsContainer2 = document.getElementById('assets-container');
+    if (assetsContainer2) assetsContainer2.innerHTML = '<p style="padding:2rem;color:var(--muted)">Could not sync with Notion. <a href="#" class="portal-retry-load" style="color:var(--terra)">Retry</a></p><p style="padding:0 2rem 2rem;font-size:.72rem;color:var(--muted);word-break:break-word">' + detail.replace(/</g, '&lt;') + '</p>';
+    document.querySelectorAll('.portal-retry-load').forEach(function (a) {
+      a.addEventListener('click', function (ev) { ev.preventDefault(); loadLiveAssets(); });
+    });
   }
 }
 
