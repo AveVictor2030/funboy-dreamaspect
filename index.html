@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FUNBOY Portal</title>
+<link rel="dns-prefetch" href="https://script.google.com"/>
+<link rel="preconnect" href="https://script.google.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -1099,76 +1101,98 @@ function copyPhrase(el){
 const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbw2qzHwQB4m-hEr7j1dgBMQK7VZCP0YpibMr4WaeR6llm8fS6Af4SlxPYdJxjnXCbu-xQ/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
+/** One JSONP request; timeoutMs should allow Apps Script cold start (often 15–40s right after deploy). */
+function fetchAssetsJsonpOnce(timeoutMs) {
+  return new Promise(function (resolve, reject) {
+    const callbackName = 'fb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    const script = document.createElement('script');
+    let settled = false;
+    const finish = function (err) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try { delete window[callbackName]; } catch (x) {}
+      if (script.parentNode) script.parentNode.removeChild(script);
+      if (err) reject(err);
+      else resolve();
+    };
+    const timer = setTimeout(function () {
+      finish(new Error('Request timed out (' + Math.round(timeoutMs / 1000) + 's). Apps Script may be cold — try Retry, or wait a minute after deploy.'));
+    }, timeoutMs);
+    window[callbackName] = function (data) {
+      try {
+        if (data == null || typeof data !== 'object') {
+          finish(new Error('Invalid response from Apps Script (not JSON). Redeploy Web App or verify URL).'));
+          return;
+        }
+        if (data.error) {
+          var em = typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
+          finish(new Error(em === 'Unauthorized' ? 'Unauthorized — set APPS_SCRIPT_TOKEN in this file to match Apps Script PORTAL_TOKEN.' : em));
+          return;
+        }
+        const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
+        const live = raw.map(function (a) {
+          return {
+            name              : a.name || '',
+            status            : a.status || '',
+            mediaType         : a.mediaType ? a.mediaType.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
+            dueDate           : a.dueDate || null,
+            postingDate       : a.postingDate || null,
+            product           : a.product ? a.product.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
+            pillar            : a.pillar || '',
+            shootDay          : a.shootDay || '',
+            blockingReason    : a.blockingReason || '',
+            statusChangedAt   : a.statusChangedAt || '',
+            url               : a.url || '#',
+            finishedAssetLink : a.finishedAssetLink || '',
+            footageLink       : a.footageLink || '',
+            assetType         : a.assetType || 'organic',
+          };
+        }).filter(function (a) { return a.name; });
+        ASSETS.length = 0;
+        live.forEach(function (liveAsset) { ASSETS.push(liveAsset); });
+        applyFilters();
+        renderCalendar();
+        var sh = document.getElementById('shoots');
+        if (sh && sh.classList.contains('active') && typeof renderShoots === 'function') renderShoots();
+        var rep = document.getElementById('reports');
+        if (rep && rep.classList.contains('active') && typeof renderReports === 'function') renderReports();
+        finish(null);
+      } catch (inner) {
+        finish(inner);
+      }
+    };
+    script.onerror = function () { finish(new Error('Failed to load script from Google (wrong URL, blocked, or offline).')); };
+    script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
+    document.body.appendChild(script);
+  });
+}
+
 async function loadLiveAssets() {
   const calGrid = document.getElementById('cal-grid');
   if (calGrid) calGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem"><div class="spinner" style="margin:0 auto 1rem"></div>Loading from Notion...</div>';
   const assetsContainer = document.getElementById('assets-container');
   if (assetsContainer) assetsContainer.innerHTML = '<div class="loading"><div class="spinner"></div>Syncing with Notion...</div>';
+  var e = null;
   try {
-    await new Promise((resolve, reject) => {
-      const callbackName = 'fb_' + Date.now();
-      const script = document.createElement('script');
-      let settled = false;
-      const finish = function (err) {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timeout);
-        try { delete window[callbackName]; } catch (x) {}
-        if (script.parentNode) script.parentNode.removeChild(script);
-        if (err) reject(err);
-        else resolve();
-      };
-      const timeout = setTimeout(function () {
-        finish(new Error('Request timed out (20s). Check Web App URL, network, or ad blockers.'));
-      }, 20000);
-      window[callbackName] = function (data) {
-        try {
-          if (data == null || typeof data !== 'object') {
-            finish(new Error('Invalid response from Apps Script (not JSON). Redeploy Web App or verify URL).'));
-            return;
-          }
-          if (data.error) {
-            var em = typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
-            finish(new Error(em === 'Unauthorized' ? 'Unauthorized — set APPS_SCRIPT_TOKEN in this file to match Apps Script PORTAL_TOKEN.' : em));
-            return;
-          }
-          const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
-          const live = raw.map(function (a) {
-            return {
-              name              : a.name || '',
-              status            : a.status || '',
-              mediaType         : a.mediaType ? a.mediaType.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
-              dueDate           : a.dueDate || null,
-              postingDate       : a.postingDate || null,
-              product           : a.product ? a.product.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
-              pillar            : a.pillar || '',
-              shootDay          : a.shootDay || '',
-              blockingReason    : a.blockingReason || '',
-              statusChangedAt   : a.statusChangedAt || '',
-              url               : a.url || '#',
-              finishedAssetLink : a.finishedAssetLink || '',
-              footageLink       : a.footageLink || '',
-              assetType         : a.assetType || 'organic',
-            };
-          }).filter(function (a) { return a.name; });
-          ASSETS.length = 0;
-          live.forEach(function (liveAsset) { ASSETS.push(liveAsset); });
-          applyFilters();
-          renderCalendar();
-          var sh = document.getElementById('shoots');
-          if (sh && sh.classList.contains('active') && typeof renderShoots === 'function') renderShoots();
-          var rep = document.getElementById('reports');
-          if (rep && rep.classList.contains('active') && typeof renderReports === 'function') renderReports();
-          finish(null);
-        } catch (inner) {
-          finish(inner);
-        }
-      };
-      script.onerror = function () { finish(new Error('Failed to load script from Google (wrong URL, blocked, or offline).')); };
-      script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
-      document.body.appendChild(script);
-    });
-  } catch (e) {
+    await fetchAssetsJsonpOnce(28000);
+  } catch (err1) {
+    e = err1;
+    var msg = (e && e.message) ? e.message : String(e);
+    var unauthorized = msg.indexOf('Unauthorized') >= 0;
+    var transient = msg.indexOf('timed out') >= 0 || msg.indexOf('timeout') >= 0 || msg.indexOf('Failed to load script') >= 0;
+    if (!unauthorized && transient) {
+      console.warn('FUNBOY portal: automatic retry (Apps Script cold start or slow network)...');
+      if (assetsContainer) assetsContainer.innerHTML = '<div class="loading"><div class="spinner"></div>Still connecting…</div>';
+      try {
+        await fetchAssetsJsonpOnce(45000);
+        e = null;
+      } catch (err2) {
+        e = err2;
+      }
+    }
+  }
+  if (e) {
     console.warn('Live fetch failed:', e.message);
     var detail = (e && e.message) ? e.message : String(e);
     var calGrid2 = document.getElementById('cal-grid');
