@@ -737,121 +737,78 @@ function applyFilters() {
 
 // ── REPORTS ──
 // ── REPORTS ── dynamic from live ASSETS
+// ── REPORTS — dynamic from live ASSETS ──
 function renderReports() {
   if (!ASSETS.length) return;
 
-  const ORGANIC_DONE   = ['posted','content scheduled for organic','accepted / sent for review'];
-  const AD_DONE        = ['content added to ad-tracker','accepted / sent for review'];
-  const isDropbox      = (url) => url && url.toLowerCase().includes('dropbox.com');
+  const ORGANIC_DONE = ['posted','content scheduled for organic','accepted / sent for review'];
+  const AD_DONE      = ['content added to ad-tracker','accepted / sent for review'];
+  const isDropbox    = (url) => url && url.toLowerCase().includes('dropbox.com');
 
-  // All organic assets with a final asset link OR posted/scheduled
-  const organicPosted  = ASSETS.filter(a => a.assetType !== 'ad' && (ORGANIC_DONE.includes(a.status) || isDropbox(a.finishedAssetLink)));
-  // All ad assets submitted to tracker OR with final asset link
-  const adsSubmitted   = ASSETS.filter(a => a.assetType === 'ad' && (AD_DONE.includes(a.status) || isDropbox(a.finishedAssetLink)));
-  // With actual Dropbox link
+  const organicPosted   = ASSETS.filter(a => a.assetType !== 'ad' && (ORGANIC_DONE.includes(a.status) || isDropbox(a.finishedAssetLink)));
+  const adsSubmitted    = ASSETS.filter(a => a.assetType === 'ad'  && (AD_DONE.includes(a.status)     || isDropbox(a.finishedAssetLink)));
   const organicWithLink = organicPosted.filter(a => isDropbox(a.finishedAssetLink));
   const adsWithLink     = adsSubmitted.filter(a => isDropbox(a.finishedAssetLink));
 
-  // By media type
   const countType = (list, type) => list.filter(a => Array.isArray(a.mediaType) ? a.mediaType.includes(type) : (a.mediaType||'').includes(type)).length;
 
-  // By product
   const productCounts = {};
   [...organicPosted, ...adsSubmitted].forEach(a => {
     const prods = Array.isArray(a.product) ? a.product : (a.product||'').split(',').map(s=>s.trim()).filter(Boolean);
     prods.forEach(p => { if(p) productCounts[p] = (productCounts[p]||0) + 1; });
   });
   const topProducts = Object.entries(productCounts).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  const maxProd = topProducts.length ? topProducts[0][1] : 1;
 
-  // Assets with links (for the table)
-  const allDone = [...new Set([...organicPosted, ...adsSubmitted])];
+  const allDone   = [...new Set([...organicPosted, ...adsSubmitted])];
   const withLinks = allDone.filter(a => isDropbox(a.finishedAssetLink));
+  const el        = document.getElementById('reports-content');
+  if (!el) return;
 
-  const el = document.getElementById('reports-content');
-  const barColor = ['var(--terra)','var(--amber)','var(--teal)','#4A7FC1','#888'];
-
-  el.innerHTML = \`
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
-      \${statCard(organicPosted.length, 'Organic Posts', 'posted, scheduled, or sent for review')}
-      \${statCard(organicWithLink.length, 'With Final Asset', 'organic posts with Dropbox link', 'teal')}
-      \${statCard(adsSubmitted.length, 'Ad Assets', 'submitted to Meta ad tracker')}
-      \${statCard(adsWithLink.length, 'Ads with Final Asset', 'ad assets with Dropbox link', 'amber')}
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
-      <div class="chart-wrap">
-        <div class="chart-title">Organic — by media type</div>
-        \${miniBar([
-          {name:'Video',    val:countType(organicPosted,'video')},
-          {name:'Stills',   val:countType(organicPosted,'stills')},
-          {name:'Graphic',  val:countType(organicPosted,'graphic post')},
-          {name:'Carousel', val:countType(organicPosted,'carousel')},
-        ])}
-      </div>
-      <div class="chart-wrap">
-        <div class="chart-title">Ads — by media type</div>
-        \${miniBar([
-          {name:'Video',    val:countType(adsSubmitted,'video')},
-          {name:'Stills',   val:countType(adsSubmitted,'stills')},
-          {name:'Graphic',  val:countType(adsSubmitted,'graphic post')},
-          {name:'Carousel', val:countType(adsSubmitted,'carousel')},
-        ])}
-      </div>
-    </div>
-
-    <div class="chart-wrap" style="margin-bottom:1.5rem;">
-      <div class="chart-title">Output by Product</div>
-      \${miniBar(topProducts.map(([name,val]) => ({name, val})))}
-    </div>
-
-    <div class="chart-wrap">
-      <div class="chart-title">Assets with Final Asset Link (\${withLinks.length})</div>
-      \${withLinks.length ? \`
-        <table class="asset-table">
-          <thead><tr><th>Asset</th><th>Channel</th><th>Status</th><th>Product</th><th>Final Asset</th></tr></thead>
-          <tbody>
-            \${withLinks.map(a => {
-              const prod = Array.isArray(a.product) ? a.product.join(', ') : (a.product||'-');
-              const isAd = a.assetType === 'ad';
-              const chanTag = isAd
-                ? '<span class="channel-tag channel-paid">Paid Ad</span>'
-                : '<span class="channel-tag channel-organic">Organic</span>';
-              const [cls,lbl] = STATUS_MAP[a.status]||['s-idea',a.status];
-              return \`<tr>
-                <td><a class="asset-link" href="\${a.url}" target="_blank">\${a.name}</a></td>
-                <td>\${chanTag}</td>
-                <td><span class="status-badge \${cls}">\${lbl}</span></td>
-                <td style="font-size:.76rem;color:var(--muted)">\${prod||'-'}</td>
-                <td><a class="footage-link footage-link-green" href="\${a.finishedAssetLink}" target="_blank" style="font-size:.7rem;padding:.18rem .5rem">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                  View</a></td>
-              </tr>\`;
-            }).join('')}
-          </tbody>
-        </table>
-      \` : '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0">No assets have a Dropbox link yet.</p>'}
-    </div>
-  \`;
-}
-
-function statCard(num, lbl, note, color) {
-  const c = color === 'teal' ? 'var(--teal)' : color === 'amber' ? 'var(--amber)' : color === 'terra' ? 'var(--terra)' : 'var(--ink)';
-  return \`<div class="stat-card"><div class="stat-num" style="color:\${c}">\${num}</div><div class="stat-lbl">\${lbl}</div><div class="stat-note">\${note}</div></div>\`;
-}
-
-function miniBar(items) {
-  const max = Math.max(...items.map(i=>i.val), 1);
   const colors = ['var(--terra)','var(--amber)','var(--teal)','#4A7FC1'];
-  return '<div class="bar-chart">' + items.map((r,i) => \`
-    <div class="bar-row">
-      <div class="bar-name">\${r.name}</div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:\${Math.max(Math.round(r.val/max*100),r.val?4:0)}%;background:\${colors[i%colors.length]}">
-          <span>\${r.val}</span>
-        </div>
-      </div>
-    </div>\`).join('') + '</div>';
+
+  function sc(num, lbl, note, col) {
+    const c = col === 'teal' ? 'var(--teal)' : col === 'amber' ? 'var(--amber)' : 'var(--ink)';
+    return '<div class="stat-card"><div class="stat-num" style="color:' + c + '">' + num + '</div><div class="stat-lbl">' + lbl + '</div><div class="stat-note">' + note + '</div></div>';
+  }
+
+  function mb(items) {
+    const max = Math.max.apply(null, items.map(i=>i.val).concat([1]));
+    return '<div class="bar-chart">' + items.map(function(r,i) {
+      return '<div class="bar-row"><div class="bar-name">' + r.name + '</div><div class="bar-track"><div class="bar-fill" style="width:' + Math.max(Math.round(r.val/max*100), r.val?4:0) + '%;background:' + colors[i%colors.length] + '"><span>' + r.val + '</span></div></div></div>';
+    }).join('') + '</div>';
+  }
+
+  const linkRows = withLinks.map(function(a) {
+    const prod = Array.isArray(a.product) ? a.product.join(', ') : (a.product||'-');
+    const isAd = a.assetType === 'ad';
+    const chanTag = isAd ? '<span class="channel-tag channel-paid">Paid Ad</span>' : '<span class="channel-tag channel-organic">Organic</span>';
+    const smk = STATUS_MAP[a.status] || ['s-idea', a.status];
+    return '<tr><td><a class="asset-link" href="' + a.url + '" target="_blank">' + a.name + '</a></td><td>' + chanTag + '</td><td><span class="status-badge ' + smk[0] + '">' + smk[1] + '</span></td><td style="font-size:.76rem;color:var(--muted)">' + (prod||'-') + '</td><td><a class="footage-link footage-link-green" href="' + a.finishedAssetLink + '" target="_blank" style="font-size:.7rem;padding:.18rem .5rem"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> View</a></td></tr>';
+  }).join('');
+
+  el.innerHTML =
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">' +
+      sc(organicPosted.length,  'Organic Posts',      'posted, scheduled, or sent for review') +
+      sc(organicWithLink.length,'With Final Asset',   'organic posts with Dropbox link', 'teal') +
+      sc(adsSubmitted.length,   'Ad Assets',          'submitted to Meta ad tracker') +
+      sc(adsWithLink.length,    'Ads with Final Asset','ad assets with Dropbox link', 'amber') +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">' +
+      '<div class="chart-wrap"><div class="chart-title">Organic — by media type</div>' +
+        mb([{name:'Video',val:countType(organicPosted,'video')},{name:'Stills',val:countType(organicPosted,'stills')},{name:'Graphic',val:countType(organicPosted,'graphic post')},{name:'Carousel',val:countType(organicPosted,'carousel')}]) +
+      '</div>' +
+      '<div class="chart-wrap"><div class="chart-title">Ads — by media type</div>' +
+        mb([{name:'Video',val:countType(adsSubmitted,'video')},{name:'Stills',val:countType(adsSubmitted,'stills')},{name:'Graphic',val:countType(adsSubmitted,'graphic post')},{name:'Carousel',val:countType(adsSubmitted,'carousel')}]) +
+      '</div>' +
+    '</div>' +
+    '<div class="chart-wrap" style="margin-bottom:1.5rem;"><div class="chart-title">Output by Product</div>' +
+      mb(topProducts.map(function(p){return {name:p[0],val:p[1]};})) +
+    '</div>' +
+    '<div class="chart-wrap"><div class="chart-title">Assets with Final Asset Link (' + withLinks.length + ')</div>' +
+      (withLinks.length ?
+        '<table class="asset-table"><thead><tr><th>Asset</th><th>Channel</th><th>Status</th><th>Product</th><th>Final Asset</th></tr></thead><tbody>' + linkRows + '</tbody></table>'
+        : '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0">No assets have a Dropbox link yet.</p>') +
+    '</div>';
 }
 
 // ── SHOOTS ──
