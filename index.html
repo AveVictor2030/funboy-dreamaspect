@@ -788,7 +788,7 @@ function renderAssets(list){
     return ao-bo;
   });
   if(!sorted.length){document.getElementById('assets-container').innerHTML='<p style="padding:2rem;color:var(--muted)">No assets match.</p>';return;}
-  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Product</th><th>Status</th><th>Type</th><th>Final Asset</th></tr></thead><tbody>`;
+  let h=`<table class="asset-table"><thead><tr><th>Asset Name</th><th>Product</th><th>Status</th><th>In Status</th><th>Type</th><th>Final Asset</th></tr></thead><tbody>`;
   for(const a of sorted){
     const dateVal = a.dueDate;
     const href = (a.finishedAssetLink && a.finishedAssetLink.trim()) ? a.finishedAssetLink : a.url;
@@ -799,7 +799,9 @@ function renderAssets(list){
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           View</a>`
       : `<span class="no-link-indicator">—</span>`;
-    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td><td>${statusBadge(a.status)}</td><td>${typePills(a.mediaType)}</td><td>${finalAssetCell}</td></tr>`;
+    const tis = timeInStatus(a.statusChangedAt);
+    const tisHtml = tis ? `<span style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--muted)">${tis}</span>` : '<span style="color:#ccc">—</span>';
+    h+=`<tr><td><a class="asset-link" href="${href}" target="_blank">${linkLabel}</a></td><td style="font-size:.76rem;color:var(--muted)">${a.product.join(', ')||'-'}</td><td>${statusBadge(a.status)}</td><td>${tisHtml}</td><td>${typePills(a.mediaType)}</td><td>${finalAssetCell}</td></tr>`;
   }
   h+='</tbody></table>';
   document.getElementById('assets-container').innerHTML=h;
@@ -1022,6 +1024,19 @@ function chipClass(name, pillar, status) {
   return 'chip-other';
 }
 
+function timeInStatus(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return '';
+  const diff = Math.floor((new Date() - d) / 86400000);
+  if (diff === 0) return 'today';
+  if (diff === 1) return '1 day';
+  if (diff < 7) return diff + ' days';
+  if (diff < 14) return '1 week';
+  const weeks = Math.floor(diff / 7);
+  return weeks + ' weeks';
+}
+
 function chipOpacity(status) {
   if (status === 'blocked') return '1'; // blocked is always fully visible
   // Full opacity for in-review and beyond
@@ -1145,7 +1160,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzLjGrtZqlI--CxrTQFmJYI0-LYwCfvCNMokVxMA0RLouGVbZEruw6WAEVIs292j8gSxg/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzpAiwX8dEt14sWnUHPtDb1cQqUrmnfMJ4GQJFIfvK-nSNhtXEgTPLhb5LFlMfzPLaDwQ/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
@@ -1180,6 +1195,7 @@ async function loadLiveAssets() {
           pillar            : a.pillar || '',
           shootDay          : a.shootDay || '',
           blockingReason    : a.blockingReason || '',
+          statusChangedAt   : a.statusChangedAt || '',
           url               : a.url || '#',
           finishedAssetLink : a.finishedAssetLink || '',
           assetType         : a.assetType || 'organic',
@@ -1199,6 +1215,7 @@ async function loadLiveAssets() {
             pillar            : liveAsset.pillar,
             shootDay          : liveAsset.shootDay || (baked && baked.shootDay) || '',
             blockingReason    : liveAsset.blockingReason || '',
+            statusChangedAt   : liveAsset.statusChangedAt || '',
             url               : liveAsset.url,
             finishedAssetLink : liveAsset.finishedAssetLink != null ? liveAsset.finishedAssetLink : (baked && baked.finishedAssetLink) || '',
             footageLink       : liveAsset.footageLink != null ? liveAsset.footageLink : (baked && baked.footageLink) || '',
