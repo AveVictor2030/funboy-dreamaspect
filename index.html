@@ -4,8 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FUNBOY Portal</title>
-<link rel="dns-prefetch" href="https://script.google.com"/>
-<link rel="preconnect" href="https://script.google.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -379,7 +377,7 @@
     <button class="tab active" onclick="show('calendar',this)">Content Calendar</button>
     <button class="tab" onclick="show('assets',this)">Assets</button>
     <button class="tab" onclick="show('shoots',this)">Shoots</button>
-    <button class="tab" onclick="show('voice',this)">Brand Voice</button>
+    <button class="tab" onclick="show('voice',this)">Ad Performance</button>
     <button class="tab" onclick="show('reports',this);renderReports()">Reports</button>
   </div>
 </nav>
@@ -387,77 +385,12 @@
 <!-- BRAND VOICE -->
 <div id="voice" class="section">
   <div class="page-header">
-    <div class="page-eyebrow">Brand Voice &amp; Caption Generator</div>
-    <div class="page-title">Write Like FUNBOY</div>
-    <div class="page-sub">Generate on-brand captions for organic and paid ads — powered by AI trained on FUNBOY's voice.</div>
+    <div class="page-eyebrow">Ad Performance &amp; Creative Tracker</div>
+    <div class="page-title">Ad Performance</div>
+    <div class="page-sub">Track creative performance metrics pulled from Triplewhale — ROAS, Spend, CPM, Hook Rate, CTR.</div>
   </div>
   <div class="page">
-    <div class="voice-grid">
-      <div>
-        <div class="panel">
-          <div class="panel-title">Caption Generator</div>
-          <label>Content type</label>
-          <select id="ct">
-            <option value="organic">Organic (Instagram / TikTok)</option>
-            <option value="ad">Paid Ad</option>
-            <option value="story">Story / Vertical</option>
-            <option value="product">Product Page Copy</option>
-          </select>
-          <label>Post purpose</label>
-          <select id="purpose">
-            <option value="launch">Product Launch</option>
-            <option value="restock">Restock / Back in Stock</option>
-            <option value="lifestyle">Lifestyle / Vibe</option>
-            <option value="sale">Sale / Promo</option>
-            <option value="occasion">Holiday / Occasion</option>
-            <option value="collection">Collection Drop</option>
-          </select>
-          <label>Product / context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-          <textarea id="context" placeholder="e.g. Fabric Sunbed launch, spring pool weekend, golf husband audience..." rows="3"></textarea>
-          <button class="gen-btn" id="gen-btn" onclick="generateCaption()" data-tip="AI writes a caption using FUNBOY's brand voice">Generate Caption</button>
-        </div>
-        <div style="height:.9rem"></div>
-        <div class="panel" style="position:relative">
-          <div class="panel-title">Output</div>
-          <div class="output-panel" id="output"><span class="output-placeholder">Your caption will appear here...</span></div>
-          <button class="copy-out" id="copy-out-btn" onclick="copyOutput()" style="display:none">Copy</button>
-        </div>
-      </div>
-      <div>
-        <div class="panel">
-          <div class="panel-title">Signature Phrases &mdash; tap to copy</div>
-          <div class="phrases">
-            <span class="phrase" onclick="copyPhrase(this)">There's something about summer...</span>
-            <span class="phrase" onclick="copyPhrase(this)">Allow us to reintroduce...</span>
-            <span class="phrase" onclick="copyPhrase(this)">Welcome to the future of leisure.</span>
-            <span class="phrase" onclick="copyPhrase(this)">Luxury meets leisure</span>
-            <span class="phrase" onclick="copyPhrase(this)">Blow up to glow up.</span>
-            <span class="phrase" onclick="copyPhrase(this)">High design. Low lift.</span>
-            <span class="phrase" onclick="copyPhrase(this)">Made for the group that never wants to leave</span>
-            <span class="phrase" onclick="copyPhrase(this)">Endless summer, wherever you are.</span>
-            <span class="phrase" onclick="copyPhrase(this)">La dolce vita lifestyle</span>
-            <span class="phrase" onclick="copyPhrase(this)">Instant bar. Endless vibes.</span>
-            <span class="phrase" onclick="copyPhrase(this)">Double the comfort, double the fun.</span>
-            <span class="phrase" onclick="copyPhrase(this)">The restock is live!</span>
-            <span class="phrase" onclick="copyPhrase(this)">Sure to sell out.</span>
-            <span class="phrase" onclick="copyPhrase(this)">Engineered for adventure.</span>
-            <span class="phrase" onclick="copyPhrase(this)">Be the best host ever.</span>
-          </div>
-        </div>
-        <div style="height:.9rem"></div>
-        <div class="panel">
-          <div class="panel-title">Voice Pillars</div>
-          <div class="pillars">
-            <div class="pillar"><h4>Playfully Premium</h4><p>Fun is the brand. Quality is the promise.</p></div>
-            <div class="pillar"><h4>Aspirational Leisure</h4><p>Sell the lifestyle first. Product is the answer.</p></div>
-            <div class="pillar"><h4>Effortlessly Chic</h4><p>Malibu, country club, la dolce vita.</p></div>
-            <div class="pillar"><h4>Family &amp; Hosting</h4><p>Celebrate togetherness and shared moments.</p></div>
-            <div class="pillar"><h4>Smart &amp; Witty</h4><p>Puns earn their place. Wit serves the product.</p></div>
-            <div class="pillar"><h4>Occasion-Led</h4><p>Always anchor to a moment or season.</p></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="adperf-content"><div class="loading"><div class="spinner"></div>Loading ad performance data...</div></div>
   </div>
 </div>
 
@@ -939,7 +872,8 @@ function setChannel(ch) {
 
 // ── CALENDAR ──
 let calSwitcher = 'organic';
-let calYear = 2026, calMonth = 2;
+const _now = new Date();
+let calYear = _now.getFullYear(), calMonth = _now.getMonth();
 
 function setCalSwitcher(val, btn) {
   calSwitcher = val;
@@ -962,9 +896,8 @@ function chipClass(name, pillar, status) {
 
 function timeInStatus(dateStr) {
   if (!dateStr) return '';
-  const s = String(dateStr).trim();
-  const d = (s.length <= 10 && /^\d{4}-\d{2}-\d{2}$/.test(s)) ? new Date(s + 'T12:00:00') : new Date(s);
-  if (isNaN(d.getTime())) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return '';
   const diff = Math.floor((new Date() - d) / 86400000);
   if (diff === 0) return 'today';
   if (diff === 1) return '1 day';
@@ -1096,112 +1029,72 @@ function copyPhrase(el){
   });
 }
 
-// ── LIVE FETCH from Apps Script Web App (JSONP) ──
-// Deploy URL: Apps Script → Deploy → Web app → copy /exec link. APPS_SCRIPT_TOKEN must match Script property PORTAL_TOKEN.
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbw2qzHwQB4m-hEr7j1dgBMQK7VZCP0YpibMr4WaeR6llm8fS6Af4SlxPYdJxjnXCbu-xQ/exec';
+// ── LIVE FETCH from Apps Script Web App (JSON) ──
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxPU-l1DWpyx_m__jeDENOmFrZlp1BhREzKWU88e8tJZvEgO6SlDVejUwzBJqmUnkt4Yg/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
-/** One JSONP request; timeoutMs should allow Apps Script cold start (often 15–40s right after deploy). */
-function fetchAssetsJsonpOnce(timeoutMs) {
-  return new Promise(function (resolve, reject) {
-    const callbackName = 'fb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
-    const script = document.createElement('script');
-    let settled = false;
-    const finish = function (err) {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timer);
-      try { delete window[callbackName]; } catch (x) {}
-      if (script.parentNode) script.parentNode.removeChild(script);
-      if (err) reject(err);
-      else resolve();
-    };
-    const timer = setTimeout(function () {
-      finish(new Error('Request timed out (' + Math.round(timeoutMs / 1000) + 's). Apps Script may be cold — try Retry, or wait a minute after deploy.'));
-    }, timeoutMs);
-    window[callbackName] = function (data) {
-      try {
-        if (data == null || typeof data !== 'object') {
-          finish(new Error('Invalid response from Apps Script (not JSON). Redeploy Web App or verify URL).'));
-          return;
-        }
-        if (data.error) {
-          var em = typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
-          finish(new Error(em === 'Unauthorized' ? 'Unauthorized — set APPS_SCRIPT_TOKEN in this file to match Apps Script PORTAL_TOKEN.' : em));
-          return;
-        }
-        const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
-        const live = raw.map(function (a) {
-          return {
-            name              : a.name || '',
-            status            : a.status || '',
-            mediaType         : a.mediaType ? a.mediaType.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
-            dueDate           : a.dueDate || null,
-            postingDate       : a.postingDate || null,
-            product           : a.product ? a.product.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [],
-            pillar            : a.pillar || '',
-            shootDay          : a.shootDay || '',
-            blockingReason    : a.blockingReason || '',
-            statusChangedAt   : a.statusChangedAt || '',
-            url               : a.url || '#',
-            finishedAssetLink : a.finishedAssetLink || '',
-            footageLink       : a.footageLink || '',
-            assetType         : a.assetType || 'organic',
-          };
-        }).filter(function (a) { return a.name; });
-        ASSETS.length = 0;
-        live.forEach(function (liveAsset) { ASSETS.push(liveAsset); });
-        applyFilters();
-        renderCalendar();
-        var sh = document.getElementById('shoots');
-        if (sh && sh.classList.contains('active') && typeof renderShoots === 'function') renderShoots();
-        var rep = document.getElementById('reports');
-        if (rep && rep.classList.contains('active') && typeof renderReports === 'function') renderReports();
-        finish(null);
-      } catch (inner) {
-        finish(inner);
-      }
-    };
-    script.onerror = function () { finish(new Error('Failed to load script from Google (wrong URL, blocked, or offline).')); };
-    script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + encodeURIComponent(callbackName) + '&_=' + Date.now();
-    document.body.appendChild(script);
-  });
-}
-
 async function loadLiveAssets() {
+  // Show loading state while fetching from Notion
   const calGrid = document.getElementById('cal-grid');
   if (calGrid) calGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem"><div class="spinner" style="margin:0 auto 1rem"></div>Loading from Notion...</div>';
   const assetsContainer = document.getElementById('assets-container');
   if (assetsContainer) assetsContainer.innerHTML = '<div class="loading"><div class="spinner"></div>Syncing with Notion...</div>';
-  var e = null;
   try {
-    await fetchAssetsJsonpOnce(28000);
-  } catch (err1) {
-    e = err1;
-    var msg = (e && e.message) ? e.message : String(e);
-    var unauthorized = msg.indexOf('Unauthorized') >= 0;
-    var transient = msg.indexOf('timed out') >= 0 || msg.indexOf('timeout') >= 0 || msg.indexOf('Failed to load script') >= 0;
-    if (!unauthorized && transient) {
-      console.warn('FUNBOY portal: automatic retry (Apps Script cold start or slow network)...');
-      if (assetsContainer) assetsContainer.innerHTML = '<div class="loading"><div class="spinner"></div>Still connecting…</div>';
-      try {
-        await fetchAssetsJsonpOnce(45000);
-        e = null;
-      } catch (err2) {
-        e = err2;
-      }
-    }
-  }
-  if (e) {
-    console.warn('Live fetch failed:', e.message);
-    var detail = (e && e.message) ? e.message : String(e);
-    var calGrid2 = document.getElementById('cal-grid');
-    if (calGrid2) calGrid2.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">Could not sync with Notion. <a href="#" class="portal-retry-load" style="color:var(--terra)">Retry</a><div style="margin-top:.75rem;font-size:.72rem;max-width:28rem;margin-left:auto;margin-right:auto;word-break:break-word">' + detail.replace(/</g, '&lt;') + '</div></div>';
-    var assetsContainer2 = document.getElementById('assets-container');
-    if (assetsContainer2) assetsContainer2.innerHTML = '<p style="padding:2rem;color:var(--muted)">Could not sync with Notion. <a href="#" class="portal-retry-load" style="color:var(--terra)">Retry</a></p><p style="padding:0 2rem 2rem;font-size:.72rem;color:var(--muted);word-break:break-word">' + detail.replace(/</g, '&lt;') + '</p>';
-    document.querySelectorAll('.portal-retry-load').forEach(function (a) {
-      a.addEventListener('click', function (ev) { ev.preventDefault(); loadLiveAssets(); });
+    await new Promise((resolve, reject) => {
+      const callbackName = 'fb_' + Date.now();
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => {
+        delete window[callbackName];
+        if (script.parentNode) document.body.removeChild(script);
+        reject(new Error('JSONP timeout'));
+      }, 7000);
+      window[callbackName] = function(data) {
+        clearTimeout(timeout);
+        delete window[callbackName];
+        if (script.parentNode) document.body.removeChild(script);
+        if (data.error) { reject(new Error(data.error)); return; }
+        const raw = Array.isArray(data) ? data : (Array.isArray(data.assets) ? data.assets : []);
+        console.log('Live sync received', raw.length, 'assets');
+        console.log('Sample assetTypes:', raw.slice(0,5).map(a => a.name + ' -> ' + a.assetType));
+        console.log('Ad count:', raw.filter(a => a.assetType === 'ad').length);
+        const live = raw.map(a => ({
+          name              : a.name || '',
+          status            : a.status || '',
+          mediaType         : a.mediaType ? a.mediaType.split(',').map(s=>s.trim()).filter(Boolean) : [],
+          dueDate           : a.dueDate || null,
+          postingDate       : a.postingDate || null,
+          product           : a.product ? a.product.split(',').map(s=>s.trim()).filter(Boolean) : [],
+          pillar            : a.pillar || '',
+          shootDay          : a.shootDay || '',
+          blockingReason    : a.blockingReason || '',
+          statusChangedAt   : a.statusChangedAt || '',
+          url               : a.url || '#',
+          finishedAssetLink : a.finishedAssetLink || '',
+          assetType         : a.assetType || 'organic',
+        })).filter(a => a.name);
+        // Use live data directly — no baked data fallback
+        ASSETS.length = 0;
+        live.forEach(liveAsset => {
+          ASSETS.push(liveAsset);
+        });
+        console.log('Live sync merged:', ASSETS.length, 'assets, posting dates:', ASSETS.filter(a=>a.postingDate).length);
+        applyFilters();
+        renderCalendar();
+        if (document.getElementById('shoots').classList.contains('active')) renderShoots();
+        if (document.getElementById('reports').classList.contains('active')) renderReports();
+        if (document.getElementById('voice').classList.contains('active')) renderAdPerf();
+        resolve();
+      };
+      script.src = APPS_SCRIPT_URL + '?token=' + encodeURIComponent(APPS_SCRIPT_TOKEN) + '&callback=' + callbackName;
+      script.onerror = () => reject(new Error('Script load failed'));
+      document.body.appendChild(script);
     });
+  } catch(e) {
+    console.warn('Live fetch failed:', e.message);
+    const calGrid = document.getElementById('cal-grid');
+    if (calGrid) calGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">Could not connect to Notion. <a href="#" onclick="loadLiveAssets();return false" style="color:var(--terra)">Retry</a></div>';
+    const assetsContainer = document.getElementById('assets-container');
+    if (assetsContainer) assetsContainer.innerHTML = '<p style="padding:2rem;color:var(--muted)">Could not sync with Notion. <a href="#" onclick="loadLiveAssets();return false" style="color:var(--terra)">Retry</a></p>';
   }
 }
 
@@ -1404,6 +1297,119 @@ async function daEscalate(question, aiReply, btn, askedBy) {
     btn.disabled = false;
     daAddBubble('Could not reach the team right now — try again in a moment.', false);
   }
+}
+
+// ── AD PERFORMANCE ──
+function renderAdPerf() {
+  const el = document.getElementById('adperf-content');
+  if (!ASSETS.length) { el.innerHTML = '<div class="loading"><div class="spinner"></div>Loading...</div>'; return; }
+
+  const isDropbox = (url) => url && url.toLowerCase().includes('dropbox.com');
+  const ads = ASSETS.filter(a => a.assetType === 'ad' || (a.assetTypes||'').includes('ad'));
+
+  // Split into those with perf data vs just submitted
+  const withROAS  = ads.filter(a => a.roas && parseFloat(a.roas) > 0);
+  const submitted = ads.filter(a => ['content added to ad-tracker','accepted / sent for review'].includes(a.status));
+  const scaling   = ads.filter(a => a.creativeStatus === 'Scaling');
+  const fatigued  = ads.filter(a => a.creativeStatus === 'Fatigued');
+
+  // Decision tree signal cards
+  const signals = [
+    { label: 'Scaling', count: scaling.length, color: 'var(--teal)', note: 'High ROAS — increase budget' },
+    { label: 'Testing', count: ads.filter(a => a.creativeStatus === 'Testing').length, color: 'var(--amber)', note: 'Awaiting signal' },
+    { label: 'Fatigued', count: fatigued.length, color: 'var(--rose)', note: 'Kill and brief new concept' },
+    { label: 'In Tracker', count: submitted.length, color: 'var(--ink)', note: 'Submitted to Meta' },
+  ];
+
+  const PERF_FIELDS = ['roas','spend','cpm','hookRate','ctr','sv3count'];
+
+  el.innerHTML = \`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+      \${signals.map(s => \`
+        <div class="stat-card">
+          <div class="stat-num" style="color:\${s.color}">\${s.count}</div>
+          <div class="stat-lbl">\${s.label}</div>
+          <div class="stat-note">\${s.note}</div>
+        </div>\`).join('')}
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:1.5rem;">
+      <div class="chart-title">Ad Creatives — Performance Tracker</div>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">
+        Fill in ROAS, Spend, CPM, Hook Rate %, CTR %, and 3SV count directly in Notion for each ad asset.
+        Set <strong>creative status</strong> to Testing, Scaling, Fatigued, or Killed based on signal.
+        Data pulls live from Notion on every page load.
+      </p>
+      \${ads.length ? \`
+        <div style="overflow-x:auto;">
+        <table class="asset-table">
+          <thead><tr>
+            <th>Asset</th>
+            <th>Product</th>
+            <th>Hook Type</th>
+            <th>Platform</th>
+            <th>Status</th>
+            <th style="color:var(--teal)">ROAS</th>
+            <th>Spend</th>
+            <th>CPM</th>
+            <th>Hook %</th>
+            <th>CTR %</th>
+            <th>3SV</th>
+            <th>Creative Status</th>
+            <th>Asset</th>
+          </tr></thead>
+          <tbody>
+            \${ads.map(a => {
+              const prod = Array.isArray(a.product) ? a.product.join(', ') : (a.product||'-');
+              const [cls,lbl] = STATUS_MAP[a.status]||['s-idea',a.status];
+              const roasVal = a.roas ? parseFloat(a.roas) : null;
+              const roasColor = roasVal >= 3 ? 'var(--teal)' : roasVal >= 1.5 ? 'var(--amber)' : roasVal ? 'var(--rose)' : 'var(--muted)';
+              const csMap = {'Scaling':'s-complete','Testing':'s-production','Fatigued':'s-blocked','Killed':'s-research'};
+              const csLbl = a.creativeStatus || '';
+              const csCls = csMap[csLbl] || 's-idea';
+              const assetBtn = isDropbox(a.finishedAssetLink)
+                ? \`<a class="footage-link footage-link-green" href="\${a.finishedAssetLink}" target="_blank" style="font-size:.7rem;padding:.18rem .5rem">View</a>\`
+                : '<span style="color:#ccc">—</span>';
+              return \`<tr>
+                <td><a class="asset-link" href="\${a.url}" target="_blank">\${a.name}</a></td>
+                <td style="font-size:.75rem;color:var(--muted)">\${prod}</td>
+                <td style="font-size:.75rem">\${a.hookType||'—'}</td>
+                <td style="font-size:.75rem">\${a.adPlatform||'—'}</td>
+                <td><span class="status-badge \${cls}">\${lbl}</span></td>
+                <td style="font-weight:700;color:\${roasColor}">\${roasVal ? roasVal.toFixed(1)+'x' : '—'}</td>
+                <td style="font-size:.75rem">\${a.spend ? '$'+parseFloat(a.spend).toFixed(0) : '—'}</td>
+                <td style="font-size:.75rem">\${a.cpm ? '$'+parseFloat(a.cpm).toFixed(2) : '—'}</td>
+                <td style="font-size:.75rem">\${a.hookRate ? parseFloat(a.hookRate).toFixed(1)+'%' : '—'}</td>
+                <td style="font-size:.75rem">\${a.ctr ? parseFloat(a.ctr).toFixed(1)+'%' : '—'}</td>
+                <td style="font-size:.75rem">\${a.sv3count || '—'}</td>
+                <td>\${csLbl ? \`<span class="status-badge \${csCls}">\${csLbl}</span>\` : '<span style="color:#ccc">—</span>'}</td>
+                <td>\${assetBtn}</td>
+              </tr>\`;
+            }).join('')}
+          </tbody>
+        </table>
+        </div>
+      \` : '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0">No ad assets found in Notion.</p>'}
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">How to use this tab</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem;">
+        \${[
+          ['1. Asset goes live on Meta','Set status to "content added to ad-tracker" in Notion'],
+          ['2. Pull Triplewhale data','After 3-7 days, pull ROAS, Spend, CPM, Hook Rate %, CTR %, 3SV'],
+          ['3. Fill in Notion','Enter the metrics directly on the asset page in Notion'],
+          ['4. Set creative status','Testing → Scaling (win) or Fatigued (kill) based on signal'],
+          ['5. Brief next batch','Winners get hook iterations. Fatigued gets net-new concept.'],
+          ['6. Portal updates live','Refresh portal to see updated data pulled from Notion'],
+        ].map(([t,d]) => \`
+          <div style="background:var(--sand);border-radius:4px;padding:.65rem .8rem;border-left:3px solid var(--amber)">
+            <div style="font-size:.77rem;font-weight:700;margin-bottom:.15rem">\${t}</div>
+            <div style="font-size:.72rem;color:#666;line-height:1.5">\${d}</div>
+          </div>\`).join('')}
+      </div>
+    </div>
+  \`;
 }
 
 </script>
