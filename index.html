@@ -1030,7 +1030,7 @@ function copyPhrase(el){
 }
 
 // ── LIVE FETCH from Apps Script Web App (JSON) ──
-const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbxXDwoqsmHB_ZsCjoWEm0VnyoSRPivAuHqS3kjHzTRl2HndHMYfFrnmy5ZZQToueBc/exec';
+const APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzrkQtVufHPJeYwDzNrexv4cizx8sTJXpamecpuW3wwH_Q7FJto8J_qysTjAjZbPlpR/exec';
 const APPS_SCRIPT_TOKEN = 'dreamaspect2026';
 
 async function loadLiveAssets() {
@@ -1301,115 +1301,93 @@ async function daEscalate(question, aiReply, btn, askedBy) {
 
 // ── AD PERFORMANCE ──
 function renderAdPerf() {
-  const el = document.getElementById('adperf-content');
+  var el = document.getElementById('adperf-content');
   if (!ASSETS.length) { el.innerHTML = '<div class="loading"><div class="spinner"></div>Loading...</div>'; return; }
 
-  const isDropbox = (url) => url && url.toLowerCase().includes('dropbox.com');
-  const ads = ASSETS.filter(a => a.assetType === 'ad' || (a.assetTypes||'').includes('ad'));
+  var isDropbox = function(url) { return url && url.toLowerCase().includes('dropbox.com'); };
+  var ads = ASSETS.filter(function(a) { return a.assetType === 'ad' || (a.assetTypes||'').includes('ad'); });
 
-  // Split into those with perf data vs just submitted
-  const withROAS  = ads.filter(a => a.roas && parseFloat(a.roas) > 0);
-  const submitted = ads.filter(a => ['content added to ad-tracker','accepted / sent for review'].includes(a.status));
-  const scaling   = ads.filter(a => a.creativeStatus === 'Scaling');
-  const fatigued  = ads.filter(a => a.creativeStatus === 'Fatigued');
+  var submitted = ads.filter(function(a) { return ['content added to ad-tracker','accepted / sent for review'].includes(a.status); });
+  var scaling   = ads.filter(function(a) { return a.creativeStatus === 'Scaling'; });
+  var testing   = ads.filter(function(a) { return a.creativeStatus === 'Testing'; });
+  var fatigued  = ads.filter(function(a) { return a.creativeStatus === 'Fatigued'; });
 
-  // Decision tree signal cards
-  const signals = [
-    { label: 'Scaling', count: scaling.length, color: 'var(--teal)', note: 'High ROAS — increase budget' },
-    { label: 'Testing', count: ads.filter(a => a.creativeStatus === 'Testing').length, color: 'var(--amber)', note: 'Awaiting signal' },
-    { label: 'Fatigued', count: fatigued.length, color: 'var(--rose)', note: 'Kill and brief new concept' },
-    { label: 'In Tracker', count: submitted.length, color: 'var(--ink)', note: 'Submitted to Meta' },
+  // Stat cards
+  var cardsHtml = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">'
+    + '<div class="stat-card"><div class="stat-num" style="color:var(--teal)">' + scaling.length + '</div><div class="stat-lbl">Scaling</div><div class="stat-note">High ROAS — increase budget</div></div>'
+    + '<div class="stat-card"><div class="stat-num" style="color:var(--amber)">' + testing.length + '</div><div class="stat-lbl">Testing</div><div class="stat-note">Awaiting signal</div></div>'
+    + '<div class="stat-card"><div class="stat-num" style="color:var(--rose)">' + fatigued.length + '</div><div class="stat-lbl">Fatigued</div><div class="stat-note">Kill and brief new concept</div></div>'
+    + '<div class="stat-card"><div class="stat-num" style="color:var(--ink)">' + submitted.length + '</div><div class="stat-lbl">In Tracker</div><div class="stat-note">Submitted to Meta</div></div>'
+    + '</div>';
+
+  // Table
+  var tableHtml = '';
+  if (ads.length) {
+    tableHtml = '<div style="overflow-x:auto;"><table class="asset-table"><thead><tr>'
+      + '<th>Asset</th><th>Product</th><th>Hook Type</th><th>Platform</th><th>Status</th>'
+      + '<th style="color:var(--teal)">ROAS</th><th>Spend</th><th>CPM</th><th>Hook %</th><th>CTR %</th><th>3SV</th>'
+      + '<th>Creative Status</th><th>Asset</th></tr></thead><tbody>';
+
+    ads.forEach(function(a) {
+      var prod = Array.isArray(a.product) ? a.product.join(', ') : (a.product||'-');
+      var statusInfo = STATUS_MAP[a.status] || ['s-idea', a.status];
+      var cls = statusInfo[0], lbl = statusInfo[1];
+      var roasVal = a.roas ? parseFloat(a.roas) : null;
+      var roasColor = roasVal >= 3 ? 'var(--teal)' : roasVal >= 1.5 ? 'var(--amber)' : roasVal ? 'var(--rose)' : 'var(--muted)';
+      var csMap = {'Scaling':'s-complete','Testing':'s-production','Fatigued':'s-blocked','Killed':'s-research'};
+      var csLbl = a.creativeStatus || '';
+      var csCls = csMap[csLbl] || 's-idea';
+      var assetBtn = isDropbox(a.finishedAssetLink)
+        ? '<a class="footage-link footage-link-green" href="' + a.finishedAssetLink + '" target="_blank" style="font-size:.7rem;padding:.18rem .5rem">View</a>'
+        : '<span style="color:#ccc">—</span>';
+      var csHtml = csLbl ? '<span class="status-badge ' + csCls + '">' + csLbl + '</span>' : '<span style="color:#ccc">—</span>';
+
+      tableHtml += '<tr>'
+        + '<td><a class="asset-link" href="' + a.url + '" target="_blank">' + a.name + '</a></td>'
+        + '<td style="font-size:.75rem;color:var(--muted)">' + prod + '</td>'
+        + '<td style="font-size:.75rem">' + (a.hookType||'—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.adPlatform||'—') + '</td>'
+        + '<td><span class="status-badge ' + cls + '">' + lbl + '</span></td>'
+        + '<td style="font-weight:700;color:' + roasColor + '">' + (roasVal ? roasVal.toFixed(1)+'x' : '—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.spend ? '$'+parseFloat(a.spend).toFixed(0) : '—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.cpm ? '$'+parseFloat(a.cpm).toFixed(2) : '—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.hookRate ? parseFloat(a.hookRate).toFixed(1)+'%' : '—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.ctr ? parseFloat(a.ctr).toFixed(1)+'%' : '—') + '</td>'
+        + '<td style="font-size:.75rem">' + (a.sv3count||'—') + '</td>'
+        + '<td>' + csHtml + '</td>'
+        + '<td>' + assetBtn + '</td>'
+        + '</tr>';
+    });
+    tableHtml += '</tbody></table></div>';
+  } else {
+    tableHtml = '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0">No ad assets found. Make sure assets have type "ad" set in Notion.</p>';
+  }
+
+  // How to use
+  var steps = [
+    ['1. Asset goes live on Meta','Set status to "content added to ad-tracker" in Notion'],
+    ['2. Pull Triplewhale data','After 3-7 days, pull ROAS, Spend, CPM, Hook Rate %, CTR %, 3SV'],
+    ['3. Fill in Notion','Enter the metrics directly on the asset page in Notion'],
+    ['4. Set creative status','Testing, Scaling (win), Fatigued (kill), or Killed'],
+    ['5. Brief next batch','Winners get hook iterations. Fatigued gets net-new concept.'],
+    ['6. Portal updates live','Refresh portal to see updated data pulled from Notion'],
   ];
+  var stepsHtml = '<div class="chart-wrap"><div class="chart-title">How to use this tab</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem;">';
+  steps.forEach(function(s) {
+    stepsHtml += '<div style="background:var(--sand);border-radius:4px;padding:.65rem .8rem;border-left:3px solid var(--amber)">'
+      + '<div style="font-size:.77rem;font-weight:700;margin-bottom:.15rem">' + s[0] + '</div>'
+      + '<div style="font-size:.72rem;color:#666;line-height:1.5">' + s[1] + '</div>'
+      + '</div>';
+  });
+  stepsHtml += '</div></div>';
 
-  const PERF_FIELDS = ['roas','spend','cpm','hookRate','ctr','sv3count'];
-
-  el.innerHTML = \`
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
-      \${signals.map(s => \`
-        <div class="stat-card">
-          <div class="stat-num" style="color:\${s.color}">\${s.count}</div>
-          <div class="stat-lbl">\${s.label}</div>
-          <div class="stat-note">\${s.note}</div>
-        </div>\`).join('')}
-    </div>
-
-    <div class="chart-wrap" style="margin-bottom:1.5rem;">
-      <div class="chart-title">Ad Creatives — Performance Tracker</div>
-      <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">
-        Fill in ROAS, Spend, CPM, Hook Rate %, CTR %, and 3SV count directly in Notion for each ad asset.
-        Set <strong>creative status</strong> to Testing, Scaling, Fatigued, or Killed based on signal.
-        Data pulls live from Notion on every page load.
-      </p>
-      \${ads.length ? \`
-        <div style="overflow-x:auto;">
-        <table class="asset-table">
-          <thead><tr>
-            <th>Asset</th>
-            <th>Product</th>
-            <th>Hook Type</th>
-            <th>Platform</th>
-            <th>Status</th>
-            <th style="color:var(--teal)">ROAS</th>
-            <th>Spend</th>
-            <th>CPM</th>
-            <th>Hook %</th>
-            <th>CTR %</th>
-            <th>3SV</th>
-            <th>Creative Status</th>
-            <th>Asset</th>
-          </tr></thead>
-          <tbody>
-            \${ads.map(a => {
-              const prod = Array.isArray(a.product) ? a.product.join(', ') : (a.product||'-');
-              const [cls,lbl] = STATUS_MAP[a.status]||['s-idea',a.status];
-              const roasVal = a.roas ? parseFloat(a.roas) : null;
-              const roasColor = roasVal >= 3 ? 'var(--teal)' : roasVal >= 1.5 ? 'var(--amber)' : roasVal ? 'var(--rose)' : 'var(--muted)';
-              const csMap = {'Scaling':'s-complete','Testing':'s-production','Fatigued':'s-blocked','Killed':'s-research'};
-              const csLbl = a.creativeStatus || '';
-              const csCls = csMap[csLbl] || 's-idea';
-              const assetBtn = isDropbox(a.finishedAssetLink)
-                ? \`<a class="footage-link footage-link-green" href="\${a.finishedAssetLink}" target="_blank" style="font-size:.7rem;padding:.18rem .5rem">View</a>\`
-                : '<span style="color:#ccc">—</span>';
-              return \`<tr>
-                <td><a class="asset-link" href="\${a.url}" target="_blank">\${a.name}</a></td>
-                <td style="font-size:.75rem;color:var(--muted)">\${prod}</td>
-                <td style="font-size:.75rem">\${a.hookType||'—'}</td>
-                <td style="font-size:.75rem">\${a.adPlatform||'—'}</td>
-                <td><span class="status-badge \${cls}">\${lbl}</span></td>
-                <td style="font-weight:700;color:\${roasColor}">\${roasVal ? roasVal.toFixed(1)+'x' : '—'}</td>
-                <td style="font-size:.75rem">\${a.spend ? '$'+parseFloat(a.spend).toFixed(0) : '—'}</td>
-                <td style="font-size:.75rem">\${a.cpm ? '$'+parseFloat(a.cpm).toFixed(2) : '—'}</td>
-                <td style="font-size:.75rem">\${a.hookRate ? parseFloat(a.hookRate).toFixed(1)+'%' : '—'}</td>
-                <td style="font-size:.75rem">\${a.ctr ? parseFloat(a.ctr).toFixed(1)+'%' : '—'}</td>
-                <td style="font-size:.75rem">\${a.sv3count || '—'}</td>
-                <td>\${csLbl ? \`<span class="status-badge \${csCls}">\${csLbl}</span>\` : '<span style="color:#ccc">—</span>'}</td>
-                <td>\${assetBtn}</td>
-              </tr>\`;
-            }).join('')}
-          </tbody>
-        </table>
-        </div>
-      \` : '<p style="color:var(--muted);font-size:.85rem;padding:1rem 0">No ad assets found in Notion.</p>'}
-    </div>
-
-    <div class="chart-wrap">
-      <div class="chart-title">How to use this tab</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.5rem;">
-        \${[
-          ['1. Asset goes live on Meta','Set status to "content added to ad-tracker" in Notion'],
-          ['2. Pull Triplewhale data','After 3-7 days, pull ROAS, Spend, CPM, Hook Rate %, CTR %, 3SV'],
-          ['3. Fill in Notion','Enter the metrics directly on the asset page in Notion'],
-          ['4. Set creative status','Testing → Scaling (win) or Fatigued (kill) based on signal'],
-          ['5. Brief next batch','Winners get hook iterations. Fatigued gets net-new concept.'],
-          ['6. Portal updates live','Refresh portal to see updated data pulled from Notion'],
-        ].map(([t,d]) => \`
-          <div style="background:var(--sand);border-radius:4px;padding:.65rem .8rem;border-left:3px solid var(--amber)">
-            <div style="font-size:.77rem;font-weight:700;margin-bottom:.15rem">\${t}</div>
-            <div style="font-size:.72rem;color:#666;line-height:1.5">\${d}</div>
-          </div>\`).join('')}
-      </div>
-    </div>
-  \`;
+  el.innerHTML = cardsHtml
+    + '<div class="chart-wrap" style="margin-bottom:1.5rem;">'
+    + '<div class="chart-title">Ad Creatives — Performance Tracker</div>'
+    + '<p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Fill in ROAS, Spend, CPM, Hook Rate %, CTR %, and 3SV count directly in Notion for each ad asset. Set <strong>creative status</strong> to Testing, Scaling, Fatigued, or Killed based on signal.</p>'
+    + tableHtml
+    + '</div>'
+    + stepsHtml;
 }
 
 </script>
