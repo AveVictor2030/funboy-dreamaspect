@@ -104,9 +104,30 @@
   details.week-block summary span{font-size:11.5px;font-weight:normal;color:var(--muted);}
   footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);}
   @media (max-width:700px){.kpi-strip{grid-template-columns:repeat(2,1fr);}}
+
+  .report-nav{background:#1a1a1a;color:#fff;border-bottom:4px solid #ff6a1a;position:sticky;top:0;z-index:30;}
+  .report-nav-inner{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;align-items:stretch;gap:8px;min-height:48px;}
+  .report-nav a{color:#f0ddd0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;padding:12px 12px;}
+  .report-nav a.is-current{color:#1a1a1a;background:#ff6a1a;}
+  .reports-tab{display:flex;align-items:stretch;margin-left:auto;background:#2a2a2a;}
+  .reports-tab.is-open{box-shadow:inset 0 -3px 0 #ff6a1a;}
+  .reports-label{display:inline-flex;align-items:center;padding:0 14px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;}
+  .reports-tab.is-open .reports-label{color:#ff6a1a;}
+  .mark-underline{background-image:linear-gradient(transparent 62%, #c73333 62%, #c73333 78%, transparent 78%);}
+  .mark-circle{display:inline-block;border:2px solid #c73333;border-radius:999px;padding:0 7px;line-height:1.35;}
 </style>
 </head>
 <body>
+<nav class="report-nav" aria-label="Portal">
+  <div class="report-nav-inner">
+    <a class="tab-dash" href="index.html">Dashboard</a>
+    <div class="reports-tab is-open">
+      <span class="reports-label">Reports</span>
+      <a class="tab-sep is-current" href="september-2026-recap.html">September</a>
+      <a class="tab-aug" href="august-2026-recap.html">August</a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="inner">
@@ -132,7 +153,7 @@
     <tr><th></th><th>September (final)</th><th>August</th><th>Result</th></tr>
     <tr><td>Total posts (IG + TT)</td><td>26</td><td>31</td><td>&mdash;</td></tr>
     <tr><td>Posting pace (posts/day)</td><td>0.87</td><td>1.0</td><td class="bench-worse">-13% vs. August</td></tr>
-    <tr><td>Total likes (both platforms)</td><td>15,699</td><td>4,150</td><td class="bench-better">+278% vs. August</td></tr>
+    <tr><td>Total likes (both platforms)</td><td><span class="mark-circle">15,699</span></td><td>4,150</td><td class="bench-better"><span class="mark-underline">+278%</span> vs. August</td></tr>
     <tr><td>Total comments (both platforms)</td><td>364</td><td>596</td><td class="bench-worse">-39% vs. August</td></tr>
     <tr><td>Instagram avg. likes / post</td><td>300</td><td>166</td><td class="bench-better">+81% vs. August</td></tr>
     <tr><td>Instagram avg. comments / post</td><td>12.3</td><td>23.2</td><td class="bench-worse">-47% vs. August</td></tr>
@@ -493,7 +514,7 @@
   <h2>Instagram Engagement Detail<span class="tag">Confirmed via native Insights &mdash; 16 of 17 posts &middot; sorted by engagement</span></h2>
   <table>
     <tr><th>Date</th><th>Post</th><th>Likes</th><th>Views</th><th>Saves</th><th>Shares</th></tr>
-    <tr><td>Sep 12</td><td>This is your sign to start planning your next Halloween movi</td><td>10493</td><td>187,226</td><td>2586</td><td>4990</td></tr><tr><td>Sep 17</td><td>Pumpkin picking looks a little different around here</td><td>978</td><td>18,678</td><td>17</td><td>23</td></tr><tr><td>Sep 13</td><td>Wake up, spooky season is calling. The mummies are out and H</td><td>468</td><td>20,644</td><td>36</td><td>258</td></tr><tr><td>Sep 1</td><td>Reminder that Halloween is 8 Saturdays away.</td><td>657</td><td>13,914</td><td>20</td><td>89</td></tr><tr><td>Sep 6</td><td>Just killing time until Halloween.</td><td>368</td><td>18,491</td><td>18</td><td>352</td></tr><tr><td>Sep 5</td><td>Mentally picking pumpkins, physically still by the pool</td><td>423</td><td>23,650</td><td>54</td><td>66</td></tr><tr><td>Sep 3</td><td>When the heat wave has you wishing for fall.</td><td>342</td><td>13,683</td><td>16</td><td>101</td></tr><tr><td>Sep 10</td><td>High-end Halloween decor without the scary setup. Just infla</td><td>185</td><td>18,267</td><td>41</td><td>63</td></tr><tr><td>Sep 22</td><td>You waited long enough, it's time to decorate. Happy first d</td><td>229</td><td>7,716</td><td>21</td><td>31</td></tr><tr><td>Sep 19</td><td>They're big. They're spooky. And they're officially shipping</td><td>217</td><td>9,613</td><td>15</td><td>48</td></tr><tr><td>Sep 15</td><td>Consider this your shortcut to the best-decorated house on t</td><td>167</td><td>10,185</td><td>14</td><td>71</td></tr><tr><td>Sep 4</td><td>The Labor Day Sale is officially live. Shop end-of-summer fa</td><td>211</td><td>6,827</td><td>17</td><td>19</td></tr><tr><td>Sep 24</td><td>Not your average porch pumpkins. These guys are ready for th</td><td>157</td><td>9,646</td><td>14</td><td>25</td></tr><tr><td>Sep 26</td><td>Can't talk right now, spooky season is on the brain.</td><td>146</td><td>7,861</td><td>11</td><td>7</td></tr><tr><td>Sep 27</td><td>Your front yard is missing something... Comment SNAKE for th</td><td>111</td><td>8,113</td><td>16</td><td>19</td></tr><tr><td>Sep 20</td><td>The making of the Halloween magic. Trust the process.</td><td>67</td><td>4,922</td><td>5</td><td>13</td></tr>
+    <tr><td>Sep 12</td><td>This is your sign to start planning your next Halloween movi</td><td>10493</td><td><span class="mark-circle">187,226</span></td><td>2586</td><td>4990</td></tr><tr><td>Sep 17</td><td>Pumpkin picking looks a little different around here</td><td>978</td><td>18,678</td><td>17</td><td>23</td></tr><tr><td>Sep 13</td><td>Wake up, spooky season is calling. The mummies are out and H</td><td>468</td><td>20,644</td><td>36</td><td>258</td></tr><tr><td>Sep 1</td><td>Reminder that Halloween is 8 Saturdays away.</td><td>657</td><td>13,914</td><td>20</td><td>89</td></tr><tr><td>Sep 6</td><td>Just killing time until Halloween.</td><td>368</td><td>18,491</td><td>18</td><td>352</td></tr><tr><td>Sep 5</td><td>Mentally picking pumpkins, physically still by the pool</td><td>423</td><td>23,650</td><td>54</td><td>66</td></tr><tr><td>Sep 3</td><td>When the heat wave has you wishing for fall.</td><td>342</td><td>13,683</td><td>16</td><td>101</td></tr><tr><td>Sep 10</td><td>High-end Halloween decor without the scary setup. Just infla</td><td>185</td><td>18,267</td><td>41</td><td>63</td></tr><tr><td>Sep 22</td><td>You waited long enough, it's time to decorate. Happy first d</td><td>229</td><td>7,716</td><td>21</td><td>31</td></tr><tr><td>Sep 19</td><td>They're big. They're spooky. And they're officially shipping</td><td>217</td><td>9,613</td><td>15</td><td>48</td></tr><tr><td>Sep 15</td><td>Consider this your shortcut to the best-decorated house on t</td><td>167</td><td>10,185</td><td>14</td><td>71</td></tr><tr><td>Sep 4</td><td>The Labor Day Sale is officially live. Shop end-of-summer fa</td><td>211</td><td>6,827</td><td>17</td><td>19</td></tr><tr><td>Sep 24</td><td>Not your average porch pumpkins. These guys are ready for th</td><td>157</td><td>9,646</td><td>14</td><td>25</td></tr><tr><td>Sep 26</td><td>Can't talk right now, spooky season is on the brain.</td><td>146</td><td>7,861</td><td>11</td><td>7</td></tr><tr><td>Sep 27</td><td>Your front yard is missing something... Comment SNAKE for th</td><td>111</td><td>8,113</td><td>16</td><td>19</td></tr><tr><td>Sep 20</td><td>The making of the Halloween magic. Trust the process.</td><td>67</td><td>4,922</td><td>5</td><td>13</td></tr>
   </table>
 </section>
 

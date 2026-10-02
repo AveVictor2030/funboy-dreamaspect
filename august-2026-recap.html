@@ -191,9 +191,30 @@
   footer a{color:var(--orange-dark);font-weight:bold;text-decoration:none;}
   footer a:hover{text-decoration:underline;}
   @media (max-width:700px){.two-col{grid-template-columns:1fr;} .kpi-strip{grid-template-columns:repeat(2,1fr);}}
+
+  .report-nav{background:#1a1a1a;color:#fff;border-bottom:4px solid #ff6a1a;position:sticky;top:0;z-index:30;}
+  .report-nav-inner{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;align-items:stretch;gap:8px;min-height:48px;}
+  .report-nav a{color:#f0ddd0;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;display:inline-flex;align-items:center;padding:12px 12px;}
+  .report-nav a.is-current{color:#1a1a1a;background:#ff6a1a;}
+  .reports-tab{display:flex;align-items:stretch;margin-left:auto;background:#2a2a2a;}
+  .reports-tab.is-open{box-shadow:inset 0 -3px 0 #ff6a1a;}
+  .reports-label{display:inline-flex;align-items:center;padding:0 14px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;}
+  .reports-tab.is-open .reports-label{color:#ff6a1a;}
+  .mark-underline{background-image:linear-gradient(transparent 62%, #c73333 62%, #c73333 78%, transparent 78%);}
+  .mark-circle{display:inline-block;border:2px solid #c73333;border-radius:999px;padding:0 7px;line-height:1.35;}
 </style>
 </head>
 <body>
+<nav class="report-nav" aria-label="Portal">
+  <div class="report-nav-inner">
+    <a class="tab-dash" href="index.html">Dashboard</a>
+    <div class="reports-tab is-open">
+      <span class="reports-label">Reports</span>
+      <a class="tab-sep" href="september-2026-recap.html">September</a>
+      <a class="tab-aug is-current" href="august-2026-recap.html">August</a>
+    </div>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="inner">
