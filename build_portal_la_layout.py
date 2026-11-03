@@ -222,12 +222,19 @@ table.data th { background: var(--fog); font-weight: 700; }
   min-height: 100%;
 }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
-.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0; }
-.comp-card .role { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.comp-card dl { margin: 0; display: grid; gap: 6px; font-size: 12px; }
-.comp-card dt { color: var(--muted); font-weight: 600; }
-.comp-card dd { margin: 0; font-variant-numeric: tabular-nums; }
-.comp-card .tt { font-size: 11px; color: var(--muted); line-height: 1.35; margin: 0; }
+.comp-cover-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 0 0 12px; aspect-ratio: 3 / 1.05; }
+.comp-cover-row img, .comp-cover-row a { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; display: block; border: 1px solid var(--gray); }
+.comp-cover-ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ice), var(--blue)); font-family: Nohemi, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--black); }
+.comp-cover-row--empty { place-items: center; background: var(--fog); border: 1px dashed var(--gray); border-radius: 3px; color: var(--muted); font-size: 12px; }
+.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0 0 10px; }
+.comp-card .role { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.comp-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 0 0 8px; }
+.comp-kpis div { border: 1px solid var(--gray); border-radius: 3px; padding: 8px; background: var(--white); }
+.comp-kpis b { display: block; font-family: Nohemi, sans-serif; font-size: 16px; letter-spacing: -0.02em; }
+.comp-kpis span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.comp-card .link-ig { font-size: 12px; font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--black); }
+.stat-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 24px; }
+.stat-strip .kpi b { font-size: 20px; }
 .comp-block { margin-top: 28px; }
 .comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
@@ -241,7 +248,8 @@ table.data th { background: var(--fog); font-weight: 700; }
 @media (max-width: 680px) {
   .chrome, main, .archive-note { padding-left: 16px; padding-right: 16px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .kpi-row, .reach-grid { grid-template-columns: 1fr; }
+  .kpi-row, .reach-grid, .stat-strip { grid-template-columns: 1fr; }
+  .comp-grid { grid-template-columns: 1fr; }
 }
 """
 
@@ -307,6 +315,42 @@ def reel_posts_for(handle: str) -> list[dict]:
     return []
 
 
+def cover_mosaic(posts: list[dict], handle: str, limit: int = 3) -> str:
+    if not posts:
+        return f'<div class="comp-cover-row comp-cover-row--empty">No public reels yet</div>'
+    cells = ""
+    for p in sorted(posts, key=lambda x: x["date"], reverse=True)[:limit]:
+        href = ig_url(p["shortcode"], "reel")
+        if handle == "funboy":
+            src = cover_path(p["shortcode"])
+            cells += f'<a href="{href}" target="_blank" rel="noopener"><img src="{src}" alt="" loading="lazy" /></a>'
+        else:
+            cells += f'<a class="comp-cover-ph" href="{href}" target="_blank" rel="noopener">{p["date"][5:]}</a>'
+    return f'<div class="comp-cover-row">{cells}</div>'
+
+
+def pool_reel_grid(pool: list[dict], limit: int = 12) -> str:
+    html = '<div class="grid">'
+    for p in sorted(pool, key=lambda x: x["views"], reverse=True)[:limit]:
+        handle = p["account"]
+        href = ig_url(p["shortcode"], p.get("type", "reel"))
+        er = (p["likes"] + p["comments"]) / p["views"] * 100
+        if handle == "funboy":
+            thumb = f'<div class="thumb"><img src="{cover_path(p["shortcode"])}" alt="" loading="lazy" /></div>'
+        else:
+            thumb = f'<div class="thumb comp-cover-ph" style="min-height:140px">{p["date"][5:]}</div>'
+        cap = (p.get("caption") or p["shortcode"])[:40]
+        html += f"""<a class="card" href="{href}" target="_blank" rel="noopener">
+      {thumb}
+      <div class="meta">
+        <p class="place">{cap}</p>
+        <p class="who">@{handle} · {fmt(p['views'])} views</p>
+        <div class="stats"><span><b>{fmt(p['likes'])}</b> likes</span><span class="eng">{er:.1f}%</span></div>
+      </div></a>"""
+    html += "</div>"
+    return html
+
+
 def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
     html = '<div class="comp-grid">'
     for c in COMPETITOR_SHELF:
@@ -318,19 +362,20 @@ def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
         share = (med / c["followers"] * 100) if med else None
         brand_cls = " is-brand" if c.get("brand") else ""
         med_line = fmt(int(med)) if med is not None else "—"
-        share_line = f"{share:.2f}%" if share is not None else "—"
+        share_line = f"{share:.1f}%" if share is not None else "—"
         reels_line = str(reels_n) if reels_n else "—"
+        mosaic = cover_mosaic(posts, c["handle"])
         html += f"""<article class="comp-card{brand_cls}">
-  <p class="role">{c['role']}</p>
+  {mosaic}
+  <p class="role">{c['label']}</p>
   <p class="handle">@{c['handle']}</p>
-  <dl>
-    <div><dt>Followers</dt><dd>{fmt(c['followers'])}</dd></div>
-    <div><dt>Reels collected</dt><dd>{reels_line}</dd></div>
-    <div><dt>Median views</dt><dd>{med_line}</dd></div>
-    <div><dt>Views / followers</dt><dd>{share_line}</dd></div>
-  </dl>
-  <p class="tt">TikTok · {c['tiktok']}</p>
-  <p class="tt">Instagram · <a href="https://www.instagram.com/{c['handle']}/" target="_blank" rel="noopener">@{c['handle']}</a></p>
+  <div class="comp-kpis">
+    <div><b>{fmt(c['followers'])}</b><span>Followers</span></div>
+    <div><b>{reels_line}</b><span>Reels</span></div>
+    <div><b>{med_line}</b><span>Median views</span></div>
+    <div><b>{share_line}</b><span>Views / followers</span></div>
+  </div>
+  <a class="link-ig" href="https://www.instagram.com/{c['handle']}/" target="_blank" rel="noopener">Open Instagram</a>
 </article>"""
     html += "</div>"
     return html
@@ -338,7 +383,7 @@ def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
 
 def competitor_ig_cards(posts: list[dict], handle: str, med: float) -> str:
     if not posts:
-        return f'<p class="empty-shelf">No reels collected for @{handle} in this pass. TikTok and Instagram grids can be added when public video rows load.</p>'
+        return f'<div class="comp-cover-row comp-cover-row--empty">Profile only · reels not in this pass</div>'
     html = '<div class="grid">'
     for p in sorted(posts, key=lambda x: x["date"]):
         mult = p["views"] / med if med else 0
@@ -348,10 +393,16 @@ def competitor_ig_cards(posts: list[dict], handle: str, med: float) -> str:
         elif p.get("note"):
             badge = f'<span class="tag warn">{p["note"]}</span>'
         title = p.get("caption", p.get("shortcode", ""))[:48]
-        html += f"""<a class="card" href="{ig_url(p['shortcode'], 'reel')}" target="_blank" rel="noopener">
-      <div class="meta" style="padding:14px">
+        href = ig_url(p["shortcode"], "reel")
+        if handle == "funboy":
+            thumb = f'<div class="thumb"><img src="{cover_path(p["shortcode"])}" alt="" loading="lazy" /></div>'
+        else:
+            thumb = f'<div class="thumb comp-cover-ph" style="min-height:140px">{p["date"][5:]}</div>'
+        html += f"""<a class="card" href="{href}" target="_blank" rel="noopener">
+      {thumb}
+      <div class="meta">
         <p class="place">{title or p['date']}</p>
-        <p class="who">@{handle} · {p['date']} · {fmt(p['views'])} views · {mult:.2f}× median</p>
+        <p class="who">@{handle} · {fmt(p['views'])} views · {mult:.1f}× med</p>
         <ul class="counts"><li><b>{p['likes']}</b> likes</li><li><b>{p['comments']}</b> comments</li></ul>
         {badge}
       </div></a>"""
@@ -514,34 +565,25 @@ def build_benchmarks() -> str:
     subject = min(pool, key=lambda p: abs(p["views"] - med))
     center, lo, hi = log_normal_band(views)
     ranked = sorted(pool, key=lambda p: p["views"], reverse=True)
-    rows = ""
-    for i, p in enumerate(ranked, 1):
-        er = (p["likes"] + p["comments"]) / p["views"] * 100
-        cap = (p.get("caption") or p["shortcode"])[:36]
-        rows += f"<tr><td>{i:02d}</td><td>@{p['account']}</td><td>{p['date']}</td><td>{fmt(p['views'])}</td><td>{er:.2f}%</td><td>{cap}</td></tr>"
 
     body = f"""<p class="eyebrow">Benchmarks · MULE-14 math</p>
 <h1>View benchmark</h1>
-<p class="lead">Population statistics on every public reel we collected — FUNBOY October window plus competitor grids ({COLLECTED}). Engagement is (likes + comments) / views.</p>
 {competitor_shelf_cards()}
-<div class="section"><h2>Combined pool</h2>
-<table class="data">
-<tr><th>Metric</th><th>Value</th></tr>
-<tr><td>Reels in pool</td><td>{len(pool)} (@funboy {len(reel_posts_for('funboy'))} · @bigshinyballs {len(reel_posts_for('bigshinyballs'))})</td></tr>
-<tr><td>Sum of views</td><td>{fmt(int(sum(views)))}</td></tr>
-<tr><td>Average views</td><td>{avg:,.0f}</td></tr>
-<tr><td>Median views (subject)</td><td>{fmt(int(med))} · {subject['date']} · @{subject['account']}</td></tr>
-<tr><td>Population std. dev.</td><td>{sd:,.0f}</td></tr>
-<tr><td>Average + 1σ</td><td>{avg + sd:,.0f}</td></tr>
-<tr><td>Subject vs average</td><td>{fmt(int(abs(avg - subject['views'])))} {'below' if subject['views'] < avg else 'above'} ({abs((avg-subject['views'])/avg*100):.1f}%)</td></tr>
-<tr><td>Subject engagement</td><td>{(subject['likes']+subject['comments'])/subject['views']*100:.2f}% vs pool {(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.2f}%</td></tr>
-</table>
+<div class="stat-strip">
+  <div class="kpi"><b>{len(pool)}</b><span>Reels in pool</span></div>
+  <div class="kpi"><b>{fmt(int(sum(views)))}</b><span>Total public views</span></div>
+  <div class="kpi"><b>{avg:,.0f}</b><span>Average views</span></div>
+  <div class="kpi"><b>{sd:,.0f}</b><span>Std. dev.</span></div>
+  <div class="kpi"><b>{fmt(int(med))}</b><span>Median views</span></div>
+  <div class="kpi"><b>{(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.1f}%</b><span>Avg engagement</span></div>
+</div>
 {histogram_svg([int(v) for v in views], "View count histogram · combined collected reels")}
 {normal_curve_svg(views, center, lo, hi, float(subject["views"]))}
+<div class="section"><h2>Top reels in the pool</h2>
+<p class="who">FUNBOY + competitors · public views · tap opens Instagram</p>
+{pool_reel_grid(pool, limit=12)}
 </div>
-<div class="section"><h2>Ranked reels</h2>
-<table class="data"><tr><th>Rank</th><th>Account</th><th>Date</th><th>Views</th><th>Engagement</th><th>Caption</th></tr>{rows}</table></div>
-<p class="foot">Benchmark method from MULE-14 · Market Reel Report. Layout from la-reels ({LA_REELS_SOURCE}). Archive month recaps (Aug/Sep) stay on All reports — not merged into this pool yet.</p>"""
+<p class="foot">MULE-14 on collected public reels ({COLLECTED}). Layout from la-reels.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
 
 
@@ -562,18 +604,14 @@ def build_competitor() -> str:
 
     body = f"""<p class="eyebrow">Competitor research · mold 1</p>
 <h1>Competitor research</h1>
-<p class="lead">Inflatable / pool decor set — public Instagram (and TikTok where collected). FUNBOY October posts live on the main report; this page is competitors only.</p>
-<div class="section"><h2>01 · Competitor shelf</h2>
-{competitor_shelf_cards()}
-</div>
-<div class="section"><h2>02 · Signals</h2>
+{competitor_shelf_cards(competitors_only=True)}
+<div class="section"><h2>Signals</h2>
 <div class="reach-grid">
 <div><b>1</b><span>@bigshinyballs reach breakthrough (Oct 19)</span></div>
 <div><b>{fmt(BSB_POSTS_WINDOW[-1]['views'])}</b><span>BSB Oct 29 reach spike · low engagement</span></div>
 <div><b>2</b><span>Named shelf accounts without reel rows: @poolcandy, @bigmouthinc</span></div>
 </div></div>
-<div class="section"><h2>03 · Competitor content</h2>
-<p class="who">Instagram reels in window · TikTok rows when the logged-out grid loads</p>
+<div class="section"><h2>Competitor content</h2>
 {comp_blocks}
 <p class="who" style="margin-top:16px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
 </div>

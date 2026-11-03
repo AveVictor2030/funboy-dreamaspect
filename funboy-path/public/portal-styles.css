@@ -158,12 +158,19 @@ table.data th { background: var(--fog); font-weight: 700; }
   min-height: 100%;
 }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
-.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0; }
-.comp-card .role { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.comp-card dl { margin: 0; display: grid; gap: 6px; font-size: 12px; }
-.comp-card dt { color: var(--muted); font-weight: 600; }
-.comp-card dd { margin: 0; font-variant-numeric: tabular-nums; }
-.comp-card .tt { font-size: 11px; color: var(--muted); line-height: 1.35; margin: 0; }
+.comp-cover-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 0 0 12px; aspect-ratio: 3 / 1.05; }
+.comp-cover-row img, .comp-cover-row a { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; display: block; border: 1px solid var(--gray); }
+.comp-cover-ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ice), var(--blue)); font-family: Nohemi, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--black); }
+.comp-cover-row--empty { place-items: center; background: var(--fog); border: 1px dashed var(--gray); border-radius: 3px; color: var(--muted); font-size: 12px; }
+.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0 0 10px; }
+.comp-card .role { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.comp-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 0 0 8px; }
+.comp-kpis div { border: 1px solid var(--gray); border-radius: 3px; padding: 8px; background: var(--white); }
+.comp-kpis b { display: block; font-family: Nohemi, sans-serif; font-size: 16px; letter-spacing: -0.02em; }
+.comp-kpis span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.comp-card .link-ig { font-size: 12px; font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--black); }
+.stat-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 24px; }
+.stat-strip .kpi b { font-size: 20px; }
 .comp-block { margin-top: 28px; }
 .comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
