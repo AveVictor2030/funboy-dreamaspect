@@ -149,6 +149,16 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .kpi span { font-size: 12px; color: var(--muted); }
 .section { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--gray); }
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.grid-dense { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.grid-dense .card { flex-direction: column; }
+.grid-dense .thumb { aspect-ratio: 4 / 5; max-height: 88px; }
+.grid-dense .meta { padding: 6px 8px 8px; }
+.grid-dense .place { font-size: 11px; margin: 0 0 2px; line-height: 1.25; }
+.grid-dense .who { font-size: 10px; margin: 0 0 4px; }
+.grid-dense .stats { font-size: 11px; }
+.grid-dense .stats b { font-size: 11px; }
+.grid-dense .eng { font-size: 10px; padding: 1px 4px; }
+.grid-dense .counts, .grid-dense .tag { display: none; }
 .card {
   display: flex;
   flex-direction: column;
@@ -210,31 +220,39 @@ table.data th { background: var(--fog); font-weight: 700; }
 .reach-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .reach-grid div { border: 1px solid var(--gray); border-radius: 4px; padding: 12px; background: var(--fog); }
 .reach-grid b { display: block; font-family: Nohemi, sans-serif; font-size: 24px; }
-.comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 28px; }
+.comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 160px)); gap: 8px; margin: 0 0 20px; justify-content: start; }
 .comp-card {
   border: 1px solid var(--gray);
   border-radius: 4px;
-  padding: 14px 14px 12px;
+  padding: 8px 10px 10px;
   background: var(--fog);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 100%;
+  gap: 6px;
+  min-height: 0;
 }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
-.comp-cover-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 0 0 12px; aspect-ratio: 3 / 1.05; }
-.comp-cover-row img, .comp-cover-row a { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; display: block; border: 1px solid var(--gray); }
-.comp-cover-ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ice), var(--blue)); font-family: Nohemi, sans-serif; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--black); }
-.comp-cover-row--empty { place-items: center; background: var(--fog); border: 1px dashed var(--gray); border-radius: 3px; color: var(--muted); font-size: 12px; }
-.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0 0 10px; }
-.comp-card .role { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
-.comp-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 0 0 8px; }
-.comp-kpis div { border: 1px solid var(--gray); border-radius: 3px; padding: 8px; background: var(--white); }
-.comp-kpis b { display: block; font-family: Nohemi, sans-serif; font-size: 16px; letter-spacing: -0.02em; }
-.comp-kpis span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-.comp-card .link-ig { font-size: 12px; font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--black); }
-.stat-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 24px; }
-.stat-strip .kpi b { font-size: 20px; }
+.comp-cover-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin: 0; height: 36px; }
+.comp-cover-row img, .comp-cover-row a { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; display: block; border: 1px solid var(--gray); }
+.comp-cover-ph { font-size: 10px; }
+.comp-cover-row--empty { height: 36px; font-size: 10px; }
+.comp-card .handle { font-size: 14px; margin: 0; }
+.comp-card .role { font-size: 9px; margin: 0; }
+.comp-kpis { grid-template-columns: repeat(2, 1fr); gap: 4px; margin: 0; }
+.comp-kpis div { padding: 4px 6px; }
+.comp-kpis b { font-size: 13px; }
+.comp-kpis span { font-size: 9px; }
+.comp-cover-ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ice), var(--blue)); font-family: Nohemi, sans-serif; font-weight: 500; text-decoration: none; color: var(--black); }
+.comp-cover-row--empty { place-items: center; background: var(--fog); border: 1px dashed var(--gray); border-radius: 2px; color: var(--muted); }
+.comp-kpis { display: grid; }
+.comp-kpis div { border: 1px solid var(--gray); border-radius: 2px; background: var(--white); }
+.comp-kpis b { display: block; font-family: Nohemi, sans-serif; letter-spacing: -0.02em; }
+.comp-kpis span { color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.comp-card .link-ig { font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--black); }
+.stat-strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin: 0 0 18px; }
+.stat-strip .kpi { padding: 8px 10px; }
+.stat-strip .kpi b { font-size: 16px; }
+.stat-strip .kpi span { font-size: 10px; }
 .comp-block { margin-top: 28px; }
 .comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
@@ -244,7 +262,7 @@ table.data th { background: var(--fog); font-weight: 700; }
 .archive-list.mold2 a:hover { border-color: var(--black); transform: translateY(-2px); }
 .empty-shelf { border: 1px dashed var(--gray); border-radius: 4px; padding: 18px; color: var(--muted); font-size: 14px; margin: 0 0 16px; }
 @media (prefers-reduced-motion: reduce) { .mold2-card { animation: none; } }
-@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } .comp-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid-dense { grid-template-columns: repeat(4, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } .comp-grid { grid-template-columns: repeat(2, minmax(0, 160px)); } .stat-strip { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 680px) {
   .chrome, main, .archive-note { padding-left: 16px; padding-right: 16px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -329,8 +347,8 @@ def cover_mosaic(posts: list[dict], handle: str, limit: int = 3) -> str:
     return f'<div class="comp-cover-row">{cells}</div>'
 
 
-def pool_reel_grid(pool: list[dict], limit: int = 12) -> str:
-    html = '<div class="grid">'
+def pool_reel_grid(pool: list[dict], limit: int = 8) -> str:
+    html = '<div class="grid grid-dense">'
     for p in sorted(pool, key=lambda x: x["views"], reverse=True)[:limit]:
         handle = p["account"]
         href = ig_url(p["shortcode"], p.get("type", "reel"))
@@ -338,14 +356,14 @@ def pool_reel_grid(pool: list[dict], limit: int = 12) -> str:
         if handle == "funboy":
             thumb = f'<div class="thumb"><img src="{cover_path(p["shortcode"])}" alt="" loading="lazy" /></div>'
         else:
-            thumb = f'<div class="thumb comp-cover-ph" style="min-height:140px">{p["date"][5:]}</div>'
-        cap = (p.get("caption") or p["shortcode"])[:40]
+            thumb = f'<div class="thumb comp-cover-ph">{p["date"][5:]}</div>'
+        cap = (p.get("caption") or p["shortcode"])[:28]
         html += f"""<a class="card" href="{href}" target="_blank" rel="noopener">
       {thumb}
       <div class="meta">
         <p class="place">{cap}</p>
-        <p class="who">@{handle} · {fmt(p['views'])} views</p>
-        <div class="stats"><span><b>{fmt(p['likes'])}</b> likes</span><span class="eng">{er:.1f}%</span></div>
+        <p class="who">@{handle} · {fmt(p['views'])}</p>
+        <div class="stats"><span class="eng">{er:.1f}%</span></div>
       </div></a>"""
     html += "</div>"
     return html
@@ -384,26 +402,25 @@ def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
 def competitor_ig_cards(posts: list[dict], handle: str, med: float) -> str:
     if not posts:
         return f'<div class="comp-cover-row comp-cover-row--empty">Profile only · reels not in this pass</div>'
-    html = '<div class="grid">'
+    html = '<div class="grid grid-dense">'
     for p in sorted(posts, key=lambda x: x["date"]):
         mult = p["views"] / med if med else 0
         badge = ""
         if p.get("breakthrough"):
-            badge = '<span class="tag boost">Breakthrough · reach</span>'
+            badge = '<span class="tag boost">Breakthrough</span>'
         elif p.get("note"):
-            badge = f'<span class="tag warn">{p["note"]}</span>'
-        title = p.get("caption", p.get("shortcode", ""))[:48]
+            badge = f'<span class="tag warn">Spike</span>'
+        title = p.get("caption", p.get("shortcode", ""))[:28]
         href = ig_url(p["shortcode"], "reel")
         if handle == "funboy":
             thumb = f'<div class="thumb"><img src="{cover_path(p["shortcode"])}" alt="" loading="lazy" /></div>'
         else:
-            thumb = f'<div class="thumb comp-cover-ph" style="min-height:140px">{p["date"][5:]}</div>'
+            thumb = f'<div class="thumb comp-cover-ph">{p["date"][5:]}</div>'
         html += f"""<a class="card" href="{href}" target="_blank" rel="noopener">
       {thumb}
       <div class="meta">
         <p class="place">{title or p['date']}</p>
-        <p class="who">@{handle} · {fmt(p['views'])} views · {mult:.1f}× med</p>
-        <ul class="counts"><li><b>{p['likes']}</b> likes</li><li><b>{p['comments']}</b> comments</li></ul>
+        <p class="who">@{handle} · {fmt(p['views'])} · {mult:.1f}×</p>
         {badge}
       </div></a>"""
     html += "</div>"
@@ -579,9 +596,8 @@ def build_benchmarks() -> str:
 </div>
 {histogram_svg([int(v) for v in views], "View count histogram · combined collected reels")}
 {normal_curve_svg(views, center, lo, hi, float(subject["views"]))}
-<div class="section"><h2>Top reels in the pool</h2>
-<p class="who">FUNBOY + competitors · public views · tap opens Instagram</p>
-{pool_reel_grid(pool, limit=12)}
+<div class="section"><h2>Top reels</h2>
+{pool_reel_grid(pool, limit=8)}
 </div>
 <p class="foot">MULE-14 on collected public reels ({COLLECTED}). Layout from la-reels.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
