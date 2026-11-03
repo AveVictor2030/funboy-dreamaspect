@@ -192,6 +192,7 @@ table.data th { background: var(--fog); font-weight: 700; }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
 .comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 160px)); gap: 8px; margin: 0 0 20px; justify-content: start; max-width: 100%; }
 .comp-card { overflow: hidden; max-width: 160px; }
+.comp-grid--no-covers .comp-card { max-width: 148px; padding-top: 10px; }
 .comp-cover-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -210,9 +211,10 @@ table.data th { background: var(--fog); font-weight: 700; }
 }
 .comp-cover-row img {
   width: 100%;
-  height: 32px;
-  max-height: 32px;
+  height: 32px !important;
+  max-height: 32px !important;
   object-fit: cover;
+  object-position: center;
   border-radius: 2px;
   display: block;
   border: 1px solid var(--gray);

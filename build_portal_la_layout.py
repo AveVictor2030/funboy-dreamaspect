@@ -256,6 +256,7 @@ table.data th { background: var(--fog); font-weight: 700; }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
 .comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 160px)); gap: 8px; margin: 0 0 20px; justify-content: start; max-width: 100%; }
 .comp-card { overflow: hidden; max-width: 160px; }
+.comp-grid--no-covers .comp-card { max-width: 148px; padding-top: 10px; }
 .comp-cover-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -274,9 +275,10 @@ table.data th { background: var(--fog); font-weight: 700; }
 }
 .comp-cover-row img {
   width: 100%;
-  height: 32px;
-  max-height: 32px;
+  height: 32px !important;
+  max-height: 32px !important;
   object-fit: cover;
+  object-position: center;
   border-radius: 2px;
   display: block;
   border: 1px solid var(--gray);
@@ -392,10 +394,17 @@ def cover_mosaic(posts: list[dict], handle: str, limit: int = 3) -> str:
         href = ig_url(p["shortcode"], "reel")
         if handle == "funboy":
             src = cover_path(p["shortcode"])
-            cells += f'<a href="{href}" target="_blank" rel="noopener"><img src="{src}" alt="" loading="lazy" /></a>'
+            cells += (
+                f'<a href="{href}" target="_blank" rel="noopener">'
+                f'<img src="{src}" alt="" width="48" height="32" loading="lazy" decoding="async" /></a>'
+            )
         else:
             cells += f'<a class="comp-cover-ph" href="{href}" target="_blank" rel="noopener">{p["date"][5:]}</a>'
-    return f'<div class="comp-cover-row">{cells}</div>'
+    return (
+        '<div class="comp-cover-row" style="height:32px;max-height:32px;overflow:hidden;'
+        'display:grid;grid-template-columns:repeat(3,1fr);gap:3px">'
+        f"{cells}</div>"
+    )
 
 
 def pool_reel_grid(pool: list[dict], limit: int = 8) -> str:
@@ -420,8 +429,9 @@ def pool_reel_grid(pool: list[dict], limit: int = 8) -> str:
     return html
 
 
-def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
-    html = '<div class="comp-grid">'
+def competitor_shelf_cards(*, competitors_only: bool = False, show_covers: bool = True) -> str:
+    grid_cls = "comp-grid" if show_covers else "comp-grid comp-grid--no-covers"
+    html = f'<div class="{grid_cls}">'
     for c in COMPETITOR_SHELF:
         if competitors_only and c.get("brand"):
             continue
@@ -433,7 +443,7 @@ def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
         med_line = fmt(int(med)) if med is not None else "—"
         share_line = f"{share:.1f}%" if share is not None else "—"
         reels_line = str(reels_n) if reels_n else "—"
-        mosaic = cover_mosaic(posts, c["handle"])
+        mosaic = cover_mosaic(posts, c["handle"]) if show_covers else ""
         html += f"""<article class="comp-card{brand_cls}">
   {mosaic}
   <p class="role">{c['label']}</p>
@@ -762,7 +772,7 @@ def build_benchmarks() -> str:
 
     body = f"""<p class="eyebrow">Benchmarks · MULE-14 math</p>
 <h1>View benchmark</h1>
-{competitor_shelf_cards()}
+{competitor_shelf_cards(show_covers=False)}
 <div class="stat-strip">
   <div class="kpi"><b>{len(pool)}</b><span>Reels in pool</span></div>
   <div class="kpi"><b>{fmt(int(sum(views)))}</b><span>Total public views</span></div>
