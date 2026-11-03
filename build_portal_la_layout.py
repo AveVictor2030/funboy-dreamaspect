@@ -26,6 +26,42 @@ from build_public_report import (  # noqa: E402
 
 LA_REELS_SOURCE = "https://www.dreamaspect.co/la-reels/ (Dream Aspect worker da-report-la-reels; layout and fonts copied Nov 3, 2026)"
 
+# Public competitor shelf (inflatable / pool decor). Reels only where collected in this pass.
+COMPETITOR_SHELF = [
+    {
+        "handle": "funboy",
+        "label": "FUNBOY",
+        "role": "Subject brand",
+        "followers": 337_091,
+        "tiktok": "46.1K followers · video grid did not load logged out",
+        "brand": True,
+    },
+    {
+        "handle": "bigshinyballs",
+        "label": "Big Shiny Balls",
+        "role": "Competitor · collected",
+        "followers": 63_495,
+        "tiktok": "24 followers · 0 public videos",
+        "brand": False,
+    },
+    {
+        "handle": "poolcandy",
+        "label": "PoolCandy",
+        "role": "Competitor · profile only",
+        "followers": 9_412,
+        "tiktok": "Not collected this pass",
+        "brand": False,
+    },
+    {
+        "handle": "bigmouthinc",
+        "label": "BigMouth Inc.",
+        "role": "Competitor · profile only",
+        "followers": 24_402,
+        "tiktok": "Not collected this pass",
+        "brand": False,
+    },
+]
+
 CSS = """@font-face {
   font-family: Nohemi;
   src: url("fonts/Nohemi-Medium.ttf") format("truetype");
@@ -174,7 +210,34 @@ table.data th { background: var(--fog); font-weight: 700; }
 .reach-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .reach-grid div { border: 1px solid var(--gray); border-radius: 4px; padding: 12px; background: var(--fog); }
 .reach-grid b { display: block; font-family: Nohemi, sans-serif; font-size: 24px; }
-@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+.comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 28px; }
+.comp-card {
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  padding: 14px 14px 12px;
+  background: var(--fog);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100%;
+}
+.comp-card.is-brand { border-color: var(--black); background: var(--white); }
+.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0; }
+.comp-card .role { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.comp-card dl { margin: 0; display: grid; gap: 6px; font-size: 12px; }
+.comp-card dt { color: var(--muted); font-weight: 600; }
+.comp-card dd { margin: 0; font-variant-numeric: tabular-nums; }
+.comp-card .tt { font-size: 11px; color: var(--muted); line-height: 1.35; margin: 0; }
+.comp-block { margin-top: 28px; }
+.comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
+@keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
+.mold2-card { animation: 2.8s ease-in-out infinite edgeGlowOneOff; border-radius: 4px; }
+.archive-list.mold2 { gap: 14px; margin-top: 20px; }
+.archive-list.mold2 a { transition: border-color 0.2s ease, transform 0.2s ease; }
+.archive-list.mold2 a:hover { border-color: var(--black); transform: translateY(-2px); }
+.empty-shelf { border: 1px dashed var(--gray); border-radius: 4px; padding: 18px; color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+@media (prefers-reduced-motion: reduce) { .mold2-card { animation: none; } }
+@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } .comp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 680px) {
   .chrome, main, .archive-note { padding-left: 16px; padding-right: 16px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -233,18 +296,76 @@ def cover_path(shortcode: str) -> str:
 
 
 def rules_block() -> str:
-    return (
-        '<div class="rules">\n'
-        "  <strong>How this report is built</strong>\n"
-        "  <ul>\n"
-        "    <li>Public pages only — logged-out Instagram and TikTok profiles. No account login, no native Insights, no private dashboards.</li>\n"
-        "    <li>Counts must be visible on the public post or profile. If likes or views are hidden, the field stays blank and that post is excluded from engagement averages.</li>\n"
-        "    <li>Instagram reel views use public <code>video_view_count</code>, not Insights reach or impressions.</li>\n"
-        "    <li>Window: first 12-tile Instagram grid on @funboy, Pacific dates from <code>taken_at</code>. TikTok post rows only when the logged-out video grid loads.</li>\n"
-        f"    <li>Collected {COLLECTED}. Window {WINDOW_LABEL}.</li>\n"
-        "  </ul>\n"
-        "</div>"
-    )
+    return ""
+
+
+def reel_posts_for(handle: str) -> list[dict]:
+    if handle == "funboy":
+        return [p for p in FUN_POSTS if p.get("views")]
+    if handle == "bigshinyballs":
+        return list(BSB_POSTS_WINDOW)
+    return []
+
+
+def competitor_shelf_cards(*, competitors_only: bool = False) -> str:
+    html = '<div class="comp-grid">'
+    for c in COMPETITOR_SHELF:
+        if competitors_only and c.get("brand"):
+            continue
+        posts = reel_posts_for(c["handle"])
+        med = median([p["views"] for p in posts]) if posts else None
+        reels_n = len(posts)
+        share = (med / c["followers"] * 100) if med else None
+        brand_cls = " is-brand" if c.get("brand") else ""
+        med_line = fmt(int(med)) if med is not None else "—"
+        share_line = f"{share:.2f}%" if share is not None else "—"
+        reels_line = str(reels_n) if reels_n else "—"
+        html += f"""<article class="comp-card{brand_cls}">
+  <p class="role">{c['role']}</p>
+  <p class="handle">@{c['handle']}</p>
+  <dl>
+    <div><dt>Followers</dt><dd>{fmt(c['followers'])}</dd></div>
+    <div><dt>Reels collected</dt><dd>{reels_line}</dd></div>
+    <div><dt>Median views</dt><dd>{med_line}</dd></div>
+    <div><dt>Views / followers</dt><dd>{share_line}</dd></div>
+  </dl>
+  <p class="tt">TikTok · {c['tiktok']}</p>
+  <p class="tt">Instagram · <a href="https://www.instagram.com/{c['handle']}/" target="_blank" rel="noopener">@{c['handle']}</a></p>
+</article>"""
+    html += "</div>"
+    return html
+
+
+def competitor_ig_cards(posts: list[dict], handle: str, med: float) -> str:
+    if not posts:
+        return f'<p class="empty-shelf">No reels collected for @{handle} in this pass. TikTok and Instagram grids can be added when public video rows load.</p>'
+    html = '<div class="grid">'
+    for p in sorted(posts, key=lambda x: x["date"]):
+        mult = p["views"] / med if med else 0
+        badge = ""
+        if p.get("breakthrough"):
+            badge = '<span class="tag boost">Breakthrough · reach</span>'
+        elif p.get("note"):
+            badge = f'<span class="tag warn">{p["note"]}</span>'
+        title = p.get("caption", p.get("shortcode", ""))[:48]
+        html += f"""<a class="card" href="{ig_url(p['shortcode'], 'reel')}" target="_blank" rel="noopener">
+      <div class="meta" style="padding:14px">
+        <p class="place">{title or p['date']}</p>
+        <p class="who">@{handle} · {p['date']} · {fmt(p['views'])} views · {mult:.2f}× median</p>
+        <ul class="counts"><li><b>{p['likes']}</b> likes</li><li><b>{p['comments']}</b> comments</li></ul>
+        {badge}
+      </div></a>"""
+    html += "</div>"
+    return html
+
+
+def all_collected_reels() -> list[dict]:
+    rows: list[dict] = []
+    for p in reel_posts_for("funboy"):
+        rows.append({**p, "account": "funboy"})
+    for p in reel_posts_for("bigshinyballs"):
+        rows.append({**p, "account": "bigshinyballs", "caption": p.get("shortcode", ""), "type": "reel"})
+    return rows
 
 
 def post_cards(posts: list[dict], reels_only: bool = False) -> str:
@@ -346,8 +467,6 @@ def build_october() -> str:
 
     body = f"""<p class="eyebrow">Current report · public social</p>
 <h1>October report</h1>
-<p class="lead">FUNBOY Instagram and TikTok for {WINDOW_LABEL}. This is the active report. Benchmarks and competitor research live on their own pages; August and September are archived under All reports.</p>
-{rules_block()}
 <div class="kpi-row">
   <div class="kpi"><b>12</b><span>Instagram posts (11 reels + 1 photo)</span></div>
   <div class="kpi"><b>{fmt(total_likes)}</b><span>Instagram likes</span></div>
@@ -360,7 +479,7 @@ def build_october() -> str:
 <p class="lead">Instagram likes vs September recap tile. Views not compared — September used Insights.</p>
 <table class="data">
 <tr><th></th><th>Oct 10–Nov 1 (public)</th><th>September recap</th><th>Result</th></tr>
-<tr><td>Instagram likes</td><td><span class="mark-circle">{fmt(total_likes)}</span></td><td>{fmt(SEP_IG_LIKES)}</td><td class="worse"><span class="mark-underline">{like_delta} vs September</span></td></tr>
+<tr><td>Instagram likes</td><td><span class="mark-circle">{fmt(total_likes)}</span></td><td>{fmt(SEP_IG_LIKES)}</td><td class="worse">{like_delta} vs September</td></tr>
 <tr><td>Instagram posts</td><td>12</td><td>17</td><td>—</td></tr>
 <tr><td>Days covered</td><td>23</td><td>30</td><td>—</td></tr>
 </table></div>
@@ -387,103 +506,90 @@ def build_october() -> str:
 
 
 def build_benchmarks() -> str:
-    reels = [p for p in FUN_POSTS if p.get("views")]
-    views = [float(p["views"]) for p in reels]
+    pool = all_collected_reels()
+    views = [float(p["views"]) for p in pool]
     avg = sum(views) / len(views)
     sd = pop_std(views)
     med = median(views)
-    subject = min(reels, key=lambda p: abs(p["views"] - med))
+    subject = min(pool, key=lambda p: abs(p["views"] - med))
     center, lo, hi = log_normal_band(views)
-    ranked = sorted(reels, key=lambda p: p["views"], reverse=True)
+    ranked = sorted(pool, key=lambda p: p["views"], reverse=True)
     rows = ""
     for i, p in enumerate(ranked, 1):
         er = (p["likes"] + p["comments"]) / p["views"] * 100
-        rows += f"<tr><td>{i:02d}</td><td>{p['date']}</td><td>{fmt(p['views'])}</td><td>{er:.2f}%</td><td>{p['caption'][:40]}</td></tr>"
+        cap = (p.get("caption") or p["shortcode"])[:36]
+        rows += f"<tr><td>{i:02d}</td><td>@{p['account']}</td><td>{p['date']}</td><td>{fmt(p['views'])}</td><td>{er:.2f}%</td><td>{cap}</td></tr>"
 
     body = f"""<p class="eyebrow">Benchmarks · MULE-14 math</p>
 <h1>View benchmark</h1>
-<p class="lead">Population statistics on FUNBOY public reel views for {WINDOW_LABEL}. Engagement is (likes + comments) / views. Graphs describe this ranked list only — not every reel the brand ever posted.</p>
-{rules_block()}
+<p class="lead">Population statistics on every public reel we collected — FUNBOY October window plus competitor grids ({COLLECTED}). Engagement is (likes + comments) / views.</p>
+{competitor_shelf_cards()}
+<div class="section"><h2>Combined pool</h2>
 <table class="data">
 <tr><th>Metric</th><th>Value</th></tr>
-<tr><td>Reels in window</td><td>{len(reels)}</td></tr>
+<tr><td>Reels in pool</td><td>{len(pool)} (@funboy {len(reel_posts_for('funboy'))} · @bigshinyballs {len(reel_posts_for('bigshinyballs'))})</td></tr>
 <tr><td>Sum of views</td><td>{fmt(int(sum(views)))}</td></tr>
 <tr><td>Average views</td><td>{avg:,.0f}</td></tr>
-<tr><td>Median views (subject)</td><td>{fmt(int(med))} · {subject['date']}</td></tr>
+<tr><td>Median views (subject)</td><td>{fmt(int(med))} · {subject['date']} · @{subject['account']}</td></tr>
 <tr><td>Population std. dev.</td><td>{sd:,.0f}</td></tr>
 <tr><td>Average + 1σ</td><td>{avg + sd:,.0f}</td></tr>
-<tr><td>Subject vs average</td><td>{fmt(int(avg - subject['views']))} below ({((avg-subject['views'])/avg*100):.1f}% under)</td></tr>
-<tr><td>Subject engagement</td><td>{(subject['likes']+subject['comments'])/subject['views']*100:.2f}% vs pool {(sum((p['likes']+p['comments'])/p['views'] for p in reels)/len(reels)*100):.2f}%</td></tr>
+<tr><td>Subject vs average</td><td>{fmt(int(abs(avg - subject['views'])))} {'below' if subject['views'] < avg else 'above'} ({abs((avg-subject['views'])/avg*100):.1f}%)</td></tr>
+<tr><td>Subject engagement</td><td>{(subject['likes']+subject['comments'])/subject['views']*100:.2f}% vs pool {(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.2f}%</td></tr>
 </table>
-{histogram_svg([int(v) for v in views], "View count histogram (6 bins, this window)")}
+{histogram_svg([int(v) for v in views], "View count histogram · combined collected reels")}
 {normal_curve_svg(views, center, lo, hi, float(subject["views"]))}
+</div>
 <div class="section"><h2>Ranked reels</h2>
-<table class="data"><tr><th>Rank</th><th>Date</th><th>Views</th><th>Engagement</th><th>Caption</th></tr>{rows}</table></div>
-<p class="foot">Benchmark method from MULE-14 · Market Reel Report. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
+<table class="data"><tr><th>Rank</th><th>Account</th><th>Date</th><th>Views</th><th>Engagement</th><th>Caption</th></tr>{rows}</table></div>
+<p class="foot">Benchmark method from MULE-14 · Market Reel Report. Layout from la-reels ({LA_REELS_SOURCE}). Archive month recaps (Aug/Sep) stay on All reports — not merged into this pool yet.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
 
 
 def build_competitor() -> str:
-    fun_followers = 337091
-    bsb_followers = 63495
-    fun_reels = [p for p in FUN_POSTS if p.get("views")]
-    fun_med = median([p["views"] for p in fun_reels])
-    bsb_med = median([p["views"] for p in BSB_POSTS_WINDOW])
-    fun_share = fun_med / fun_followers * 100
-    bsb_share = bsb_med / bsb_followers * 100
+    bsb_posts = reel_posts_for("bigshinyballs")
+    bsb_med = median([p["views"] for p in bsb_posts]) if bsb_posts else 0
+    comp_blocks = ""
+    for c in COMPETITOR_SHELF:
+        if c.get("brand"):
+            continue
+        posts = reel_posts_for(c["handle"])
+        med = median([p["views"] for p in posts]) if posts else 0.0
+        comp_blocks += f"""<div class="comp-block">
+<h3>@{c['handle']} · {c['label']}</h3>
+<p class="who">Instagram public reels · TikTok: {c['tiktok']}</p>
+{competitor_ig_cards(posts, c['handle'], med or bsb_med or 1.0)}
+</div>"""
 
     body = f"""<p class="eyebrow">Competitor research · mold 1</p>
 <h1>Competitor research</h1>
-<p class="lead">Public Instagram grids only — inflatable decor set. FUNBOY vs Big Shiny Balls (required). PoolCandy and BigMouth named but reels not collected in this pass.</p>
-{rules_block()}
-<div class="section"><h2>01 · Side by side</h2>
-<table class="data">
-<tr><th></th><th>@funboy</th><th>@bigshinyballs</th></tr>
-<tr><td>Followers</td><td>{fmt(fun_followers)}</td><td>{fmt(bsb_followers)}</td></tr>
-<tr><td>Reels in window</td><td>{len(fun_reels)}</td><td>{len(BSB_POSTS_WINDOW)}</td></tr>
-<tr><td>Median views / reel</td><td><span class="mark-underline">{fmt(int(fun_med))}</span></td><td>{fmt(int(bsb_med))}</td></tr>
-<tr><td>Median views / followers</td><td>{fun_share:.2f}%</td><td><span class="mark-circle">{bsb_share:.2f}%</span></td></tr>
-<tr><td>TikTok logged out</td><td>46.1K followers · grid failed</td><td>24 followers · 0 videos</td></tr>
-</table></div>
-<div class="section"><h2>02 · What the grids say</h2>
+<p class="lead">Inflatable / pool decor set — public Instagram (and TikTok where collected). FUNBOY October posts live on the main report; this page is competitors only.</p>
+<div class="section"><h2>01 · Competitor shelf</h2>
+{competitor_shelf_cards()}
+</div>
+<div class="section"><h2>02 · Signals</h2>
 <div class="reach-grid">
-<div><b>2</b><span>FUNBOY reach breakthroughs (Oct 13 & Oct 24)</span></div>
-<div><b>1</b><span>Big Shiny Balls reach breakthrough (Oct 19)</span></div>
+<div><b>1</b><span>@bigshinyballs reach breakthrough (Oct 19)</span></div>
 <div><b>{fmt(BSB_POSTS_WINDOW[-1]['views'])}</b><span>BSB Oct 29 reach spike · low engagement</span></div>
+<div><b>2</b><span>Named shelf accounts without reel rows: @poolcandy, @bigmouthinc</span></div>
 </div></div>
-<div class="section"><h2>03 · Every reel</h2>
-<p class="who">Breakthrough = ≥3× account median views and ≥0.7× median engagement rate</p>
-<h2 style="font-size:20px">@funboy</h2>
-{post_cards(fun_reels, reels_only=True)}
-<h2 style="font-size:20px;margin-top:28px">@bigshinyballs · Oct 1–29 window</h2>
-<div class="grid">"""
-    for p in sorted(BSB_POSTS_WINDOW, key=lambda x: x["date"]):
-        mult = p["views"] / bsb_med
-        badge = '<span class="tag boost">Breakthrough · reach</span>' if p.get("breakthrough") else (
-            f'<span class="tag warn">{p["note"]}</span>' if p.get("note") else ""
-        )
-        body += f"""<a class="card" href="{ig_url(p['shortcode'], 'reel')}" target="_blank" rel="noopener">
-      <div class="meta" style="padding:14px">
-        <p class="place">{p['date']}</p>
-        <p class="who">@bigshinyballs · {fmt(p['views'])} views · {mult:.2f}× median</p>
-        <ul class="counts"><li><b>{p['likes']}</b> likes</li><li><b>{p['comments']}</b> comments</li></ul>
-        {badge}
-      </div></a>"""
-    body += f"""</div>
-<p class="who" style="margin-top:16px">Pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} views) still on grid — excluded from Oct medians.</p>
+<div class="section"><h2>03 · Competitor content</h2>
+<p class="who">Instagram reels in window · TikTok rows when the logged-out grid loads</p>
+{comp_blocks}
+<p class="who" style="margin-top:16px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
+</div>
 <p class="foot">Competitor shelf follows DA Portal competitor-watch mold. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
     return page_shell("FUNBOY · Competitor research", "competitor", body)
 
 
 def build_all_reports() -> str:
-    body = """<p class="eyebrow">Archive</p>
+    body = """<p class="eyebrow">Archive · mold 2</p>
 <h1>All reports</h1>
-<p class="lead">Earlier full-month recaps kept for reference. They use the legacy brown portal styling and September/August scopes (Insights-backed views on Instagram where noted). The current report is the October public window.</p>
-<div class="archive-list">
-  <a href="september-2026-recap.html"><span><strong>September 2026</strong><br><span class="who">Full month · Insights-backed Instagram views</span></span><span class="pill">Archive</span></a>
-  <a href="august-2026-recap.html"><span><strong>August 2026</strong><br><span class="who">Full month · prior recap format</span></span><span class="pill">Archive</span></a>
+<p class="lead">Earlier full-month recaps. Legacy brown styling on August and September; active window is the October public report.</p>
+<div class="archive-list mold2">
+  <a class="mold2-card" href="september-2026-recap.html"><span><strong>September 2026</strong><br><span class="who">Full month · Instagram Insights + TikTok</span></span><span class="pill">Archive</span></a>
+  <a class="mold2-card" href="august-2026-recap.html"><span><strong>August 2026</strong><br><span class="who">Full month · Instagram + TikTok</span></span><span class="pill">Archive</span></a>
 </div>
-<p class="foot">Return to the <a href="index.html">October report</a> for the active public-only window.</p>"""
+<p class="foot">Card edge glow matches the Dream Aspect pricing selector animation. Return to the <a href="index.html">October report</a> for the active public-only window.</p>"""
     return page_shell("FUNBOY · All reports", "all", body)
 
 

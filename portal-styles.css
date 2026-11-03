@@ -146,7 +146,34 @@ table.data th { background: var(--fog); font-weight: 700; }
 .reach-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
 .reach-grid div { border: 1px solid var(--gray); border-radius: 4px; padding: 12px; background: var(--fog); }
 .reach-grid b { display: block; font-family: Nohemi, sans-serif; font-size: 24px; }
-@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+.comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 28px; }
+.comp-card {
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  padding: 14px 14px 12px;
+  background: var(--fog);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100%;
+}
+.comp-card.is-brand { border-color: var(--black); background: var(--white); }
+.comp-card .handle { font-family: Nohemi, sans-serif; font-size: 18px; letter-spacing: -0.02em; margin: 0; }
+.comp-card .role { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.comp-card dl { margin: 0; display: grid; gap: 6px; font-size: 12px; }
+.comp-card dt { color: var(--muted); font-weight: 600; }
+.comp-card dd { margin: 0; font-variant-numeric: tabular-nums; }
+.comp-card .tt { font-size: 11px; color: var(--muted); line-height: 1.35; margin: 0; }
+.comp-block { margin-top: 28px; }
+.comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
+@keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
+.mold2-card { animation: 2.8s ease-in-out infinite edgeGlowOneOff; border-radius: 4px; }
+.archive-list.mold2 { gap: 14px; margin-top: 20px; }
+.archive-list.mold2 a { transition: border-color 0.2s ease, transform 0.2s ease; }
+.archive-list.mold2 a:hover { border-color: var(--black); transform: translateY(-2px); }
+.empty-shelf { border: 1px dashed var(--gray); border-radius: 4px; padding: 18px; color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+@media (prefers-reduced-motion: reduce) { .mold2-card { animation: none; } }
+@media (max-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpi-row { grid-template-columns: repeat(2, 1fr); } .comp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 680px) {
   .chrome, main, .archive-note { padding-left: 16px; padding-right: 16px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
