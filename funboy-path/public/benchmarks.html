@@ -1,180 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>FUNBOY Benchmarks — MULE-14 on public reels</title>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>FUNBOY Social Recap - September 2026</title>
-<style>
-@font-face{
-  font-family:"BrownLL";
-  src:url("BrownLL-Regular.otf") format("opentype");
-  font-weight:100 900;
-  font-style:normal;
-  font-display:swap;
-}
-  :root{
-    --ink:#000000; --paper:#ffffff; --card:#ffffff; --muted:#5c5c5c;
-    --orange:#8d3f29; --orange-dark:#6e2f1e; --green:#1B9500;
-    --red:#c73333; --amber:#faae17; --amber-bg:#fff6e0; --amber-ink:#6e4e00; --line:#e6e6e6; --tt:#000000;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:"BrownLL",Brown,sans-serif;line-height:1.5;}
-  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px;}
-  header.hero{background:#8d3f29;color:#fff;padding:48px 24px 40px;}
-  header.hero .inner{max-width:1000px;margin:0 auto;}
-  .draft-pill{display:inline-block;background:#000;color:#fff;font-weight:400;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:8px;margin-bottom:14px;}
-  header.hero h1{font-size:40px;margin:0 0 6px;font-weight:500;letter-spacing:-0.025em;}
-  header.hero p.sub{margin:0;font-size:15px;color:rgba(255,255,255,.88);}
-  .kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
-  .kpi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:16px;}
-  .kpi .num{font-size:24px;font-weight:800;}
-  .kpi .lbl{font-size:12px;color:rgba(255,255,255,.88);margin-top:2px;}
-  section{margin-top:44px;}
-  h2{font-size:28px;letter-spacing:-0.025em;font-weight:500;margin:0 0 6px;border-left:5px solid var(--orange);padding-left:12px;}
-  h2 .tag{display:block;font-size:12px;font-weight:normal;color:var(--muted);margin-top:2px;}
-  p.lead{color:var(--muted);margin:12px 0 18px;max-width:760px;}
-  .chart-block{margin-top:28px;}
-  .chart-block h4{font-size:13.5px;margin:0 0 4px;color:var(--ink);}
-  .chart-block .sub{font-size:12px;color:var(--muted);margin:0 0 4px;}
-  .chart{display:flex;align-items:flex-end;gap:20px;height:200px;margin:20px 0 6px;padding:0 6px;border-bottom:2px solid var(--ink);}
-  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
-  .stack{position:relative;width:60px;}
-  .stack .segments{display:flex;flex-direction:column-reverse;border-radius:6px 6px 0 0;overflow:hidden;}
-  .stack .seg-ig{background:var(--orange);}
-  .stack .seg-tt{background:var(--tt);}
-  .stack .val{position:absolute;top:-22px;left:0;right:0;text-align:center;font-weight:bold;font-size:13px;}
-  .bar-lbl{margin-top:8px;font-size:12px;text-align:center;color:var(--muted);}
-  .legend{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--muted);}
-  .legend span{display:inline-flex;align-items:center;gap:6px;}
-  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
-  .legend i.ig{background:var(--orange);} .legend i.tt{background:var(--tt);}
-  .avg-note{font-size:11.5px;color:var(--muted);margin-top:8px;}
-  .callout{background:#f5f5f5;border:1px solid #e6e6e6;border-radius:8px;padding:14px 16px;margin-top:16px;font-size:14px;}
-  .callout b{color:var(--orange-dark);}
-  .callout.pending{background:#f5f5f5;border-color:var(--line);}
-  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px;}
-  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;}
-  th{background:#f5f5f5;font-weight:500;}
-  .bench-better{color:var(--green);font-weight:bold;}
-  .bench-worse{color:var(--red);font-weight:bold;}
-  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:16px;}
-  .week-label{grid-column:1/-1;display:flex;align-items:baseline;gap:8px;margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;font-weight:bold;color:var(--ink);}
-  .week-label:first-child{margin-top:0;padding-top:0;border-top:none;}
-  .week-label span{font-size:11.5px;font-weight:normal;color:var(--muted);}
-  .post-cell{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
-  .post-cell:hover{border-color:var(--orange);}
-  .tile-img{width:100%;height:120px;object-fit:cover;display:block;}
-  .post-meta{padding:6px 8px 8px;}
-  .post-date{font-size:11px;font-weight:bold;color:var(--muted);}
-  .post-stat{font-size:12px;margin-top:1px;}
-  .badge{display:inline-block;margin-top:4px;margin-right:4px;font-size:9.5px;font-weight:bold;padding:2px 6px;border-radius:8px;}
-  .badge.low{background:#fdeeee;color:var(--red);}
-  .badge.boost{background:var(--amber-bg);color:var(--amber-ink);}
-  .badge.top{background:#eef8f0;color:var(--green);}
-  .reach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:16px;}
-  .reach-stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
-  .reach-stat .num{font-size:26px;font-weight:800;color:var(--orange-dark);}
-  .reach-stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;}
-  .top-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px;}
-  .top-cards.compact{grid-template-columns:repeat(5,1fr);}
-  .top-card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
-  .top-img{width:100%;height:220px;object-fit:cover;display:block;}
-  .compact .top-img{height:120px;}
-  .compact .top-body{padding:10px 12px;}
-  .compact .top-card h3{font-size:12.5px;margin:0 0 4px;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;display:-webkit-box;}
-  .compact .top-card .stats{font-size:11px;}
-  .compact .rank{font-size:10px;padding:2px 6px;margin-bottom:5px;}
-  .top-body{padding:14px 16px;}
-  .rank{display:inline-block;background:var(--ink);color:#fff;font-size:11px;font-weight:bold;padding:2px 8px;border-radius:12px;margin-bottom:8px;}
-  .rank-low{background:var(--red);}
-  .top-card h3{font-size:15px;margin:0 0 6px;}
-  .top-card .stats{font-size:13px;color:var(--muted);}
-  @media (max-width:820px){.top-cards.compact{grid-template-columns:repeat(3,1fr);}}
-  @media (max-width:520px){.top-cards.compact{grid-template-columns:repeat(2,1fr);}}
-  .boost-line{font-size:12px;margin-top:8px;color:var(--amber-ink);}
-  .lowlight-card .boost-line{color:var(--red);}
-  details.chart-toggle{margin-top:22px;}
-  details.chart-toggle summary{cursor:pointer;list-style:none;font-size:14.5px;font-weight:bold;color:#fff;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);padding:12px 18px;border-radius:10px;box-shadow:0 2px 6px rgba(201,77,12,.25);}
-  details.chart-toggle summary:hover{filter:brightness(1.06);}
-  details.chart-toggle summary::-webkit-details-marker{display:none;}
-  details.chart-toggle summary::before{content:"+";display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-weight:800;font-size:15px;flex-shrink:0;}
-  details.chart-toggle[open] summary::before{content:"\2212";}
-  details.chart-toggle summary .sub-inline{font-weight:normal;color:rgba(255,255,255,.85);font-size:12px;}
-  details.chart-toggle[open] summary{border-radius:10px 10px 0 0;}
-  details.chart-toggle .chart-block:first-of-type{padding-top:18px;}
-  details.chart-toggle > .chart-block{padding-left:4px;padding-right:4px;}
-  details.week-block{margin-top:0;}
-  details.week-block summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:8px;margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;font-weight:bold;color:var(--ink);}
-  details.week-block:first-of-type summary{margin-top:0;padding-top:0;border-top:none;}
-  details.week-block summary::-webkit-details-marker{display:none;}
-  details.week-block summary::before{content:"\2212";display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:4px;background:#f5f5f5;color:var(--orange-dark);font-weight:800;font-size:12px;flex-shrink:0;}
-  details.week-block:not([open]) summary::before{content:"+";}
-  details.week-block summary span{font-size:11.5px;font-weight:normal;color:var(--muted);}
-  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);}
-  @media (max-width:700px){.kpi-strip{grid-template-columns:repeat(2,1fr);}}
-
-  .report-nav{background:#8d3f29;color:#fff;border-bottom:0;position:sticky;top:0;z-index:30;}
-  .report-nav-inner{max-width:1000px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:8px;min-height:56px;}
-  .report-nav a{color:#fff;text-decoration:none;font-size:14px;font-weight:400;letter-spacing:.02em;text-transform:uppercase;display:inline-flex;align-items:center;padding:8px 12px;border-radius:8px;}
-  .report-nav a.is-current{color:#000;background:#fff;}
-  .reports-tab{display:flex;align-items:center;margin-left:auto;background:transparent;gap:4px;}
-  .reports-tab.is-open{box-shadow:none;}
-  .reports-label{display:inline-flex;align-items:center;padding:0 10px;font-size:14px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:#fff;}
-  .reports-tab.is-open .reports-label{color:#fff;}
-  .mark-underline{background-image:linear-gradient(transparent 62%, #c73333 62%, #c73333 78%, transparent 78%);}
-  .mark-circle{display:inline-block;border:2px solid #c73333;border-radius:999px;padding:0 7px;line-height:1.35;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>FUNBOY · Benchmarks</title>
+  <link rel="stylesheet" href="portal-styles.css" />
 </head>
 <body>
-<nav class="report-nav" aria-label="Portal">
-  <div class="report-nav-inner">
-    <a href="index.html">Dashboard</a>
-    <a class="is-current" href="benchmarks.html">Benchmarks</a>
-    <a href="competitor-watch.html">Competitor watch</a>
-    <div class="reports-tab">
-      <span class="reports-label">Reports</span>
-      <a href="october-public-2026-recap.html">Oct 10–Nov 1</a>
-      <a href="september-2026-recap.html">September</a>
-      <a href="august-2026-recap.html">August</a>
-    </div>
-  </div>
-</nav>
-<header class="hero">
-  <div class="inner">
-    <div class="draft-pill">Public only · MULE-14 math · October 10–November 1, 2026</div>
-    <h1>View benchmark</h1>
-    <p class="sub">Ranked public reels from the Funboy window. Population standard deviation. Normal curve fit on log(view count).</p>
-  </div>
+<header class="chrome">
+  <span class="brand">FUNBOY · Dream Aspect</span>
+  <nav class="nav"><a href="index.html">October report</a><a href="benchmarks.html" aria-current="page">Benchmarks</a><a href="competitor-research.html">Competitor research</a><a href="all-reports.html">All reports</a></nav>
 </header>
-<div class="wrap">
-<section>
-  <h2>Summary<span class="tag">Subject reel = median by public views (2026-10-10)</span></h2>
-  <table>
-    <tr><th>Metric</th><th>Value</th></tr>
-    <tr><td>Reels in window</td><td>11</td></tr>
-    <tr><td>Sum of public views</td><td>68,989</td></tr>
-    <tr><td>Average views</td><td>6,272</td></tr>
-    <tr><td>Population std. dev.</td><td>5,376</td></tr>
-    <tr><td>One σ above average</td><td>11,648</td></tr>
-    <tr><td>Subject views</td><td>4,132</td></tr>
-    <tr><td>Subject vs. average</td><td>2,139 views below average (34.1% under)</td></tr>
-    <tr><td>Subject vs. average (σ)</td><td>-0.40σ</td></tr>
-    <tr><td>Log-normal center</td><td>4,580 (1σ band 2,093 – 10,023)</td></tr>
-    <tr><td>Subject engagement</td><td>8.49% vs. pool 8.76%</td></tr>
-  </table>
-</section>
-<section>
-  <h2>Ranked reels<span class="tag">Public views descending</span></h2>
-  <table>
-    <tr><th>Date</th><th>Shortcode</th><th>Views</th><th>Engagement</th></tr>
-    <tr><td>2026-10-13</td><td><a href="https://www.instagram.com/reel/DecPdkDBkRH/" target="_blank" rel="noopener">DecPdkDBkRH</a></td><td>17,386</td><td>7.86%</td></tr><tr><td>2026-10-24</td><td><a href="https://www.instagram.com/reel/De4TED2hF7e/" target="_blank" rel="noopener">De4TED2hF7e</a></td><td>17,049</td><td>6.95%</td></tr><tr><td>2026-11-01</td><td><a href="https://www.instagram.com/reel/DfNAVN7Bnao/" target="_blank" rel="noopener">DfNAVN7Bnao</a></td><td>6,254</td><td>4.53%</td></tr><tr><td>2026-10-18</td><td><a href="https://www.instagram.com/reel/Deo2TwLBk37/" target="_blank" rel="noopener">Deo2TwLBk37</a></td><td>6,067</td><td>6.92%</td></tr><tr><td>2026-10-17</td><td><a href="https://www.instagram.com/reel/DemRiA-BPUf/" target="_blank" rel="noopener">DemRiA-BPUf</a></td><td>5,387</td><td>9.00%</td></tr><tr><td>2026-10-10</td><td><a href="https://www.instagram.com/reel/DeUdstjBz5S/" target="_blank" rel="noopener">DeUdstjBz5S</a></td><td>4,132</td><td>8.49%</td></tr><tr><td>2026-10-22</td><td><a href="https://www.instagram.com/reel/DezJawWhnaF/" target="_blank" rel="noopener">DezJawWhnaF</a></td><td>3,466</td><td>10.59%</td></tr><tr><td>2026-10-20</td><td><a href="https://www.instagram.com/reel/DeuNmCahRnZ/" target="_blank" rel="noopener">DeuNmCahRnZ</a></td><td>3,159</td><td>9.34%</td></tr><tr><td>2026-10-29</td><td><a href="https://www.instagram.com/reel/DfFLAUPh9Dx/" target="_blank" rel="noopener">DfFLAUPh9Dx</a></td><td>2,511</td><td>11.31%</td></tr><tr><td>2026-10-11</td><td><a href="https://www.instagram.com/reel/DeW0vXXhd3p/" target="_blank" rel="noopener">DeW0vXXhd3p</a></td><td>2,496</td><td>11.54%</td></tr><tr><td>2026-10-27</td><td><a href="https://www.instagram.com/reel/DfABbM-BX7B/" target="_blank" rel="noopener">DfABbM-BX7B</a></td><td>1,082</td><td>9.80%</td></tr>
-  </table>
-</section>
-<footer>Benchmark method: MULE-14 · Market Reel Report, applied to Funboy public reels per MULE-15. Collected November 3, 2026.</footer>
+<main>
+<p class="eyebrow">Benchmarks · MULE-14 math</p>
+<h1>View benchmark</h1>
+<p class="lead">Population statistics on FUNBOY public reel views for October 10–November 1, 2026. Engagement is (likes + comments) / views. Graphs describe this ranked list only — not every reel the brand ever posted.</p>
+<div class="rules">
+  <strong>How this report is built</strong>
+  <ul>
+    <li>Public pages only — logged-out Instagram and TikTok profiles. No account login, no native Insights, no private dashboards.</li>
+    <li>Counts must be visible on the public post or profile. If likes or views are hidden, the field stays blank and that post is excluded from engagement averages.</li>
+    <li>Instagram reel views use public <code>video_view_count</code>, not Insights reach or impressions.</li>
+    <li>Window: first 12-tile Instagram grid on @funboy, Pacific dates from <code>taken_at</code>. TikTok post rows only when the logged-out video grid loads.</li>
+    <li>Collected November 3, 2026. Window October 10–November 1, 2026.</li>
+  </ul>
 </div>
+<table class="data">
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Reels in window</td><td>11</td></tr>
+<tr><td>Sum of views</td><td>68,989</td></tr>
+<tr><td>Average views</td><td>6,272</td></tr>
+<tr><td>Median views (subject)</td><td>4,132 · 2026-10-10</td></tr>
+<tr><td>Population std. dev.</td><td>5,376</td></tr>
+<tr><td>Average + 1σ</td><td>11,648</td></tr>
+<tr><td>Subject vs average</td><td>2,139 below (34.1% under)</td></tr>
+<tr><td>Subject engagement</td><td>8.49% vs pool 8.76%</td></tr>
+</table>
+<div class="chart-wrap"><p class="who">View count histogram (6 bins, this window)</p>
+<svg viewBox="0 0 600 170" role="img" aria-label="View count histogram (6 bins, this window)">
+  <line x1="36" y1="140" x2="580" y2="140" stroke="#000" stroke-width="2"/>
+  <rect x="40.0" y="20.0" width="85.3" height="120.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="86.7" y="158" text-anchor="middle" font-size="10" fill="#666">1</text><rect x="133.3" y="44.0" width="85.3" height="96.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="180.0" y="158" text-anchor="middle" font-size="10" fill="#666">2</text><rect x="226.7" y="140.0" width="85.3" height="0.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="273.3" y="158" text-anchor="middle" font-size="10" fill="#666">3</text><rect x="320.0" y="140.0" width="85.3" height="0.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="366.7" y="158" text-anchor="middle" font-size="10" fill="#666">4</text><rect x="413.3" y="140.0" width="85.3" height="0.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="460.0" y="158" text-anchor="middle" font-size="10" fill="#666">5</text><rect x="506.7" y="92.0" width="85.3" height="48.0" fill="#9dc9f5" stroke="#000" stroke-width="1"/><text x="553.3" y="158" text-anchor="middle" font-size="10" fill="#666">6</text>
+</svg></div>
+<div class="chart-wrap"><p class="who">Normal curve on log(view count). Center 4,580 · 1σ band 2,093 – 10,023</p>
+<svg viewBox="0 0 600 170" role="img" aria-label="Log-normal view curve">
+  <path d="M40.0,148.8 L46.6,148.5 L53.2,148.1 L59.7,147.6 L66.3,147.1 L72.9,146.4 L79.5,145.7 L86.1,144.8 L92.7,143.7 L99.2,142.5 L105.8,141.1 L112.4,139.4 L119.0,137.6 L125.6,135.5 L132.2,133.1 L138.7,130.5 L145.3,127.6 L151.9,124.4 L158.5,121.0 L165.1,117.2 L171.6,113.2 L178.2,109.0 L184.8,104.5 L191.4,99.8 L198.0,94.9 L204.6,90.0 L211.1,84.9 L217.7,79.9 L224.3,74.8 L230.9,69.9 L237.5,65.1 L244.1,60.6 L250.6,56.4 L257.2,52.5 L263.8,49.1 L270.4,46.2 L277.0,43.7 L283.5,41.9 L290.1,40.6 L296.7,40.0 L303.3,40.0 L309.9,40.6 L316.5,41.9 L323.0,43.7 L329.6,46.2 L336.2,49.1 L342.8,52.5 L349.4,56.4 L355.9,60.6 L362.5,65.1 L369.1,69.9 L375.7,74.8 L382.3,79.9 L388.9,84.9 L395.4,90.0 L402.0,94.9 L408.6,99.8 L415.2,104.5 L421.8,109.0 L428.4,113.2 L434.9,117.2 L441.5,121.0 L448.1,124.4 L454.7,127.6 L461.3,130.5 L467.8,133.1 L474.4,135.5 L481.0,137.6 L487.6,139.4 L494.2,141.1 L500.8,142.5 L507.3,143.7 L513.9,144.8 L520.5,145.7 L527.1,146.4 L533.7,147.1 L540.3,147.6 L546.8,148.1 L553.4,148.5 L560.0,148.8" fill="none" stroke="#000" stroke-width="2"/>
+  <line x1="288.6" y1="30" x2="288.6" y2="150" stroke="#c73333" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="288.6" y="22" text-anchor="middle" font-size="10" fill="#c73333">subject</text>
+</svg></div>
+<div class="section"><h2>Ranked reels</h2>
+<table class="data"><tr><th>Rank</th><th>Date</th><th>Views</th><th>Engagement</th><th>Caption</th></tr><tr><td>01</td><td>2026-10-13</td><td>17,386</td><td>7.86%</td><td>Santa season is calling.</td></tr><tr><td>02</td><td>2026-10-24</td><td>17,049</td><td>6.95%</td><td>Holiday hosting, solved.</td></tr><tr><td>03</td><td>2026-11-01</td><td>6,254</td><td>4.53%</td><td>Weekend plans: float.</td></tr><tr><td>04</td><td>2026-10-18</td><td>6,067</td><td>6.92%</td><td>Pool day, holiday edition.</td></tr><tr><td>05</td><td>2026-10-17</td><td>5,387</td><td>9.00%</td><td>Giant ornaments, tiny effort.</td></tr><tr><td>06</td><td>2026-10-10</td><td>4,132</td><td>8.49%</td><td>The coziest season starts here.</td></tr><tr><td>07</td><td>2026-10-22</td><td>3,466</td><td>10.59%</td><td>Snow globe energy.</td></tr><tr><td>08</td><td>2026-10-20</td><td>3,159</td><td>9.34%</td><td>Inflatable igloo season.</td></tr><tr><td>09</td><td>2026-10-29</td><td>2,511</td><td>11.31%</td><td>Stripe season.</td></tr><tr><td>10</td><td>2026-10-11</td><td>2,496</td><td>11.54%</td><td>Movie night, upgraded.</td></tr><tr><td>11</td><td>2026-10-27</td><td>1,082</td><td>9.80%</td><td>Candy cane lane at home.</td></tr></table></div>
+<p class="foot">Benchmark method from MULE-14 · Market Reel Report. Layout from la-reels (https://www.dreamaspect.co/la-reels/ (Dream Aspect worker da-report-la-reels; layout and fonts copied Nov 3, 2026)).</p>
+</main>
 </body>
 </html>
