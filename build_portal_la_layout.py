@@ -151,7 +151,18 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .grid-dense { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
 .grid-dense .card { flex-direction: column; }
-.grid-dense .thumb { aspect-ratio: 4 / 5; max-height: 88px; }
+.grid-dense .thumb {
+  aspect-ratio: 1;
+  max-height: 56px;
+  height: 56px;
+  overflow: hidden;
+}
+.grid-dense .thumb img {
+  width: 100%;
+  height: 56px;
+  max-height: 56px;
+  object-fit: cover;
+}
 .grid-dense .meta { padding: 6px 8px 8px; }
 .grid-dense .place { font-size: 11px; margin: 0 0 2px; line-height: 1.25; }
 .grid-dense .who { font-size: 10px; margin: 0 0 4px; }
@@ -190,8 +201,19 @@ table.data th { background: var(--fog); font-weight: 700; }
 .mark-circle { display: inline-block; border: 2px solid var(--mark); border-radius: 999px; padding: 0 6px; }
 .mark-underline { background-image: linear-gradient(transparent 62%, var(--mark) 62%, var(--mark) 78%, transparent 78%); }
 .worse { color: var(--mark); font-weight: 700; }
-.chart-wrap { margin: 16px 0; max-width: 680px; }
-.chart-wrap svg { width: 100%; height: auto; display: block; border: 1px solid var(--gray); border-radius: 4px; background: var(--white); }
+.chart-wrap { margin: 20px 0; max-width: 680px; }
+.chart-wrap .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 8px; }
+.chart-wrap .chart-head h3 { font-family: Nohemi, sans-serif; font-size: 15px; font-weight: 500; margin: 0; letter-spacing: -0.01em; }
+.chart-wrap .chart-meta { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.chart-wrap svg { width: 100%; height: auto; display: block; border: 1px solid var(--gray); border-radius: 6px; background: var(--white); }
+.chart-wrap .chart-caption { font-size: 11px; color: var(--muted); margin: 8px 0 0; line-height: 1.45; max-width: 42rem; }
+.chart-wrap .chart-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 10px; font-size: 11px; color: var(--muted); }
+.chart-wrap .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-wrap .swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.chart-wrap .swatch.bar { background: linear-gradient(180deg, #b8dcfa 0%, #6eb5ef 100%); border: 1px solid #2a7fc7; }
+.chart-wrap .swatch.curve { background: none; border: 2px solid var(--black); border-radius: 0; width: 14px; height: 0; }
+.chart-wrap .swatch.band { background: rgba(110, 181, 239, 0.22); border: 1px solid rgba(42, 127, 199, 0.35); }
+.chart-wrap .swatch.subject { border-top: 2px dashed var(--mark); height: 0; width: 14px; background: none; border-radius: 0; }
 .bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 180px; border-bottom: 2px solid var(--black); padding: 0 4px 0; margin-top: 12px; }
 .bar-col { flex: 1; text-align: center; font-size: 11px; color: var(--muted); }
 .bar-col b { display: block; color: var(--black); font-size: 13px; margin-bottom: 6px; }
@@ -232,18 +254,47 @@ table.data th { background: var(--fog); font-weight: 700; }
   min-height: 0;
 }
 .comp-card.is-brand { border-color: var(--black); background: var(--white); }
-.comp-cover-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin: 0; height: 36px; }
-.comp-cover-row img, .comp-cover-row a { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; display: block; border: 1px solid var(--gray); }
-.comp-cover-ph { font-size: 10px; }
-.comp-cover-row--empty { height: 36px; font-size: 10px; }
+.comp-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 160px)); gap: 8px; margin: 0 0 20px; justify-content: start; max-width: 100%; }
+.comp-card { overflow: hidden; max-width: 160px; }
+.comp-cover-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin: 0;
+  height: 32px;
+  max-height: 32px;
+  overflow: hidden;
+}
+.comp-cover-row > a {
+  display: block;
+  height: 32px;
+  max-height: 32px;
+  overflow: hidden;
+  min-width: 0;
+}
+.comp-cover-row img {
+  width: 100%;
+  height: 32px;
+  max-height: 32px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+  border: 1px solid var(--gray);
+}
+.comp-cover-row a.comp-cover-ph {
+  height: 32px;
+  max-height: 32px;
+  border: 1px solid var(--gray);
+  border-radius: 2px;
+}
 .comp-card .handle { font-size: 14px; margin: 0; }
 .comp-card .role { font-size: 9px; margin: 0; }
 .comp-kpis { grid-template-columns: repeat(2, 1fr); gap: 4px; margin: 0; }
 .comp-kpis div { padding: 4px 6px; }
 .comp-kpis b { font-size: 13px; }
 .comp-kpis span { font-size: 9px; }
-.comp-cover-ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ice), var(--blue)); font-family: Nohemi, sans-serif; font-weight: 500; text-decoration: none; color: var(--black); }
-.comp-cover-row--empty { place-items: center; background: var(--fog); border: 1px dashed var(--gray); border-radius: 2px; color: var(--muted); }
+.comp-cover-row--empty { height: 32px; max-height: 32px; font-size: 10px; }
+.comp-cover-ph { font-size: 10px; }
 .comp-kpis { display: grid; }
 .comp-kpis div { border: 1px solid var(--gray); border-radius: 2px; background: var(--white); }
 .comp-kpis b { display: block; font-family: Nohemi, sans-serif; letter-spacing: -0.02em; }
@@ -467,52 +518,178 @@ def post_cards(posts: list[dict], reels_only: bool = False) -> str:
     return html
 
 
-def histogram_svg(values: list[int], label: str) -> str:
-    if not values:
+def _chart_axis_num(n: float) -> str:
+    n = float(n)
+    if n >= 1_000_000:
+        return f"{n / 1_000_000:.1f}M"
+    if n >= 10_000:
+        return f"{n / 1_000:.0f}K"
+    if n >= 1_000:
+        return f"{n / 1_000:.1f}K".replace(".0K", "K")
+    return f"{int(round(n))}"
+
+
+def _nice_y_ticks(max_val: int) -> list[int]:
+    if max_val <= 6:
+        return list(range(0, max_val + 1))
+    step = max(1, math.ceil(max_val / 4))
+    mag = 10 ** math.floor(math.log10(step)) if step >= 10 else 1
+    step = max(mag, math.ceil(step / mag) * mag)
+    top = int(math.ceil(max_val / step) * step)
+    return list(range(0, top + 1, step))
+
+
+def view_distribution_chart_svg(
+    values: list[float],
+    center: float,
+    lo: float,
+    hi: float,
+    subject: float,
+) -> str:
+    """Log-spaced histogram + log-normal overlay (MULE-14 benchmarks)."""
+    pos = [float(v) for v in values if v > 0]
+    if not pos:
         return ""
-    lo, hi = min(values), max(values)
-    bins = 6
-    counts = [0] * bins
-    for v in values:
-        idx = min(bins - 1, int((v - lo) / max(hi - lo, 1) * bins))
+
+    logs = [math.log(v) for v in pos]
+    mu = sum(logs) / len(logs)
+    sd = math.sqrt(sum((x - mu) ** 2 for x in logs) / len(logs)) or 1e-6
+    log_min = min(logs)
+    log_max = max(logs)
+    pad = max(0.08, (log_max - log_min) * 0.12)
+    log_min -= pad
+    log_max += pad
+    span = log_max - log_min or 1.0
+
+    n_bins = 6
+    counts = [0] * n_bins
+    edges = [log_min + span * i / n_bins for i in range(n_bins + 1)]
+    for v in pos:
+        lv = math.log(v)
+        idx = min(n_bins - 1, max(0, int((lv - log_min) / span * n_bins)))
         counts[idx] += 1
     max_c = max(counts) or 1
+    y_ticks = _nice_y_ticks(max_c)
+
+    w, h = 680, 292
+    x0, x1 = 52, 656
+    y0, y1 = 36, 228
+    plot_h = y1 - y0
+
+    def lx(log_v: float) -> float:
+        return x0 + (log_v - log_min) / span * (x1 - x0)
+
+    def ly(count: float) -> float:
+        return y1 - (count / y_ticks[-1]) * plot_h
+
+    grid = ""
+    y_labels = ""
+    for tick in y_ticks:
+        y = ly(tick)
+        grid += f'<line x1="{x0}" y1="{y:.1f}" x2="{x1}" y2="{y:.1f}" stroke="#e8e8e8" stroke-width="1"/>'
+        if tick > 0:
+            y_labels += (
+                f'<text x="{x0 - 8}" y="{y + 3.5:.1f}" text-anchor="end" '
+                f'font-size="10" fill="#666" font-variant-numeric="tabular-nums">{tick}</text>'
+            )
+
     bars = ""
-    w = 560 / bins
+    x_labels = ""
     for i, c in enumerate(counts):
-        h = 120 * c / max_c
-        x = 40 + i * w
-        bars += f'<rect x="{x:.1f}" y="{140 - h:.1f}" width="{w - 8:.1f}" height="{h:.1f}" fill="#9dc9f5" stroke="#000" stroke-width="1"/>'
-        bars += f'<text x="{x + w/2:.1f}" y="158" text-anchor="middle" font-size="10" fill="#666">{i+1}</text>'
-    return f"""<div class="chart-wrap"><p class="who">{label}</p>
-<svg viewBox="0 0 600 170" role="img" aria-label="{label}">
-  <line x1="36" y1="140" x2="580" y2="140" stroke="#000" stroke-width="2"/>
+        x_left = lx(edges[i]) + 2
+        x_right = lx(edges[i + 1]) - 2
+        bw = max(4, x_right - x_left)
+        top = ly(c)
+        bar_h = y1 - top
+        lo_v, hi_v = math.exp(edges[i]), math.exp(edges[i + 1])
+        label = f"{_chart_axis_num(lo_v)}–{_chart_axis_num(hi_v)}"
+        bars += (
+            f'<rect x="{x_left:.1f}" y="{top:.1f}" width="{bw:.1f}" height="{bar_h:.1f}" '
+            f'rx="3" fill="url(#barFill)" stroke="#2a7fc7" stroke-width="1"/>'
+        )
+        if c:
+            bars += (
+                f'<text x="{(x_left + x_right) / 2:.1f}" y="{top - 5:.1f}" text-anchor="middle" '
+                f'font-size="10" font-weight="700" fill="#000">{c}</text>'
+            )
+        x_labels += (
+            f'<text x="{(x_left + x_right) / 2:.1f}" y="{y1 + 14:.1f}" text-anchor="middle" '
+            f'font-size="9" fill="#555">{label}</text>'
+        )
+
+    band_x0, band_x1 = lx(math.log(lo)), lx(math.log(hi))
+    sigma_band = (
+        f'<rect x="{band_x0:.1f}" y="{y0}" width="{band_x1 - band_x0:.1f}" height="{plot_h}" '
+        f'fill="rgba(110,181,239,0.18)" stroke="none"/>'
+    )
+
+    pdf_pts: list[tuple[float, float]] = []
+    steps = 120
+    log_lo_plot = log_min
+    log_hi_plot = log_max
+    for i in range(steps + 1):
+        lv = log_lo_plot + (log_hi_plot - log_lo_plot) * i / steps
+        dens = math.exp(-0.5 * ((lv - mu) / sd) ** 2) / (sd * math.sqrt(2 * math.pi))
+        pdf_pts.append((lv, dens))
+    max_d = max(p[1] for p in pdf_pts) or 1
+    scale = max_c / max_d
+    curve_path = []
+    area_path = [f"M{lx(log_lo_plot):.1f},{y1:.1f}"]
+    for i, (lv, dens) in enumerate(pdf_pts):
+        sx = lx(lv)
+        sy = ly(dens * scale)
+        curve_path.append(f"{'M' if i == 0 else 'L'}{sx:.1f},{sy:.1f}")
+        area_path.append(f"L{sx:.1f},{sy:.1f}")
+    area_path.append(f"L{lx(log_hi_plot):.1f},{y1:.1f}Z")
+    curve = f'<path d="{" ".join(curve_path)}" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>'
+    area = f'<path d="{"".join(area_path)}" fill="rgba(0,0,0,0.04)" stroke="none"/>'
+
+    sub_x = lx(math.log(max(subject, 1)))
+    subject_mark = (
+        f'<line x1="{sub_x:.1f}" y1="{y0}" x2="{sub_x:.1f}" y2="{y1}" '
+        f'stroke="#c73333" stroke-width="1.5" stroke-dasharray="5 4"/>'
+        f'<text x="{sub_x:.1f}" y="{y0 - 8}" text-anchor="middle" font-size="10" fill="#c73333">'
+        f"nearest median · {_chart_axis_num(subject)}</text>"
+    )
+
+    title = "View distribution · combined collected reels"
+    meta = f"log-normal center {_chart_axis_num(center)} · 1σ {_chart_axis_num(lo)}–{_chart_axis_num(hi)}"
+    caption = (
+        f"Histogram uses log-spaced view bins ({len(pos)} reels). "
+        f"Black curve is the fitted log-normal on log(view count), scaled to the tallest bin. "
+        f"Shaded band is the 1σ view range."
+    )
+
+    return f"""<div class="chart-wrap">
+<div class="chart-head"><h3>{title}</h3><span class="chart-meta">{meta}</span></div>
+<svg viewBox="0 0 {w} {h}" role="img" aria-label="{title}. {meta}">
+  <defs>
+    <linearGradient id="barFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c5e4fc"/>
+      <stop offset="100%" stop-color="#6eb5ef"/>
+    </linearGradient>
+  </defs>
+  {sigma_band}
+  {grid}
+  <line x1="{x0}" y1="{y1}" x2="{x1}" y2="{y1}" stroke="#000" stroke-width="1.5"/>
+  <line x1="{x0}" y1="{y0}" x2="{x0}" y2="{y1}" stroke="#000" stroke-width="1.5"/>
+  {y_labels}
   {bars}
-</svg></div>"""
-
-
-def normal_curve_svg(values: list[float], center: float, lo: float, hi: float, subject: float) -> str:
-    logs = [math.log(v) for v in values if v > 0]
-    mu = sum(logs) / len(logs)
-    sd = math.sqrt(sum((x - mu) ** 2 for x in logs) / len(logs))
-    pts = []
-    for i in range(80):
-        x = mu - 3 * sd + (6 * sd * i / 79)
-        y = math.exp(-0.5 * ((x - mu) / sd) ** 2) / (sd * math.sqrt(2 * math.pi))
-        pts.append((x, y))
-    max_y = max(p[1] for p in pts) or 1
-    path = []
-    for i, (x, y) in enumerate(pts):
-        sx = 40 + (x - (mu - 3 * sd)) / (6 * sd) * 520
-        sy = 150 - (y / max_y) * 110
-        path.append(f"{'M' if i == 0 else 'L'}{sx:.1f},{sy:.1f}")
-    sub_x = 40 + (math.log(subject) - (mu - 3 * sd)) / (6 * sd) * 520
-    return f"""<div class="chart-wrap"><p class="who">Normal curve on log(view count). Center {center:,.0f} · 1σ band {lo:,.0f} – {hi:,.0f}</p>
-<svg viewBox="0 0 600 170" role="img" aria-label="Log-normal view curve">
-  <path d="{' '.join(path)}" fill="none" stroke="#000" stroke-width="2"/>
-  <line x1="{sub_x:.1f}" y1="30" x2="{sub_x:.1f}" y2="150" stroke="#c73333" stroke-width="2" stroke-dasharray="4 3"/>
-  <text x="{sub_x:.1f}" y="22" text-anchor="middle" font-size="10" fill="#c73333">subject</text>
-</svg></div>"""
+  {area}
+  {curve}
+  {subject_mark}
+  {x_labels}
+  <text x="{(x0 + x1) / 2:.1f}" y="{h - 8}" text-anchor="middle" font-size="10" fill="#666">Public reel views (log-spaced bins)</text>
+  <text x="18" y="{(y0 + y1) / 2:.1f}" text-anchor="middle" font-size="10" fill="#666" transform="rotate(-90 18 {(y0 + y1) / 2:.1f})"># reels</text>
+</svg>
+<p class="chart-caption">{caption}</p>
+<div class="chart-legend">
+  <span><i class="swatch bar"></i>Reel count</span>
+  <span><i class="swatch curve"></i>Log-normal fit</span>
+  <span><i class="swatch band"></i>1σ band</span>
+  <span><i class="swatch subject"></i>Median-nearest reel</span>
+</div>
+</div>"""
 
 
 def build_october() -> str:
@@ -594,11 +771,7 @@ def build_benchmarks() -> str:
   <div class="kpi"><b>{fmt(int(med))}</b><span>Median views</span></div>
   <div class="kpi"><b>{(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.1f}%</b><span>Avg engagement</span></div>
 </div>
-{histogram_svg([int(v) for v in views], "View count histogram · combined collected reels")}
-{normal_curve_svg(views, center, lo, hi, float(subject["views"]))}
-<div class="section"><h2>Top reels</h2>
-{pool_reel_grid(pool, limit=8)}
-</div>
+{view_distribution_chart_svg(views, center, lo, hi, float(subject["views"]))}
 <p class="foot">MULE-14 on collected public reels ({COLLECTED}). Layout from la-reels.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
 
