@@ -14,10 +14,15 @@ Before first deploy, set secrets on the worker (not in git):
 FUNBOY_PASSWORD must match the gate password Victor shares with FUNBOY.
 COOKIE_SALT can be any random string; changing it invalidates existing cookies.
 
-Deploy (requires Cloudflare API token with Workers Scripts edit on this account, including static assets upload):
+Deploy to the live Worker funboy-portal (keeps PORTAL_PASSWORD on Cloudflare; do not create funboy-path routes):
 
   cd funboy-path
   npm install
-  npx wrangler deploy
+  npx wrangler login
+  npx wrangler deploy -c wrangler.funboy-portal.jsonc
+
+Alternate new-worker package (not used for www.dreamaspect.co/funboy today):
+
+  npx wrangler deploy -c wrangler.jsonc
 
 After deploy, verify logged-out GET shows the login form; after POST to /funboy/enter, GET /funboy/ title should be the October public recap (Oct 10–Nov 1, public only). benchmarks.html and competitor-watch.html should return 200 with the same cookie.
