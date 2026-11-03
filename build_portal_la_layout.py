@@ -13,13 +13,18 @@ from build_public_report import (  # noqa: E402
     BSB_POSTS_WINDOW,
     BSB_PINNED,
     COLLECTED,
+    FUN_IG_MONTHLY,
+    FUN_IG_YEAR_LABEL,
+    FUN_IG_YEAR_SOURCE,
     FUN_POSTS,
     SEP_IG_LIKES,
     WINDOW_LABEL,
     fmt,
+    fun_ig_year_totals,
     ig_url,
     log_normal_band,
     median,
+    month_label,
     pop_std,
     week_buckets,
 )
@@ -306,6 +311,13 @@ table.data th { background: var(--fog); font-weight: 700; }
 .stat-strip .kpi { padding: 8px 10px; }
 .stat-strip .kpi b { font-size: 16px; }
 .stat-strip .kpi span { font-size: 10px; }
+.volume-note { font-size: 12px; color: var(--muted); margin: 0 0 10px; max-width: 44rem; line-height: 1.45; }
+.volume-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; margin: 12px 0 16px; padding-bottom: 2px; border-bottom: 2px solid var(--black); max-width: 680px; }
+.volume-col { flex: 1; min-width: 0; text-align: center; font-size: 9px; color: var(--muted); }
+.volume-col b { display: block; font-size: 10px; color: var(--black); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.volume-col i { display: block; width: 100%; border-radius: 3px 3px 0 0; min-height: 2px; }
+.volume-col i.reel { background: var(--blue); }
+.volume-col i.other { background: var(--gray); margin-top: 2px; }
 .comp-block { margin-top: 28px; }
 .comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
@@ -760,6 +772,39 @@ def build_october() -> str:
     return page_shell("FUNBOY · October report (public)", "october", body)
 
 
+def ig_volume_year_section() -> str:
+    totals = fun_ig_year_totals()
+    max_posts = max(r["posts"] for r in FUN_IG_MONTHLY) or 1
+    bars = ""
+    rows = ""
+    for row in FUN_IG_MONTHLY:
+        other = row["posts"] - row["reels"]
+        h_reel = int(96 * row["reels"] / max_posts)
+        h_other = int(96 * other / max_posts)
+        short = row["month"][5:]
+        bars += f"""<div class="volume-col"><b>{row['posts']}</b>
+      <i class="reel" style="height:{max(h_reel, 2 if row['reels'] else 0)}px" title="{row['reels']} reels"></i>
+      <i class="other" style="height:{max(h_other, 2 if other else 0)}px" title="{other} other formats"></i>
+      {short}</div>"""
+        rows += (
+            f"<tr><td>{month_label(row['month'])}</td>"
+            f"<td>{row['posts']}</td><td>{row['reels']}</td>"
+            f"<td>{row['feed_posts']}</td><td>{row['carousels']}</td></tr>"
+        )
+    rows += (
+        f"<tr><th>12-month total</th><th>{totals['posts']}</th><th>{totals['reels']}</th>"
+        f"<th>{totals['feed_posts']}</th><th>{totals['carousels']}</th></tr>"
+    )
+    reel_share = totals["reels"] / totals["posts"] * 100 if totals["posts"] else 0
+    return f"""<div class="section"><h2>Instagram posting volume</h2>
+<p class="volume-note">Reviewed against {FUN_IG_YEAR_SOURCE}. Calendar months {FUN_IG_YEAR_LABEL} · @funboy main-feed assets only (Reels, feed posts, carousels; excludes Tagged reposts and TikTok). Peak month: Apr 2025 ({FUN_IG_MONTHLY[5]['posts']} assets, {FUN_IG_MONTHLY[5]['reels']} reels). Oct 2025 finished at {FUN_IG_MONTHLY[-1]['posts']} posts — all reels, zero carousels. Trailing-year reel share: {reel_share:.0f}%.</p>
+<div class="volume-chart" aria-hidden="true">{bars}</div>
+<p class="who" style="margin:-8px 0 12px">Bar stack: blue = reels · gray = other IG formats · label = month</p>
+<table class="data"><tr><th>Month</th><th>Total posts</th><th>Reels</th><th>Feed posts</th><th>Carousels</th></tr>
+{rows}
+</table></div>"""
+
+
 def build_benchmarks() -> str:
     pool = all_collected_reels()
     views = [float(p["views"]) for p in pool]
@@ -768,13 +813,13 @@ def build_benchmarks() -> str:
     med = median(views)
     subject = min(pool, key=lambda p: abs(p["views"] - med))
     center, lo, hi = log_normal_band(views)
-    ranked = sorted(pool, key=lambda p: p["views"], reverse=True)
 
     body = f"""<p class="eyebrow">Benchmarks · MULE-14 math</p>
 <h1>View benchmark</h1>
+{ig_volume_year_section()}
 {competitor_shelf_cards(show_covers=False)}
 <div class="stat-strip">
-  <div class="kpi"><b>{len(pool)}</b><span>Reels in pool</span></div>
+  <div class="kpi"><b>{len(pool)}</b><span>Reels in Oct window pool</span></div>
   <div class="kpi"><b>{fmt(int(sum(views)))}</b><span>Total public views</span></div>
   <div class="kpi"><b>{avg:,.0f}</b><span>Average views</span></div>
   <div class="kpi"><b>{sd:,.0f}</b><span>Std. dev.</span></div>
@@ -782,7 +827,7 @@ def build_benchmarks() -> str:
   <div class="kpi"><b>{(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.1f}%</b><span>Avg engagement</span></div>
 </div>
 {view_distribution_chart_svg(views, center, lo, hi, float(subject["views"]))}
-<p class="foot">MULE-14 on collected public reels ({COLLECTED}). Layout from la-reels.</p>"""
+<p class="foot">View math (MULE-14) uses public reels collected in the current October window ({COLLECTED}). Posting volume table is the prior 12 calendar months through Oct 2025. Layout from la-reels.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
 
 

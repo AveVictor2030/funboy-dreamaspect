@@ -151,11 +151,57 @@ BSB_PINNED = {
     "views": 3501009,
 }
 
+# @funboy Instagram volume by calendar month (Nectarine Social / IG Post Performance History).
+FUN_IG_YEAR_LABEL = "Nov 2024 – Oct 2025"
+FUN_IG_YEAR_SOURCE = "Nectarine Social · IG Post Performance History (queried 2026-11-03)"
+FUN_IG_MONTHLY = [
+    {"month": "2024-11", "posts": 12, "reels": 7, "feed_posts": 1, "carousels": 4},
+    {"month": "2024-12", "posts": 12, "reels": 7, "feed_posts": 0, "carousels": 5},
+    {"month": "2025-01", "posts": 7, "reels": 3, "feed_posts": 1, "carousels": 3},
+    {"month": "2025-02", "posts": 11, "reels": 3, "feed_posts": 3, "carousels": 5},
+    {"month": "2025-03", "posts": 15, "reels": 9, "feed_posts": 2, "carousels": 4},
+    {"month": "2025-04", "posts": 27, "reels": 17, "feed_posts": 0, "carousels": 10},
+    {"month": "2025-05", "posts": 25, "reels": 15, "feed_posts": 1, "carousels": 9},
+    {"month": "2025-06", "posts": 21, "reels": 13, "feed_posts": 1, "carousels": 7},
+    {"month": "2025-07", "posts": 20, "reels": 16, "feed_posts": 2, "carousels": 2},
+    {"month": "2025-08", "posts": 14, "reels": 12, "feed_posts": 0, "carousels": 2},
+    {"month": "2025-09", "posts": 11, "reels": 10, "feed_posts": 0, "carousels": 1},
+    {"month": "2025-10", "posts": 10, "reels": 10, "feed_posts": 0, "carousels": 0},
+]
+
 STYLE = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read().split("</style>")[0] + "</style>"
 
 
 def fmt(n: int) -> str:
     return f"{n:,}"
+
+
+def month_label(ym: str) -> str:
+    y, m = ym.split("-")
+    names = (
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    )
+    return f"{names[int(m) - 1]} {y}"
+
+
+def fun_ig_year_totals() -> dict[str, int]:
+    keys = ("posts", "reels", "feed_posts", "carousels")
+    out = {k: 0 for k in keys}
+    for row in FUN_IG_MONTHLY:
+        for k in keys:
+            out[k] += row[k]
+    return out
 
 
 def pct_change(new: float, old: float) -> str:
