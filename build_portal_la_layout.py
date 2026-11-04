@@ -14,6 +14,7 @@ from build_public_report import (  # noqa: E402
     BSB_PINNED,
     COLLECTED,
     FUN_IG_MONTHLY,
+    FUN_IG_MONTHLY_PRIOR,
     FUN_IG_YEAR_LABEL,
     FUN_IG_YEAR_SOURCE,
     FUN_POSTS,
@@ -26,6 +27,7 @@ from build_public_report import (  # noqa: E402
     median,
     month_label,
     pop_std,
+    save_bsb_covers,
     week_buckets,
 )
 
@@ -312,6 +314,9 @@ table.data th { background: var(--fog); font-weight: 700; }
 .stat-strip .kpi b { font-size: 16px; }
 .stat-strip .kpi span { font-size: 10px; }
 .volume-note { font-size: 12px; color: var(--muted); margin: 0 0 10px; max-width: 44rem; line-height: 1.45; }
+.volume-prior { margin-top: 14px; }
+.volume-prior summary { cursor: pointer; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.volume-prior .data { opacity: 0.92; }
 .volume-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; margin: 12px 0 16px; padding-bottom: 2px; border-bottom: 2px solid var(--black); max-width: 680px; }
 .volume-col { flex: 1; min-width: 0; text-align: center; font-size: 9px; color: var(--muted); }
 .volume-col b { display: block; font-size: 10px; color: var(--black); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
@@ -320,6 +325,60 @@ table.data th { background: var(--fog); font-weight: 700; }
 .volume-col i.other { background: var(--gray); margin-top: 2px; }
 .comp-block { margin-top: 28px; }
 .comp-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; }
+.comp-profile {
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  padding: 14px 16px 16px;
+  margin: 0 0 18px;
+  background: var(--white);
+}
+.comp-profile.is-empty { background: var(--fog); }
+.comp-profile-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 10px; }
+.comp-profile-head h3 { font-family: Nohemi, sans-serif; font-size: 18px; margin: 0; font-weight: 500; }
+.comp-profile-head .who { margin: 0; }
+.comp-metric-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0 0 12px; }
+.comp-metric-row div { border: 1px solid var(--gray); border-radius: 4px; padding: 6px 8px; background: var(--fog); font-size: 11px; }
+.comp-metric-row b { display: block; font-family: Nohemi, sans-serif; font-size: 15px; margin-bottom: 2px; }
+.comp-metric-row span { color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; }
+.comp-insights { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+.comp-insights li { font-size: 13px; line-height: 1.4; padding: 8px 10px; background: var(--ice); border-radius: 4px; border-left: 3px solid var(--blue); }
+.comp-insights li.warn { border-left-color: var(--mark); background: #fff8f8; }
+.comp-reel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 10px; }
+.comp-reel-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  background: var(--white);
+}
+.comp-reel-card:hover { border-color: var(--black); }
+.comp-reel-thumb {
+  height: 52px;
+  background: linear-gradient(135deg, var(--fog) 0%, var(--ice) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.comp-reel-thumb img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.comp-reel-thumb .comp-reel-date { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; position: relative; z-index: 1; }
+.comp-reel-thumb .comp-reel-views { font-size: 12px; font-family: Nohemi, sans-serif; position: relative; z-index: 1; }
+.comp-reel-body { padding: 8px 10px 10px; }
+.comp-reel-body .place { font-size: 12px; margin: 0 0 4px; line-height: 1.25; }
+.comp-reel-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; margin-top: 6px; font-size: 11px; }
+.comp-reel-metrics div span { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: 0.04em; }
+.comp-reel-metrics b { font-size: 12px; font-variant-numeric: tabular-nums; }
+.comp-view-bar { height: 4px; background: var(--fog); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.comp-view-bar i { display: block; height: 100%; background: var(--blue); max-width: 100%; }
+.comp-view-bar i.hot { background: var(--mark); }
+.comp-compare { font-size: 12px; color: var(--muted); margin: 0 0 10px; line-height: 1.45; }
+@media (max-width: 680px) { .comp-metric-row { grid-template-columns: repeat(2, 1fr); } }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
 .mold2-card { animation: 2.8s ease-in-out infinite edgeGlowOneOff; border-radius: 4px; }
 .archive-list.mold2 { gap: 14px; margin-top: 20px; }
@@ -382,8 +441,227 @@ def pct_change(new: float, old: float) -> str:
     return f"{sign}{ch:.0f}%"
 
 
-def cover_path(shortcode: str) -> str:
+def cover_path(shortcode: str, handle: str = "funboy") -> str:
+    if handle == "bigshinyballs":
+        return f"covers/public-oct-2026-bsb/{shortcode}.jpg"
     return f"covers/public-oct-2026/{shortcode}.jpg"
+
+
+def engagement_rate(post: dict) -> float:
+    return (post["likes"] + post["comments"]) / post["views"] * 100
+
+
+def funboy_window_stats() -> dict[str, float]:
+    posts = reel_posts_for("funboy")
+    views = [p["views"] for p in posts]
+    med = median(views)
+    followers = next(c["followers"] for c in COMPETITOR_SHELF if c["handle"] == "funboy")
+    return {
+        "median_views": med,
+        "avg_engagement": sum(engagement_rate(p) for p in posts) / len(posts),
+        "views_per_follower": med / followers * 100,
+        "reels": len(posts),
+    }
+
+
+def analyze_competitor(posts: list[dict], followers: int, *, window_label: str) -> dict | None:
+    if not posts:
+        return None
+    from datetime import date as date_cls
+
+    views = [p["views"] for p in posts]
+    med = median(views)
+    avg = sum(views) / len(views)
+    eng = [engagement_rate(p) for p in posts]
+    dates = sorted(p["date"] for p in posts)
+    d0 = date_cls.fromisoformat(dates[0])
+    d1 = date_cls.fromisoformat(dates[-1])
+    span_days = max(1, (d1 - d0).days + 1)
+    breakthroughs = [p for p in posts if p.get("breakthrough")]
+    spikes = [p for p in posts if p.get("note")]
+    top = max(posts, key=lambda p: p["views"])
+    return {
+        "posts": len(posts),
+        "median_views": med,
+        "avg_views": avg,
+        "total_views": sum(views),
+        "avg_engagement": sum(eng) / len(eng),
+        "median_engagement": median(eng),
+        "views_per_follower": med / followers * 100,
+        "reels_per_week": len(posts) / span_days * 7,
+        "breakthroughs": breakthroughs,
+        "spikes": spikes,
+        "top": top,
+        "window_label": window_label,
+        "span_days": span_days,
+    }
+
+
+def competitor_insights(
+    handle: str,
+    label: str,
+    stats: dict,
+    fun: dict[str, float],
+) -> list[tuple[str, bool]]:
+    """Return (text, is_warning) insight bullets."""
+    lines: list[tuple[str, bool]] = []
+    med = stats["median_views"]
+    fun_med = fun["median_views"]
+    raw_ratio = med / fun_med if fun_med else 0
+    share = stats["views_per_follower"]
+    fun_share = fun["views_per_follower"]
+    lines.append(
+        (
+            f"Median public views {fmt(int(med))} vs FUNBOY {fmt(int(fun_med))} "
+            f"({raw_ratio:.0%} of FUNBOY raw median) in the same collection window.",
+            False,
+        )
+    )
+    if share > fun_share:
+        lines.append(
+            (
+                f"Reach efficiency: {share:.1f}% of followers see the typical reel vs "
+                f"FUNBOY {fun_share:.1f}% — smaller account, larger share of its own audience.",
+                False,
+            )
+        )
+    else:
+        lines.append(
+            (
+                f"Reach efficiency: {share:.1f}% views/followers vs FUNBOY {fun_share:.1f}%.",
+                False,
+            )
+        )
+    eng_gap = stats["avg_engagement"] - fun["avg_engagement"]
+    lines.append(
+        (
+            f"Engagement (likes + comments / views): {stats['avg_engagement']:.1f}% avg vs "
+            f"FUNBOY {fun['avg_engagement']:.1f}% ({eng_gap:+.1f} pts).",
+            stats["avg_engagement"] < fun["avg_engagement"] * 0.5,
+        )
+    )
+    lines.append(
+        (
+            f"Posting pace {stats['reels_per_week']:.1f} reels/week over {stats['span_days']} days "
+            f"({stats['posts']} reels, {fmt(int(stats['total_views']))} total public views).",
+            False,
+        )
+    )
+    if stats["breakthroughs"]:
+        d = stats["breakthroughs"][0]["date"][5:].replace("-", "/")
+        lines.append(
+            (
+                f"Reach breakthrough on {d}: {fmt(stats['breakthroughs'][0]['views'])} views "
+                f"({stats['breakthroughs'][0]['views'] / med:.1f}× account median).",
+                False,
+            )
+        )
+    for sp in stats["spikes"]:
+        er = engagement_rate(sp)
+        lines.append(
+            (
+                f"View spike {sp['date'][5:].replace('-', '/')} — {fmt(sp['views'])} views "
+                f"({sp['views'] / med:.1f}× median) but {er:.1f}% engagement; treat as reach-only.",
+                True,
+            )
+        )
+    return lines
+
+
+def competitor_reel_card(post: dict, handle: str, med: float) -> str:
+    mult = post["views"] / med if med else 0
+    er = engagement_rate(post)
+    bar_pct = min(100, mult / 10 * 100)
+    bar_cls = "hot" if mult >= 3 else ""
+    href = ig_url(post["shortcode"], "reel")
+    rel_cover = cover_path(post["shortcode"], handle)
+    cover_fs = os.path.join(ROOT, rel_cover)
+    if os.path.isfile(cover_fs) and os.path.getsize(cover_fs) > 500:
+        thumb = f'<div class="comp-reel-thumb"><img src="{rel_cover}" alt="" loading="lazy" /></div>'
+    else:
+        thumb = (
+            f'<div class="comp-reel-thumb">'
+            f'<span class="comp-reel-date">{post["date"][5:].replace("-", " · ")}</span>'
+            f'<span class="comp-reel-views">{_chart_axis_num(post["views"])} views</span></div>'
+        )
+    badge = ""
+    if post.get("breakthrough"):
+        badge = '<span class="tag boost">Breakthrough</span>'
+    elif post.get("note"):
+        badge = '<span class="tag warn">Low engagement</span>'
+    title = (post.get("caption") or f"Reel · {post['date']}")[:32]
+    return f"""<a class="comp-reel-card" href="{href}" target="_blank" rel="noopener">
+  {thumb}
+  <div class="comp-reel-body">
+    <p class="place">{title}</p>
+    <div class="comp-reel-metrics">
+      <div><span>Views</span><b>{fmt(post['views'])}</b></div>
+      <div><span>× median</span><b>{mult:.1f}×</b></div>
+      <div><span>Likes</span><b>{post['likes']}</b></div>
+      <div><span>Engagement</span><b>{er:.1f}%</b></div>
+    </div>
+    <div class="comp-view-bar" title="{mult:.1f}× median views"><i class="{bar_cls}" style="width:{bar_pct:.0f}%"></i></div>
+    {badge}
+  </div>
+</a>"""
+
+
+def competitor_profile_block(c: dict, fun: dict[str, float]) -> str:
+    handle = c["handle"]
+    posts = reel_posts_for(handle)
+    stats = analyze_competitor(posts, c["followers"], window_label=WINDOW_LABEL)
+    head = f"""<div class="comp-profile-head">
+  <h3>{c['label']}</h3>
+  <p class="who">@{handle} · {c['tiktok']}</p>
+</div>"""
+    if not stats:
+        return f"""<article class="comp-profile is-empty">
+{head}
+<p class="comp-compare">Profile on shelf ({fmt(c['followers'])} followers). No public reels collected in this pass — cannot compute median views, engagement, or breakthrough flags until the logged-out grid is pulled.</p>
+<a class="link-ig" href="https://www.instagram.com/{handle}/" target="_blank" rel="noopener">Open Instagram</a>
+</article>"""
+
+    insights_html = ""
+    for text, warn in competitor_insights(handle, c["label"], stats, fun):
+        cls = " class=\"warn\"" if warn else ""
+        insights_html += f"<li{cls}>{text}</li>"
+
+    reels = "".join(
+        competitor_reel_card(p, handle, stats["median_views"])
+        for p in sorted(posts, key=lambda x: x["date"])
+    )
+    return f"""<article class="comp-profile">
+{head}
+<div class="comp-metric-row">
+  <div><b>{fmt(c['followers'])}</b><span>Followers</span></div>
+  <div><b>{fmt(int(stats['median_views']))}</b><span>Median views</span></div>
+  <div><b>{stats['views_per_follower']:.1f}%</b><span>Views / followers</span></div>
+  <div><b>{stats['avg_engagement']:.1f}%</b><span>Avg engagement</span></div>
+</div>
+<ul class="comp-insights">{insights_html}</ul>
+<div class="comp-reel-grid">{reels}</div>
+<a class="link-ig" href="https://www.instagram.com/{handle}/" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px">Open Instagram</a>
+</article>"""
+
+
+def competitor_signals_html(fun: dict[str, float]) -> str:
+    bsb = analyze_competitor(
+        reel_posts_for("bigshinyballs"),
+        next(c["followers"] for c in COMPETITOR_SHELF if c["handle"] == "bigshinyballs"),
+        window_label=WINDOW_LABEL,
+    )
+    empty = [c["handle"] for c in COMPETITOR_SHELF if not c.get("brand") and not reel_posts_for(c["handle"])]
+    cells = ""
+    if bsb and bsb["breakthroughs"]:
+        cells += f"""<div><b>{len(bsb['breakthroughs'])}</b><span>BSB reach breakthrough(s) · public window</span></div>"""
+    if bsb and bsb["spikes"]:
+        top_spike = max(bsb["spikes"], key=lambda p: p["views"])
+        cells += f"""<div><b>{fmt(top_spike['views'])}</b><span>BSB top spike · {engagement_rate(top_spike):.1f}% engagement</span></div>"""
+    if bsb:
+        cells += f"""<div><b>{bsb['views_per_follower']:.1f}%</b><span>BSB median views ÷ followers vs FUNBOY {fun['views_per_follower']:.1f}%</span></div>"""
+    if empty:
+        cells += f"""<div><b>{len(empty)}</b><span>Shelf accounts without reel rows: {', '.join('@' + h for h in empty)}</span></div>"""
+    return f'<div class="reach-grid">{cells}</div>'
 
 
 def rules_block() -> str:
@@ -772,12 +1050,11 @@ def build_october() -> str:
     return page_shell("FUNBOY · October report (public)", "october", body)
 
 
-def ig_volume_year_section() -> str:
-    totals = fun_ig_year_totals()
-    max_posts = max(r["posts"] for r in FUN_IG_MONTHLY) or 1
+def _volume_table_rows(rows: list[dict], *, total_label: str) -> tuple[str, str]:
+    max_posts = max(r["posts"] for r in rows) or 1
     bars = ""
-    rows = ""
-    for row in FUN_IG_MONTHLY:
+    table_rows = ""
+    for row in rows:
         other = row["posts"] - row["reels"]
         h_reel = int(96 * row["reels"] / max_posts)
         h_other = int(96 * other / max_posts)
@@ -786,23 +1063,45 @@ def ig_volume_year_section() -> str:
       <i class="reel" style="height:{max(h_reel, 2 if row['reels'] else 0)}px" title="{row['reels']} reels"></i>
       <i class="other" style="height:{max(h_other, 2 if other else 0)}px" title="{other} other formats"></i>
       {short}</div>"""
-        rows += (
-            f"<tr><td>{month_label(row['month'])}</td>"
+        note = row.get("note")
+        month_cell = month_label(row["month"])
+        if note:
+            month_cell += f' <span class="who">({note})</span>'
+        table_rows += (
+            f"<tr><td>{month_cell}</td>"
             f"<td>{row['posts']}</td><td>{row['reels']}</td>"
             f"<td>{row['feed_posts']}</td><td>{row['carousels']}</td></tr>"
         )
-    rows += (
-        f"<tr><th>12-month total</th><th>{totals['posts']}</th><th>{totals['reels']}</th>"
+    totals = fun_ig_year_totals(rows)
+    table_rows += (
+        f"<tr><th>{total_label}</th><th>{totals['posts']}</th><th>{totals['reels']}</th>"
         f"<th>{totals['feed_posts']}</th><th>{totals['carousels']}</th></tr>"
     )
+    return bars, table_rows
+
+
+def ig_volume_year_section() -> str:
+    bars, rows = _volume_table_rows(FUN_IG_MONTHLY, total_label="Oct–Oct total")
+    totals = fun_ig_year_totals()
+    peak = max(FUN_IG_MONTHLY, key=lambda r: r["posts"])
     reel_share = totals["reels"] / totals["posts"] * 100 if totals["posts"] else 0
+    prior_bars, prior_rows = _volume_table_rows(
+        FUN_IG_MONTHLY_PRIOR, total_label="Nov 2024 – Sep 2025 subtotal"
+    )
     return f"""<div class="section"><h2>Instagram posting volume</h2>
-<p class="volume-note">Reviewed against {FUN_IG_YEAR_SOURCE}. Calendar months {FUN_IG_YEAR_LABEL} · @funboy main-feed assets only (Reels, feed posts, carousels; excludes Tagged reposts and TikTok). Peak month: Apr 2025 ({FUN_IG_MONTHLY[5]['posts']} assets, {FUN_IG_MONTHLY[5]['reels']} reels). Oct 2025 finished at {FUN_IG_MONTHLY[-1]['posts']} posts — all reels, zero carousels. Trailing-year reel share: {reel_share:.0f}%.</p>
+<p class="volume-note">Full-year circle: <b>{FUN_IG_YEAR_LABEL}</b> · @funboy main-feed assets (Reels, feed posts, carousels; excludes Tagged reposts and TikTok). Source: {FUN_IG_YEAR_SOURCE}. Peak month in this window: {month_label(peak['month'])} ({peak['posts']} assets, {peak['reels']} reels). Reel share across the year: {reel_share:.0f}%.</p>
 <div class="volume-chart" aria-hidden="true">{bars}</div>
-<p class="who" style="margin:-8px 0 12px">Bar stack: blue = reels · gray = other IG formats · label = month</p>
+<p class="who" style="margin:-8px 0 12px">Bar stack: blue = reels · gray = other IG formats · labels = month (10 = Oct)</p>
 <table class="data"><tr><th>Month</th><th>Total posts</th><th>Reels</th><th>Feed posts</th><th>Carousels</th></tr>
 {rows}
-</table></div>"""
+</table>
+<details class="volume-prior">
+<summary>Earlier months (optional · Nov 2024 – Sep 2025)</summary>
+<div class="volume-chart" aria-hidden="true">{prior_bars}</div>
+<table class="data"><tr><th>Month</th><th>Total posts</th><th>Reels</th><th>Feed posts</th><th>Carousels</th></tr>
+{prior_rows}
+</table>
+</details></div>"""
 
 
 def build_benchmarks() -> str:
@@ -827,37 +1126,28 @@ def build_benchmarks() -> str:
   <div class="kpi"><b>{(sum((p['likes']+p['comments'])/p['views'] for p in pool)/len(pool)*100):.1f}%</b><span>Avg engagement</span></div>
 </div>
 {view_distribution_chart_svg(views, center, lo, hi, float(subject["views"]))}
-<p class="foot">View math (MULE-14) uses public reels collected in the current October window ({COLLECTED}). Posting volume table is the prior 12 calendar months through Oct 2025. Layout from la-reels.</p>"""
+<p class="foot">View math (MULE-14) uses public reels collected in the current October window ({COLLECTED}). Posting volume uses the Oct 2025–Oct 2026 year circle; earlier months are optional in the fold. Layout from la-reels.</p>"""
     return page_shell("FUNBOY · Benchmarks", "benchmarks", body)
 
 
 def build_competitor() -> str:
-    bsb_posts = reel_posts_for("bigshinyballs")
-    bsb_med = median([p["views"] for p in bsb_posts]) if bsb_posts else 0
-    comp_blocks = ""
+    fun = funboy_window_stats()
+    profiles = ""
     for c in COMPETITOR_SHELF:
         if c.get("brand"):
             continue
-        posts = reel_posts_for(c["handle"])
-        med = median([p["views"] for p in posts]) if posts else 0.0
-        comp_blocks += f"""<div class="comp-block">
-<h3>@{c['handle']} · {c['label']}</h3>
-<p class="who">Instagram public reels · TikTok: {c['tiktok']}</p>
-{competitor_ig_cards(posts, c['handle'], med or bsb_med or 1.0)}
-</div>"""
+        profiles += competitor_profile_block(c, fun)
 
     body = f"""<p class="eyebrow">Competitor research · mold 1</p>
 <h1>Competitor research</h1>
+<p class="who">Public Instagram only · compared to FUNBOY in the same window ({WINDOW_LABEL}). Engagement = (likes + comments) ÷ public views.</p>
 {competitor_shelf_cards(competitors_only=True)}
 <div class="section"><h2>Signals</h2>
-<div class="reach-grid">
-<div><b>1</b><span>@bigshinyballs reach breakthrough (Oct 19)</span></div>
-<div><b>{fmt(BSB_POSTS_WINDOW[-1]['views'])}</b><span>BSB Oct 29 reach spike · low engagement</span></div>
-<div><b>2</b><span>Named shelf accounts without reel rows: @poolcandy, @bigmouthinc</span></div>
-</div></div>
-<div class="section"><h2>Competitor content</h2>
-{comp_blocks}
-<p class="who" style="margin-top:16px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
+{competitor_signals_html(fun)}
+</div>
+<div class="section"><h2>Competitor analysis</h2>
+{profiles}
+<p class="who" style="margin-top:8px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
 </div>
 <p class="foot">Competitor shelf follows DA Portal competitor-watch mold. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
     return page_shell("FUNBOY · Competitor research", "competitor", body)
@@ -910,6 +1200,10 @@ def sync_funboy_path() -> None:
 
 
 def main() -> None:
+    try:
+        save_bsb_covers()
+    except Exception:
+        pass
     open(os.path.join(ROOT, "portal-styles.css"), "w", encoding="utf-8").write(CSS)
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(build_october())
     open(os.path.join(ROOT, "benchmarks.html"), "w", encoding="utf-8").write(build_benchmarks())

@@ -152,9 +152,32 @@ BSB_PINNED = {
 }
 
 # @funboy Instagram volume by calendar month (Nectarine Social / IG Post Performance History).
-FUN_IG_YEAR_LABEL = "Nov 2024 – Oct 2025"
-FUN_IG_YEAR_SOURCE = "Nectarine Social · IG Post Performance History (queried 2026-11-03)"
+FUN_IG_YEAR_LABEL = "Oct 2025 – Oct 2026"
+FUN_IG_YEAR_SOURCE = "Nectarine Social · IG Post Performance History (Sep 2026–Oct 2026 from monthly recaps / public grid)"
 FUN_IG_MONTHLY = [
+    {"month": "2025-10", "posts": 10, "reels": 10, "feed_posts": 0, "carousels": 0},
+    {"month": "2025-11", "posts": 13, "reels": 7, "feed_posts": 1, "carousels": 5},
+    {"month": "2025-12", "posts": 7, "reels": 6, "feed_posts": 0, "carousels": 1},
+    {"month": "2026-01", "posts": 4, "reels": 2, "feed_posts": 1, "carousels": 1},
+    {"month": "2026-02", "posts": 5, "reels": 2, "feed_posts": 1, "carousels": 2},
+    {"month": "2026-03", "posts": 17, "reels": 8, "feed_posts": 2, "carousels": 7},
+    {"month": "2026-04", "posts": 21, "reels": 11, "feed_posts": 0, "carousels": 10},
+    {"month": "2026-05", "posts": 31, "reels": 23, "feed_posts": 0, "carousels": 8},
+    {"month": "2026-06", "posts": 28, "reels": 17, "feed_posts": 0, "carousels": 11},
+    {"month": "2026-07", "posts": 30, "reels": 14, "feed_posts": 1, "carousels": 15},
+    {"month": "2026-08", "posts": 22, "reels": 18, "feed_posts": 4, "carousels": 0, "note": "September recap grid"},
+    {"month": "2026-09", "posts": 17, "reels": 16, "feed_posts": 1, "carousels": 0, "note": "September recap"},
+    {
+        "month": "2026-10",
+        "posts": 11,
+        "reels": 10,
+        "feed_posts": 1,
+        "carousels": 0,
+        "note": "Public grid through Oct 29 · not full month",
+    },
+]
+# Optional context before the Oct–Oct year (not in headline totals).
+FUN_IG_MONTHLY_PRIOR = [
     {"month": "2024-11", "posts": 12, "reels": 7, "feed_posts": 1, "carousels": 4},
     {"month": "2024-12", "posts": 12, "reels": 7, "feed_posts": 0, "carousels": 5},
     {"month": "2025-01", "posts": 7, "reels": 3, "feed_posts": 1, "carousels": 3},
@@ -166,7 +189,6 @@ FUN_IG_MONTHLY = [
     {"month": "2025-07", "posts": 20, "reels": 16, "feed_posts": 2, "carousels": 2},
     {"month": "2025-08", "posts": 14, "reels": 12, "feed_posts": 0, "carousels": 2},
     {"month": "2025-09", "posts": 11, "reels": 10, "feed_posts": 0, "carousels": 1},
-    {"month": "2025-10", "posts": 10, "reels": 10, "feed_posts": 0, "carousels": 0},
 ]
 
 STYLE = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read().split("</style>")[0] + "</style>"
@@ -195,10 +217,11 @@ def month_label(ym: str) -> str:
     return f"{names[int(m) - 1]} {y}"
 
 
-def fun_ig_year_totals() -> dict[str, int]:
+def fun_ig_year_totals(rows: list[dict] | None = None) -> dict[str, int]:
+    rows = rows if rows is not None else FUN_IG_MONTHLY
     keys = ("posts", "reels", "feed_posts", "carousels")
     out = {k: 0 for k in keys}
-    for row in FUN_IG_MONTHLY:
+    for row in rows:
         for k in keys:
             out[k] += row[k]
     return out
@@ -270,10 +293,17 @@ def fetch_display_urls(shortcodes: list[str]) -> dict[str, str]:
     return urls
 
 
-def save_cover(shortcode: str, remote: str | None) -> str:
-    os.makedirs(COVERS, exist_ok=True)
-    dest = os.path.join(COVERS, f"{shortcode}.jpg")
-    rel = f"covers/public-oct-2026/{shortcode}.jpg"
+def save_cover(
+    shortcode: str,
+    remote: str | None,
+    *,
+    dest_dir: str | None = None,
+    rel_prefix: str = "covers/public-oct-2026",
+) -> str:
+    base = dest_dir or COVERS
+    os.makedirs(base, exist_ok=True)
+    dest = os.path.join(base, f"{shortcode}.jpg")
+    rel = f"{rel_prefix}/{shortcode}.jpg"
     if os.path.isfile(dest) and os.path.getsize(dest) > 1000:
         return rel
     if not remote:
@@ -287,6 +317,20 @@ def save_cover(shortcode: str, remote: str | None) -> str:
         return rel
     except Exception:
         return ""
+
+
+def save_bsb_covers() -> None:
+    """Download BSB reel covers when the public API allows."""
+    codes = [p["shortcode"] for p in BSB_POSTS_WINDOW]
+    urls = fetch_display_urls(codes)
+    bsb_dir = os.path.join(ROOT, "covers", "public-oct-2026-bsb")
+    for code in codes:
+        save_cover(
+            code,
+            urls.get(code),
+            dest_dir=bsb_dir,
+            rel_prefix="covers/public-oct-2026-bsb",
+        )
 
 
 def nav(current: str) -> str:
