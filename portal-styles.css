@@ -242,6 +242,7 @@ table.data th { background: var(--fog); font-weight: 700; }
 .stat-strip .kpi { padding: 8px 10px; }
 .stat-strip .kpi b { font-size: 16px; }
 .stat-strip .kpi span { font-size: 10px; }
+.volume-note { font-size: 12px; color: var(--muted); margin: 0 0 10px; max-width: 44rem; line-height: 1.45; }
 .volume-prior { margin-top: 14px; }
 .volume-prior summary { cursor: pointer; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
 .volume-prior .data { opacity: 0.92; }
