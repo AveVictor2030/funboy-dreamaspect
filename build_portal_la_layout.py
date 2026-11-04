@@ -379,6 +379,11 @@ table.data th { background: var(--fog); font-weight: 700; }
 .comp-view-bar i.hot { background: var(--mark); }
 .comp-compare { font-size: 12px; color: var(--muted); margin: 0 0 10px; line-height: 1.45; }
 @media (max-width: 680px) { .comp-metric-row { grid-template-columns: repeat(2, 1fr); } }
+.comp-watch-table { font-size: 12px; }
+.comp-watch-table td.num, .comp-watch-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.comp-watch-table tr.is-subject { background: var(--ice); }
+.comp-watch-table tr.is-empty { color: var(--muted); }
+.comp-watch-callout { font-size: 12px; color: var(--muted); margin: 10px 0 0; line-height: 1.45; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
 .mold2-card { animation: 2.8s ease-in-out infinite edgeGlowOneOff; border-radius: 4px; }
 .archive-list.mold2 { gap: 14px; margin-top: 20px; }
@@ -400,7 +405,7 @@ def nav(current: str) -> str:
     items = [
         ("index.html", "October report", "october"),
         ("benchmarks.html", "Benchmarks", "benchmarks"),
-        ("competitor-research.html", "Competitor research", "competitor"),
+        ("competitor-watch.html", "Competitor watch", "competitor"),
         ("all-reports.html", "All reports", "all"),
     ]
     links = []
@@ -589,7 +594,10 @@ def competitor_reel_card(post: dict, handle: str, med: float) -> str:
         badge = '<span class="tag boost">Breakthrough</span>'
     elif post.get("note"):
         badge = '<span class="tag warn">Low engagement</span>'
-    title = (post.get("caption") or f"Reel · {post['date']}")[:32]
+    if post.get("caption"):
+        title = post["caption"][:32]
+    else:
+        title = f"{month_label(post['date'][:7])} · {post['date'][5:]}"
     return f"""<a class="comp-reel-card" href="{href}" target="_blank" rel="noopener">
   {thumb}
   <div class="comp-reel-body">
@@ -644,24 +652,38 @@ def competitor_profile_block(c: dict, fun: dict[str, float]) -> str:
 </article>"""
 
 
-def competitor_signals_html(fun: dict[str, float]) -> str:
-    bsb = analyze_competitor(
-        reel_posts_for("bigshinyballs"),
-        next(c["followers"] for c in COMPETITOR_SHELF if c["handle"] == "bigshinyballs"),
-        window_label=WINDOW_LABEL,
-    )
-    empty = [c["handle"] for c in COMPETITOR_SHELF if not c.get("brand") and not reel_posts_for(c["handle"])]
-    cells = ""
-    if bsb and bsb["breakthroughs"]:
-        cells += f"""<div><b>{len(bsb['breakthroughs'])}</b><span>BSB reach breakthrough(s) · public window</span></div>"""
-    if bsb and bsb["spikes"]:
-        top_spike = max(bsb["spikes"], key=lambda p: p["views"])
-        cells += f"""<div><b>{fmt(top_spike['views'])}</b><span>BSB top spike · {engagement_rate(top_spike):.1f}% engagement</span></div>"""
-    if bsb:
-        cells += f"""<div><b>{bsb['views_per_follower']:.1f}%</b><span>BSB median views ÷ followers vs FUNBOY {fun['views_per_follower']:.1f}%</span></div>"""
-    if empty:
-        cells += f"""<div><b>{len(empty)}</b><span>Shelf accounts without reel rows: {', '.join('@' + h for h in empty)}</span></div>"""
-    return f'<div class="reach-grid">{cells}</div>'
+def competitor_watch_table(fun: dict[str, float]) -> str:
+    rows = ""
+    for c in COMPETITOR_SHELF:
+        posts = reel_posts_for(c["handle"])
+        stats = analyze_competitor(posts, c["followers"], window_label=WINDOW_LABEL)
+        is_subject = c.get("brand")
+        cls = "is-subject" if is_subject else ("is-empty" if not stats else "")
+        label = c["label"]
+        if is_subject:
+            label = f"{label} · subject"
+        reels = str(stats["posts"]) if stats else "—"
+        med = fmt(int(stats["median_views"])) if stats else "—"
+        if is_subject and stats:
+            med = f'<span class="mark-circle">{med}</span>'
+        elif stats and fun["median_views"] > stats["median_views"]:
+            med = f'<span class="mark-underline">{med}</span>'
+        share = f"{stats['views_per_follower']:.1f}%" if stats else "—"
+        if stats and not is_subject and stats["views_per_follower"] > fun["views_per_follower"]:
+            share = f'<span class="mark-circle">{share}</span>'
+        eng = f"{stats['avg_engagement']:.1f}%" if stats else "—"
+        brk = str(len(stats["breakthroughs"])) if stats else "—"
+        rows += (
+            f"<tr class=\"{cls}\"><td>@{c['handle']}<br><span class=\"who\">{label}</span></td>"
+            f"<td class=\"num\">{fmt(c['followers'])}</td><td class=\"num\">{reels}</td>"
+            f"<td class=\"num\">{med}</td><td class=\"num\">{share}</td>"
+            f"<td class=\"num\">{eng}</td><td class=\"num\">{brk}</td></tr>"
+        )
+    return f"""<table class="data comp-watch-table">
+<tr><th>Account</th><th class="num">Followers</th><th class="num">Reels</th><th class="num">Median views</th><th class="num">Views ÷ followers</th><th class="num">Avg engagement</th><th class="num">Breakthroughs</th></tr>
+{rows}
+</table>
+<p class="comp-watch-callout">Circle = higher views÷followers than FUNBOY or FUNBOY median (subject). Underline = median below FUNBOY raw median. Window: {WINDOW_LABEL} · public Instagram only.</p>"""
 
 
 def rules_block() -> str:
@@ -1138,19 +1160,18 @@ def build_competitor() -> str:
             continue
         profiles += competitor_profile_block(c, fun)
 
-    body = f"""<p class="eyebrow">Competitor research · mold 1</p>
-<h1>Competitor research</h1>
-<p class="who">Public Instagram only · compared to FUNBOY in the same window ({WINDOW_LABEL}). Engagement = (likes + comments) ÷ public views.</p>
-{competitor_shelf_cards(competitors_only=True)}
-<div class="section"><h2>Signals</h2>
-{competitor_signals_html(fun)}
+    body = f"""<p class="eyebrow">Competitor watch · mold 1</p>
+<h1>Competitor watch</h1>
+<p class="who">Side-by-side public Instagram reels · {WINDOW_LABEL} · engagement = (likes + comments) ÷ views</p>
+<div class="section"><h2>Shelf comparison</h2>
+{competitor_watch_table(fun)}
 </div>
-<div class="section"><h2>Competitor analysis</h2>
+<div class="section"><h2>Reel-by-reel analysis</h2>
 {profiles}
 <p class="who" style="margin-top:8px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
 </div>
-<p class="foot">Competitor shelf follows DA Portal competitor-watch mold. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
-    return page_shell("FUNBOY · Competitor research", "competitor", body)
+<p class="foot">Competitor watch follows the DA Portal mold (MULE-15). Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
+    return page_shell("FUNBOY · Competitor watch", "competitor", body)
 
 
 def build_all_reports() -> str:
@@ -1188,6 +1209,7 @@ def sync_funboy_path() -> None:
     for fn in (
         "index.html",
         "benchmarks.html",
+        "competitor-watch.html",
         "competitor-research.html",
         "all-reports.html",
         "portal-styles.css",
@@ -1207,10 +1229,12 @@ def main() -> None:
     open(os.path.join(ROOT, "portal-styles.css"), "w", encoding="utf-8").write(CSS)
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(build_october())
     open(os.path.join(ROOT, "benchmarks.html"), "w", encoding="utf-8").write(build_benchmarks())
-    open(os.path.join(ROOT, "competitor-research.html"), "w", encoding="utf-8").write(build_competitor())
+    comp_html = build_competitor()
+    open(os.path.join(ROOT, "competitor-watch.html"), "w", encoding="utf-8").write(comp_html)
+    open(os.path.join(ROOT, "competitor-research.html"), "w", encoding="utf-8").write(comp_html)
     open(os.path.join(ROOT, "all-reports.html"), "w", encoding="utf-8").write(build_all_reports())
     patch_archives()
-    for obsolete in ("october-public-2026-recap.html", "competitor-watch.html"):
+    for obsolete in ("october-public-2026-recap.html",):
         p = os.path.join(ROOT, obsolete)
         if os.path.isfile(p):
             os.remove(p)

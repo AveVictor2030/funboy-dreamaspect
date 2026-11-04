@@ -308,6 +308,11 @@ table.data th { background: var(--fog); font-weight: 700; }
 .comp-view-bar i.hot { background: var(--mark); }
 .comp-compare { font-size: 12px; color: var(--muted); margin: 0 0 10px; line-height: 1.45; }
 @media (max-width: 680px) { .comp-metric-row { grid-template-columns: repeat(2, 1fr); } }
+.comp-watch-table { font-size: 12px; }
+.comp-watch-table td.num, .comp-watch-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.comp-watch-table tr.is-subject { background: var(--ice); }
+.comp-watch-table tr.is-empty { color: var(--muted); }
+.comp-watch-callout { font-size: 12px; color: var(--muted); margin: 10px 0 0; line-height: 1.45; }
 @keyframes edgeGlowOneOff { 0%, 100% { outline: 2px solid var(--blue); outline-offset: 3px; } 50% { outline: 2px solid var(--black); outline-offset: 3px; } }
 .mold2-card { animation: 2.8s ease-in-out infinite edgeGlowOneOff; border-radius: 4px; }
 .archive-list.mold2 { gap: 14px; margin-top: 20px; }
