@@ -278,6 +278,67 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .year-quarter[hidden],
 .year-subplatform[hidden],
 .year-filter-note[hidden] { display: none !important; }
+.year-timeline {
+  margin: 0 0 24px;
+  padding: 16px 18px 14px;
+  background: var(--white);
+  border: 1px solid color-mix(in srgb, var(--black) 10%, transparent);
+  border-radius: 6px;
+}
+.year-timeline h2 { margin: 0 0 4px; font-size: 18px; }
+.year-timeline .tl-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 16px; margin-bottom: 12px; }
+.year-timeline .tl-metric-switch { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.year-timeline .tl-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  min-height: 168px;
+  padding: 8px 4px 0;
+  border-bottom: 2px solid var(--black);
+  overflow-x: auto;
+}
+.year-timeline .tl-col {
+  flex: 1 0 54px;
+  max-width: 72px;
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted);
+}
+.year-timeline .tl-pair {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 140px;
+  margin-bottom: 6px;
+}
+.year-timeline .tl-bar {
+  display: block;
+  width: 18px;
+  min-height: 3px;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.2s ease;
+}
+.year-timeline .tl-bar.tl-prior {
+  background: color-mix(in srgb, var(--muted) 35%, var(--fog));
+  border: 1px solid color-mix(in srgb, var(--black) 12%, transparent);
+}
+.year-timeline .tl-bar.tl-cur {
+  background: linear-gradient(180deg, #b8dcfa 0%, #6eb5ef 100%);
+  border: 1px solid #2a7fc7;
+}
+.year-timeline .tl-bar.tl-cur.tt-only {
+  background: linear-gradient(180deg, #e8e8e8 0%, #1a1a1a 55%);
+  border-color: var(--black);
+}
+.year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
+.year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
+.year-timeline .tl-val { display: block; font-size: 9px; font-variant-numeric: tabular-nums; color: var(--black); margin-top: 3px; }
+.year-timeline .tl-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 10px; font-size: 11px; color: var(--muted); }
+.year-timeline .tl-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.year-timeline .tl-swatch { width: 12px; height: 12px; border-radius: 2px; }
+.year-timeline .tl-swatch.prior { background: color-mix(in srgb, var(--muted) 35%, var(--fog)); border: 1px solid color-mix(in srgb, var(--black) 12%, transparent); }
+.year-timeline .tl-swatch.cur { background: linear-gradient(180deg, #b8dcfa 0%, #6eb5ef 100%); border: 1px solid #2a7fc7; }
 .quarter-block { margin-top: 28px; }
 .quarter-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; font-weight: 500; }
 .ads-waiting {
@@ -1007,11 +1068,115 @@ def ads_placeholder_section() -> str:
 </div></div>"""
 
 
+def year_timeline_section(timeline: dict) -> str:
+    if not timeline or not timeline.get("months"):
+        return ""
+    data_json = json.dumps(timeline, separators=(",", ":"))
+    return f"""<section class="year-timeline section" id="year-timeline" aria-label="Month over month timeline">
+  <div class="tl-head">
+    <div>
+      <h2>Month over month</h2>
+      <p class="who" style="margin:0">Each month vs same month prior year · Oct 2025–Oct 2026 window</p>
+    </div>
+    <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
+      <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts</button>
+      <button type="button" class="filter-btn" data-timeline-metric="views">Views</button>
+      <button type="button" class="filter-btn" data-timeline-metric="likes">Likes</button>
+    </div>
+  </div>
+  <div class="tl-chart" id="year-timeline-chart"></div>
+  <div class="tl-legend">
+    <span><i class="tl-swatch prior"></i> Prior year (same month)</span>
+    <span><i class="tl-swatch cur"></i> Current period</span>
+  </div>
+  <p class="who" style="margin:10px 0 0;font-size:11px">Prior-year TikTok before Nov 2025 is not in the public export. Prior-year views/likes use post-level data when available; otherwise post counts from Nectarine monthly history.</p>
+  <script type="application/json" id="year-timeline-data">{data_json}</script>
+</section>"""
+
+
 YEAR_FILTER_SCRIPT = """
 <script>
 (function () {
   var platform = "both";
   var quarter = "all";
+  var timelineMetric = "posts";
+  var timelineData = null;
+  try {
+    var el = document.getElementById("year-timeline-data");
+    timelineData = el ? JSON.parse(el.textContent) : null;
+  } catch (e) {
+    timelineData = null;
+  }
+  function pickMetrics(block) {
+    if (!block) return { posts: 0, likes: 0, views: 0 };
+    return {
+      posts: block.posts || 0,
+      likes: block.likes || 0,
+      views: block.views || 0,
+    };
+  }
+  function combineMonth(row) {
+    var ig = pickMetrics(row.instagram);
+    var tt = pickMetrics(row.tiktok);
+  if (platform === "instagram") return ig;
+  if (platform === "tiktok") return tt;
+    return {
+      posts: ig.posts + tt.posts,
+      likes: ig.likes + tt.likes,
+      views: ig.views + tt.views,
+    };
+  }
+  function combinePrior(row) {
+    var ig = row.prior_year && row.prior_year.instagram ? row.prior_year.instagram : {};
+    var tt = row.prior_year && row.prior_year.tiktok ? row.prior_year.tiktok : {};
+    var igM = {
+      posts: ig.posts == null ? 0 : ig.posts,
+      likes: ig.likes == null ? 0 : ig.likes,
+      views: ig.views == null ? 0 : ig.views,
+    };
+    var ttM = {
+      posts: tt.posts || 0,
+      likes: tt.likes || 0,
+      views: tt.views || 0,
+    };
+  if (platform === "instagram") return igM;
+  if (platform === "tiktok") return ttM;
+    return {
+      posts: igM.posts + ttM.posts,
+      likes: igM.likes + ttM.likes,
+      views: igM.views + ttM.views,
+    };
+  }
+  function renderYearTimeline() {
+    var root = document.getElementById("year-timeline-chart");
+    if (!root || !timelineData || !timelineData.months) return;
+    var rows = timelineData.months;
+    var vals = [];
+    rows.forEach(function (row) {
+      var cur = combineMonth(row);
+      var pri = combinePrior(row);
+      vals.push(cur[timelineMetric] || 0, pri[timelineMetric] || 0);
+    });
+    var maxV = Math.max.apply(null, vals.concat([1]));
+    var html = "";
+    rows.forEach(function (row) {
+      var cur = combineMonth(row);
+      var pri = combinePrior(row);
+      var cv = cur[timelineMetric] || 0;
+      var pv = pri[timelineMetric] || 0;
+      var hCur = Math.round((cv / maxV) * 100);
+      var hPri = Math.round((pv / maxV) * 100);
+      var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
+      html += '<div class="tl-col"><div class="tl-pair">';
+      html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + pv + '"></i>';
+      html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + '"></i>';
+      html += '</div><span class="tl-lbl">' + row.label + '</span>';
+      html += '<span class="tl-sub">vs ' + row.prior_label + '</span>';
+      html += '<span class="tl-val">' + cv.toLocaleString() + " · " + (pv ? pv.toLocaleString() : "—") + "</span>";
+      html += "</div>";
+    });
+    root.innerHTML = html;
+  }
   function applyYearFilters() {
     document.querySelectorAll(".year-quarter").forEach(function (el) {
       var show = quarter === "all" || el.id === quarter;
@@ -1041,6 +1206,7 @@ YEAR_FILTER_SCRIPT = """
         b.classList.toggle("is-active", b === btn);
       });
       applyYearFilters();
+      renderYearTimeline();
     });
   });
   document.querySelectorAll("[data-filter-quarter]").forEach(function (btn) {
@@ -1050,13 +1216,24 @@ YEAR_FILTER_SCRIPT = """
         b.classList.toggle("is-active", b === btn);
       });
       applyYearFilters();
+      renderYearTimeline();
       if (quarter !== "all") {
         var target = document.getElementById(quarter);
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
   });
+  document.querySelectorAll("[data-timeline-metric]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      timelineMetric = btn.getAttribute("data-timeline-metric") || "posts";
+      document.querySelectorAll("[data-timeline-metric]").forEach(function (b) {
+        b.classList.toggle("is-active", b === btn);
+      });
+      renderYearTimeline();
+    });
+  });
   applyYearFilters();
+  renderYearTimeline();
 })();
 </script>
 """
@@ -1155,6 +1332,7 @@ def build_year_report() -> str:
     body = f"""<p class="eyebrow">Year report · public social</p>
 <h1>Instagram & TikTok year report</h1>
 <p class="lead">@funboy organic posts · {meta.get("window_start", "2025-10-01")} through {meta.get("window_end", "2026-10-31")} · Instagram {ig_meta.get("post_count", 0)} ({ig_meta.get("owned_post_count", 0)} owned · {ig_meta.get("tagged_post_count", 0)} tagged UGC) · TikTok {tt_meta.get("post_count", 0)} public videos.</p>
+{year_timeline_section(meta.get("timeline") or {})}
 <div class="kpi-row">
   <div class="kpi"><b>{ig_meta.get("post_count", 0)}</b><span>Instagram posts</span></div>
   <div class="kpi"><b>{tt_meta.get("post_count", 0)}</b><span>TikTok videos</span></div>

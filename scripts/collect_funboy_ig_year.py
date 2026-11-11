@@ -364,6 +364,115 @@ def assign_quarter(d: date) -> str | None:
     return None
 
 
+MONTH_NAMES = (
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+)
+
+
+def month_label_short(ym: str) -> str:
+    y, m = ym.split("-")
+    return f"{MONTH_NAMES[int(m) - 1]} '{y[2:]}"
+
+
+def iter_year_months(start: date, end: date) -> list[str]:
+    out: list[str] = []
+    y, m = start.year, start.month
+    while (y, m) <= (end.year, end.month):
+        out.append(f"{y:04d}-{m:02d}")
+        m += 1
+        if m > 12:
+            m = 1
+            y += 1
+    return out
+
+
+def prior_year_month(ym: str) -> str:
+    y, m = ym.split("-")
+    return f"{int(y) - 1}-{m}"
+
+
+def aggregate_posts_by_month(posts: list[dict]) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for p in posts:
+        ym = p["date"][:7]
+        bucket = out.setdefault(
+            ym,
+            {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0},
+        )
+        bucket["posts"] += 1
+        bucket["likes"] += p.get("likes") or 0
+        bucket["comments"] += p.get("comments") or 0
+        views = p.get("views")
+        if views is not None:
+            bucket["views"] += int(views)
+            bucket["views_posts"] += 1
+    return out
+
+
+def load_ig_monthly_history() -> dict[str, dict]:
+    sys.path.insert(0, str(ROOT))
+    from build_public_report import FUN_IG_MONTHLY, FUN_IG_MONTHLY_PRIOR  # noqa: WPS433
+
+    lookup: dict[str, dict] = {}
+    for row in FUN_IG_MONTHLY_PRIOR + FUN_IG_MONTHLY:
+        lookup[row["month"]] = row
+    return lookup
+
+
+def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
+    ig_by_month = aggregate_posts_by_month(ig_posts)
+    tt_by_month = aggregate_posts_by_month(tt_posts)
+    ig_history = load_ig_monthly_history()
+    months: list[dict] = []
+    for ym in iter_year_months(WINDOW_START, WINDOW_END):
+        pym = prior_year_month(ym)
+        ig = ig_by_month.get(ym, {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0})
+        tt = tt_by_month.get(ym, {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0})
+        hist = ig_history.get(pym)
+        prior_ig_posts = int(hist["posts"]) if hist else None
+        prior_ig = {
+            "posts": prior_ig_posts,
+            "likes": None,
+            "comments": None,
+            "views": None,
+            "source": "nectarine_monthly_history" if hist else None,
+        }
+        prior_tt = {"posts": 0, "likes": None, "comments": None, "views": None, "source": None}
+        months.append(
+            {
+                "month": ym,
+                "label": month_label_short(ym),
+                "prior_month": pym,
+                "prior_label": month_label_short(pym),
+                "instagram": dict(ig),
+                "tiktok": dict(tt),
+                "prior_year": {"instagram": prior_ig, "tiktok": prior_tt},
+            }
+        )
+    return {
+        "window_start": WINDOW_START.isoformat(),
+        "window_end": WINDOW_END.isoformat(),
+        "months": months,
+        "notes": [
+            "Current-year metrics from public post-level dataset (Oct 2025–Oct 2026).",
+            "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024–Sep 2025); Oct 2024 not in export.",
+            "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
+            "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists.",
+        ],
+    }
+
+
 def quarter_blocks(posts: list[dict]) -> list[dict]:
     out = []
     for qid, start, end in QUARTERS:
@@ -425,12 +534,16 @@ def build_dataset() -> dict:
         "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
     ]
 
+    timeline = build_monthly_timeline(ig_filtered, tt_filtered)
+    gaps.extend(timeline["notes"])
+
     return {
         "meta": {
             "account": "funboy",
             "window_start": WINDOW_START.isoformat(),
             "window_end": WINDOW_END.isoformat(),
             "generated_by": "scripts/collect_funboy_ig_year.py",
+            "timeline": timeline,
             "instagram": {
                 "post_count": len(ig_filtered),
                 "owned_post_count": len(ig_filtered) - tagged,

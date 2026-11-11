@@ -4,6 +4,486 @@
     "window_start": "2025-10-01",
     "window_end": "2026-10-31",
     "generated_by": "scripts/collect_funboy_ig_year.py",
+    "timeline": {
+      "window_start": "2025-10-01",
+      "window_end": "2026-10-31",
+      "months": [
+        {
+          "month": "2025-10",
+          "label": "Oct '25",
+          "prior_month": "2024-10",
+          "prior_label": "Oct '24",
+          "instagram": {
+            "posts": 10,
+            "likes": 3389,
+            "comments": 4169,
+            "views": 153800,
+            "views_posts": 9
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": null,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2025-11",
+          "label": "Nov '25",
+          "prior_month": "2024-11",
+          "prior_label": "Nov '24",
+          "instagram": {
+            "posts": 13,
+            "likes": 2582,
+            "comments": 2068,
+            "views": 130000,
+            "views_posts": 7
+          },
+          "tiktok": {
+            "posts": 3,
+            "likes": 136,
+            "comments": 3,
+            "views": 10000,
+            "views_posts": 3
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 12,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2025-12",
+          "label": "Dec '25",
+          "prior_month": "2024-12",
+          "prior_label": "Dec '24",
+          "instagram": {
+            "posts": 7,
+            "likes": 855,
+            "comments": 78,
+            "views": 80000,
+            "views_posts": 6
+          },
+          "tiktok": {
+            "posts": 5,
+            "likes": 439,
+            "comments": 13,
+            "views": 40000,
+            "views_posts": 5
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 12,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-01",
+          "label": "Jan '26",
+          "prior_month": "2025-01",
+          "prior_label": "Jan '25",
+          "instagram": {
+            "posts": 4,
+            "likes": 2608,
+            "comments": 1797,
+            "views": 40000,
+            "views_posts": 2
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 7,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-02",
+          "label": "Feb '26",
+          "prior_month": "2025-02",
+          "prior_label": "Feb '25",
+          "instagram": {
+            "posts": 5,
+            "likes": 715,
+            "comments": 44,
+            "views": 40000,
+            "views_posts": 2
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 11,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-03",
+          "label": "Mar '26",
+          "prior_month": "2025-03",
+          "prior_label": "Mar '25",
+          "instagram": {
+            "posts": 17,
+            "likes": 4622,
+            "comments": 517,
+            "views": 200000,
+            "views_posts": 7
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 15,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-04",
+          "label": "Apr '26",
+          "prior_month": "2025-04",
+          "prior_label": "Apr '25",
+          "instagram": {
+            "posts": 21,
+            "likes": 32118,
+            "comments": 939,
+            "views": 1140000,
+            "views_posts": 11
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 27,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-05",
+          "label": "May '26",
+          "prior_month": "2025-05",
+          "prior_label": "May '25",
+          "instagram": {
+            "posts": 31,
+            "likes": 134238,
+            "comments": 3165,
+            "views": 5960000,
+            "views_posts": 22
+          },
+          "tiktok": {
+            "posts": 11,
+            "likes": 181777,
+            "comments": 668,
+            "views": 4350000,
+            "views_posts": 11
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 25,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-06",
+          "label": "Jun '26",
+          "prior_month": "2025-06",
+          "prior_label": "Jun '25",
+          "instagram": {
+            "posts": 28,
+            "likes": 17600,
+            "comments": 15789,
+            "views": 550000,
+            "views_posts": 17
+          },
+          "tiktok": {
+            "posts": 12,
+            "likes": 9964,
+            "comments": 57,
+            "views": 380000,
+            "views_posts": 12
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 21,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-07",
+          "label": "Jul '26",
+          "prior_month": "2025-07",
+          "prior_label": "Jul '25",
+          "instagram": {
+            "posts": 30,
+            "likes": 6535,
+            "comments": 4543,
+            "views": 170000,
+            "views_posts": 14
+          },
+          "tiktok": {
+            "posts": 10,
+            "likes": 621,
+            "comments": 28,
+            "views": 20000,
+            "views_posts": 10
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 20,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-08",
+          "label": "Aug '26",
+          "prior_month": "2025-08",
+          "prior_label": "Aug '25",
+          "instagram": {
+            "posts": 31,
+            "likes": 17533,
+            "comments": 1428,
+            "views": 235707,
+            "views_posts": 16
+          },
+          "tiktok": {
+            "posts": 1,
+            "likes": 25,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 1
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 14,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-09",
+          "label": "Sep '26",
+          "prior_month": "2025-09",
+          "prior_label": "Sep '25",
+          "instagram": {
+            "posts": 17,
+            "likes": 15294,
+            "comments": 0,
+            "views": 379436,
+            "views_posts": 16
+          },
+          "tiktok": {
+            "posts": 9,
+            "likes": 405,
+            "comments": 0,
+            "views": 16577,
+            "views_posts": 9
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 11,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        },
+        {
+          "month": "2026-10",
+          "label": "Oct '26",
+          "prior_month": "2025-10",
+          "prior_label": "Oct '25",
+          "instagram": {
+            "posts": 11,
+            "likes": 4775,
+            "comments": 530,
+            "views": 62735,
+            "views_posts": 10
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 10,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
+        }
+      ],
+      "notes": [
+        "Current-year metrics from public post-level dataset (Oct 2025\u2013Oct 2026).",
+        "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024\u2013Sep 2025); Oct 2024 not in export.",
+        "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
+        "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists."
+      ]
+    },
     "instagram": {
       "post_count": 225,
       "owned_post_count": 213,
@@ -23,20 +503,16 @@
       "Instagram carousels often have null views in Nectarine; reels use Views (Million).",
       "12 Instagram Tagged UGC rows included.",
       "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
-      "Covers: 224/225 Instagram and 51/51 TikTok cards have saved thumbnails (160px wide); remainder show date tiles."
+      "Current-year metrics from public post-level dataset (Oct 2025\u2013Oct 2026).",
+      "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024\u2013Sep 2025); Oct 2024 not in export.",
+      "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
+      "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists."
     ],
     "planned_page_parts": [
       "year_report_quarters_ig_tiktok",
       "ads_placeholder",
       "competitor_watch_existing"
-    ],
-    "covers": {
-      "instagram_with_photo": 224,
-      "instagram_missing_photo": 1,
-      "tiktok_with_photo": 51,
-      "tiktok_missing_photo": 0,
-      "thumb_max_width_px": 160
-    }
+    ]
   },
   "quarters": [
     {
@@ -55,7 +531,7 @@
           "likes": 207,
           "comments": 23,
           "views": 16500,
-          "cover_path": "covers/year-ig/DPZHKGzkfmS.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -71,7 +547,7 @@
           "likes": 830,
           "comments": 2789,
           "views": null,
-          "cover_path": "covers/year-ig/DPbotyHjq86.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -87,7 +563,7 @@
           "likes": 108,
           "comments": 8,
           "views": 8100,
-          "cover_path": "covers/year-ig/DPgyRZvjgBh.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -103,7 +579,7 @@
           "likes": 559,
           "comments": 1205,
           "views": 19200,
-          "cover_path": "covers/year-ig/DPrFaYtka-8.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -119,7 +595,7 @@
           "likes": 133,
           "comments": 24,
           "views": 10000,
-          "cover_path": "covers/year-ig/DPwjLbyDxom.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -135,7 +611,7 @@
           "likes": 293,
           "comments": 53,
           "views": 10000,
-          "cover_path": "covers/year-ig/DPy5UGjEbIb.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -151,7 +627,7 @@
           "likes": 246,
           "comments": 12,
           "views": 20000,
-          "cover_path": "covers/year-ig/DP1jE5KESZU.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -167,7 +643,7 @@
           "likes": 408,
           "comments": 29,
           "views": 20000,
-          "cover_path": "covers/year-ig/DP9G8t1jqUD.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -183,7 +659,7 @@
           "likes": 325,
           "comments": 15,
           "views": 30000,
-          "cover_path": "covers/year-ig/DQSE8WwEiA-.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -199,7 +675,7 @@
           "likes": 280,
           "comments": 11,
           "views": 20000,
-          "cover_path": "covers/year-ig/DQckYiKki1P.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -215,7 +691,7 @@
           "likes": 336,
           "comments": 15,
           "views": 30000,
-          "cover_path": "covers/year-ig/DQhKGweEkgu.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -231,7 +707,7 @@
           "likes": 118,
           "comments": 15,
           "views": 10000,
-          "cover_path": "covers/year-ig/DQpJxxMj4JL.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -247,7 +723,7 @@
           "likes": 239,
           "comments": 22,
           "views": null,
-          "cover_path": "covers/year-ig/DQuPy2yD5_m.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -263,7 +739,7 @@
           "likes": 125,
           "comments": 23,
           "views": null,
-          "cover_path": "covers/year-ig/DQ0B3Jikohp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -279,7 +755,7 @@
           "likes": 74,
           "comments": 12,
           "views": 10000,
-          "cover_path": "covers/year-ig/DRPumm2jzdR.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -295,7 +771,7 @@
           "likes": 121,
           "comments": 10,
           "views": 20000,
-          "cover_path": "covers/year-ig/DRSNKWVCXd0.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -311,7 +787,7 @@
           "likes": 303,
           "comments": 161,
           "views": 20000,
-          "cover_path": "covers/year-ig/DRXG-IeEbMf.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -327,7 +803,7 @@
           "likes": 391,
           "comments": 25,
           "views": 30000,
-          "cover_path": "covers/year-ig/DRaAHxYidRj.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -343,7 +819,7 @@
           "likes": 78,
           "comments": 7,
           "views": null,
-          "cover_path": "covers/year-ig/DRcnzwJj_2A.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -359,7 +835,7 @@
           "likes": 382,
           "comments": 1738,
           "views": null,
-          "cover_path": "covers/year-ig/DRhbLFlkf7T.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -375,7 +851,7 @@
           "likes": 69,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/DRkXaixj0oF.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -391,7 +867,7 @@
           "likes": 197,
           "comments": 2,
           "views": null,
-          "cover_path": "covers/year-ig/DRpP0BQkbDR.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -407,7 +883,7 @@
           "likes": 149,
           "comments": 30,
           "views": 10000,
-          "cover_path": "covers/year-ig/DRsDitmD556.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -423,7 +899,7 @@
           "likes": 85,
           "comments": 19,
           "views": 10000,
-          "cover_path": "covers/year-ig/DRuYGX9kczp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -439,7 +915,7 @@
           "likes": 152,
           "comments": 19,
           "views": 10000,
-          "cover_path": "covers/year-ig/DRzxnqeCYCV.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -455,7 +931,7 @@
           "likes": 111,
           "comments": 13,
           "views": 20000,
-          "cover_path": "covers/year-ig/DR7j3BEj6Zm.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -471,7 +947,7 @@
           "likes": 256,
           "comments": 16,
           "views": 20000,
-          "cover_path": "covers/year-ig/DSIZvxSkXyI.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -487,7 +963,7 @@
           "likes": 61,
           "comments": 0,
           "views": 10000,
-          "cover_path": "covers/year-ig/DSaErvhlRxI.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -503,7 +979,7 @@
           "likes": 131,
           "comments": 9,
           "views": 10000,
-          "cover_path": "covers/year-ig/DSiEA2RCXqQ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -519,7 +995,7 @@
           "likes": 59,
           "comments": 2,
           "views": null,
-          "cover_path": "covers/year-ig/DSsdB8Gjvwx.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q1_oct_dec_2025"
@@ -542,7 +1018,7 @@
           "likes": 108,
           "comments": 5,
           "views": 10000,
-          "cover_path": "covers/year-ig/DS-cZcSCcgz.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -558,7 +1034,7 @@
           "likes": 420,
           "comments": 40,
           "views": null,
-          "cover_path": "covers/year-ig/DTi4BHsEsYn.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -574,7 +1050,7 @@
           "likes": 1946,
           "comments": 1737,
           "views": null,
-          "cover_path": "covers/year-ig/DTnpIZnEXUp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -590,7 +1066,7 @@
           "likes": 134,
           "comments": 15,
           "views": 30000,
-          "cover_path": "covers/year-ig/DULrwruCbrH.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -606,7 +1082,7 @@
           "likes": 124,
           "comments": 9,
           "views": 20000,
-          "cover_path": "covers/year-ig/DUQu7FqEXDN.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -622,7 +1098,7 @@
           "likes": 115,
           "comments": 3,
           "views": null,
-          "cover_path": "covers/year-ig/DUnsaBrjhh-.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -638,7 +1114,7 @@
           "likes": 218,
           "comments": 11,
           "views": 20000,
-          "cover_path": "covers/year-ig/DUtTcbjDz7X.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -654,7 +1130,7 @@
           "likes": 155,
           "comments": 7,
           "views": null,
-          "cover_path": "covers/year-ig/DUvarXwDk6q.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -670,7 +1146,7 @@
           "likes": 103,
           "comments": 14,
           "views": null,
-          "cover_path": "covers/year-ig/DVJoMF8D_Gs.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -686,7 +1162,7 @@
           "likes": 333,
           "comments": 30,
           "views": 50000,
-          "cover_path": "covers/year-ig/DVbjGLWiS9I.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -702,7 +1178,7 @@
           "likes": 163,
           "comments": 26,
           "views": null,
-          "cover_path": "covers/year-ig/DVgvVOAiZKo.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -718,7 +1194,7 @@
           "likes": 217,
           "comments": 5,
           "views": 20000,
-          "cover_path": "covers/year-ig/DVmI1Y9ktZw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -734,7 +1210,7 @@
           "likes": 539,
           "comments": 49,
           "views": null,
-          "cover_path": "covers/year-ig/DVocSeNGqWw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -750,7 +1226,7 @@
           "likes": 119,
           "comments": 20,
           "views": 10000,
-          "cover_path": "covers/year-ig/DVte1izkThv.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -766,7 +1242,7 @@
           "likes": 128,
           "comments": 11,
           "views": null,
-          "cover_path": "covers/year-ig/DVwTNUVgZpL.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -782,7 +1258,7 @@
           "likes": 166,
           "comments": 33,
           "views": 20000,
-          "cover_path": "covers/year-ig/DV3yVu0jqX9.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -798,7 +1274,7 @@
           "likes": 64,
           "comments": 2,
           "views": null,
-          "cover_path": "covers/year-ig/DV_j6EClGp4.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -814,7 +1290,7 @@
           "likes": 158,
           "comments": 5,
           "views": null,
-          "cover_path": "covers/year-ig/DWEVlKOjyCO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -830,7 +1306,7 @@
           "likes": 262,
           "comments": 5,
           "views": 30000,
-          "cover_path": "covers/year-ig/DWHi_8wAbbM.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -846,7 +1322,7 @@
           "likes": 187,
           "comments": 16,
           "views": null,
-          "cover_path": "covers/year-ig/DWJfI_-lKQU.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -862,7 +1338,7 @@
           "likes": 196,
           "comments": 9,
           "views": null,
-          "cover_path": "covers/year-ig/DWMD9FAFTkv.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -878,7 +1354,7 @@
           "likes": 418,
           "comments": 47,
           "views": null,
-          "cover_path": "covers/year-ig/DWRarxtlK9s.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -894,7 +1370,7 @@
           "likes": 175,
           "comments": 17,
           "views": 20000,
-          "cover_path": "covers/year-ig/DWT4A62DEnO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -910,7 +1386,7 @@
           "likes": 211,
           "comments": 15,
           "views": null,
-          "cover_path": "covers/year-ig/DWbgqoGFYxp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -926,7 +1402,7 @@
           "likes": 123,
           "comments": 11,
           "views": null,
-          "cover_path": "covers/year-ig/DWeVOkxlkff.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -942,7 +1418,7 @@
           "likes": 1163,
           "comments": 216,
           "views": 50000,
-          "cover_path": "covers/year-ig/DWjhfPYkZdr.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q2_jan_mar_2026"
@@ -965,7 +1441,7 @@
           "likes": 618,
           "comments": 76,
           "views": null,
-          "cover_path": "covers/year-ig/DWopL3SEibp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -981,7 +1457,7 @@
           "likes": 524,
           "comments": 41,
           "views": 30000,
-          "cover_path": "covers/year-ig/DWozIjXAqwO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -997,7 +1473,7 @@
           "likes": 1130,
           "comments": 44,
           "views": null,
-          "cover_path": "covers/year-ig/DWtq_YPFKYN.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1013,7 +1489,7 @@
           "likes": 251,
           "comments": 7,
           "views": null,
-          "cover_path": "covers/year-ig/DWwKbi1FYJC.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1029,7 +1505,7 @@
           "likes": 316,
           "comments": 15,
           "views": 30000,
-          "cover_path": "covers/year-ig/DWwboLzBElS.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1045,7 +1521,7 @@
           "likes": 201,
           "comments": 19,
           "views": 20000,
-          "cover_path": "covers/year-ig/DW1hw3Xh04Q.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1061,7 +1537,7 @@
           "likes": 129,
           "comments": 17,
           "views": null,
-          "cover_path": "covers/year-ig/DW4DMj6FFHW.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1077,7 +1553,7 @@
           "likes": 274,
           "comments": 18,
           "views": null,
-          "cover_path": "covers/year-ig/DW6rZP1FP42.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1093,7 +1569,7 @@
           "likes": 110,
           "comments": 10,
           "views": null,
-          "cover_path": "covers/year-ig/DW8_E-fFci_.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1109,7 +1585,7 @@
           "likes": 247,
           "comments": 12,
           "views": 20000,
-          "cover_path": "covers/year-ig/DW_nQ_CBSA2.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1125,7 +1601,7 @@
           "likes": 792,
           "comments": 95,
           "views": null,
-          "cover_path": "covers/year-ig/DXFLKHKmBGz.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1141,7 +1617,7 @@
           "likes": 695,
           "comments": 121,
           "views": 50000,
-          "cover_path": "covers/year-ig/DXHntC1iXqU.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1157,7 +1633,7 @@
           "likes": 24948,
           "comments": 282,
           "views": 870000,
-          "cover_path": "covers/year-ig/DXM3-EFDUh0.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1173,7 +1649,7 @@
           "likes": 264,
           "comments": 15,
           "views": 30000,
-          "cover_path": "covers/year-ig/DXRlZu_B8Fl.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1189,7 +1665,7 @@
           "likes": 160,
           "comments": 14,
           "views": 20000,
-          "cover_path": "covers/year-ig/DXWu_aZh_Uy.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1205,7 +1681,7 @@
           "likes": 190,
           "comments": 22,
           "views": 20000,
-          "cover_path": "covers/year-ig/DXZk5mVBfjh.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1221,7 +1697,7 @@
           "likes": 276,
           "comments": 26,
           "views": null,
-          "cover_path": "covers/year-ig/DXb4mgOFM3A.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1237,7 +1713,7 @@
           "likes": 304,
           "comments": 29,
           "views": 30000,
-          "cover_path": "covers/year-ig/DXedaHgh-iw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1253,7 +1729,7 @@
           "likes": 228,
           "comments": 51,
           "views": 20000,
-          "cover_path": "covers/year-ig/DXjm--ZhQVg.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1269,7 +1745,7 @@
           "likes": 359,
           "comments": 22,
           "views": null,
-          "cover_path": "covers/year-ig/DXrUH5xDvNk.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1285,7 +1761,7 @@
           "likes": 102,
           "comments": 3,
           "views": null,
-          "cover_path": "covers/year-ig/DXwe6aTmye8.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1301,7 +1777,7 @@
           "likes": 20178,
           "comments": 469,
           "views": null,
-          "cover_path": "covers/year-ig/DX1y1eUhe4j.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1317,7 +1793,7 @@
           "likes": 392,
           "comments": 20,
           "views": 30000,
-          "cover_path": "covers/year-ig/DX4Xm2IhYk8.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1333,7 +1809,7 @@
           "likes": 45,
           "comments": 0,
           "views": 10000,
-          "cover_path": "covers/year-ig/DX9W1p7B50q.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1349,7 +1825,7 @@
           "likes": 396,
           "comments": 26,
           "views": 30000,
-          "cover_path": "covers/year-ig/DX9oFJihpCl.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1365,7 +1841,7 @@
           "likes": 202,
           "comments": 10,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYCxqmoBrr1.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1381,7 +1857,7 @@
           "likes": 942,
           "comments": 65,
           "views": null,
-          "cover_path": "covers/year-ig/DYH7Pd4G0KO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1397,7 +1873,7 @@
           "likes": 345,
           "comments": 40,
           "views": null,
-          "cover_path": "covers/year-ig/DYMzq0fm_E9.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1413,7 +1889,7 @@
           "likes": 330,
           "comments": 17,
           "views": 30000,
-          "cover_path": "covers/year-ig/DYNpQbtSbwq.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1429,7 +1905,7 @@
           "likes": 721,
           "comments": 30,
           "views": null,
-          "cover_path": "covers/year-ig/DYPYb9XG0qt.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1445,7 +1921,7 @@
           "likes": 502,
           "comments": 14,
           "views": 40000,
-          "cover_path": "covers/year-ig/DYPplvjhTaN.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1461,7 +1937,7 @@
           "likes": 203,
           "comments": 16,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYR9P2Zh-rD.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1477,7 +1953,7 @@
           "likes": 161,
           "comments": 11,
           "views": null,
-          "cover_path": "covers/year-ig/DYSOdm6Gx8G.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1493,7 +1969,7 @@
           "likes": 75828,
           "comments": 773,
           "views": 3900000,
-          "cover_path": "covers/year-ig/DYUiBuEhEor.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1509,7 +1985,7 @@
           "likes": 2826,
           "comments": 23,
           "views": 110000,
-          "cover_path": "covers/year-ig/DYX4QIcgwb7.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1525,7 +2001,7 @@
           "likes": 7167,
           "comments": 188,
           "views": 630000,
-          "cover_path": "covers/year-ig/DYZrsKchrDF.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1541,7 +2017,7 @@
           "likes": 265,
           "comments": 22,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYcQZCcBePe.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1557,7 +2033,7 @@
           "likes": 219,
           "comments": 13,
           "views": null,
-          "cover_path": "covers/year-ig/DYhv8OHm65i.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1573,7 +2049,7 @@
           "likes": 621,
           "comments": 105,
           "views": 50000,
-          "cover_path": "covers/year-ig/DYj-1rih-xa.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1589,7 +2065,7 @@
           "likes": 570,
           "comments": 1011,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYllz8mBjQw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1605,7 +2081,7 @@
           "likes": 167,
           "comments": 16,
           "views": null,
-          "cover_path": "covers/year-ig/DYm7nnkm93T.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1621,7 +2097,7 @@
           "likes": 114,
           "comments": 18,
           "views": 10000,
-          "cover_path": "covers/year-ig/DYndHJiS3lG.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1637,7 +2113,7 @@
           "likes": 240,
           "comments": 11,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYpIdDbhW85.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1653,7 +2129,7 @@
           "likes": 478,
           "comments": 24,
           "views": 30000,
-          "cover_path": "covers/year-ig/DYrtMa1ht1h.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1669,7 +2145,7 @@
           "likes": 16598,
           "comments": 86,
           "views": 760000,
-          "cover_path": "covers/year-ig/DYsVHhmPEjS.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
           "quarter": "q3_apr_jun_2026"
@@ -1685,7 +2161,7 @@
           "likes": 1320,
           "comments": 43,
           "views": 60000,
-          "cover_path": "covers/year-ig/DYuR874BhWp.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1701,7 +2177,7 @@
           "likes": 204,
           "comments": 15,
           "views": null,
-          "cover_path": "covers/year-ig/DYw20KLGuhO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1717,7 +2193,7 @@
           "likes": 945,
           "comments": 35,
           "views": 40000,
-          "cover_path": "covers/year-ig/DYxUNbyv5VS.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1733,7 +2209,7 @@
           "likes": 153,
           "comments": 11,
           "views": 20000,
-          "cover_path": "covers/year-ig/DYzy-B4RCgm.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1749,7 +2225,7 @@
           "likes": 533,
           "comments": 14,
           "views": 60000,
-          "cover_path": "covers/year-ig/DY1_WeajToh.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1765,7 +2241,7 @@
           "likes": 994,
           "comments": 24,
           "views": 50000,
-          "cover_path": "covers/year-ig/DY9uzQjhCyr.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1781,7 +2257,7 @@
           "likes": 579,
           "comments": 15,
           "views": null,
-          "cover_path": "covers/year-ig/DZATiL6jq5I.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1797,7 +2273,7 @@
           "likes": 147,
           "comments": 21,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZFdJ9ihLhw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1813,7 +2289,7 @@
           "likes": 174,
           "comments": 20,
           "views": null,
-          "cover_path": "covers/year-ig/DZLZhMUklQd.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1829,7 +2305,7 @@
           "likes": 2836,
           "comments": 49,
           "views": 120000,
-          "cover_path": "covers/year-ig/DZPwV6TBylM.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1845,7 +2321,7 @@
           "likes": 65,
           "comments": 6,
           "views": null,
-          "cover_path": "covers/year-ig/DZSmU3MGxaL.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1861,7 +2337,7 @@
           "likes": 157,
           "comments": 8,
           "views": 20000,
-          "cover_path": "covers/year-ig/DZSVHC8SwUw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1877,7 +2353,7 @@
           "likes": 171,
           "comments": 20,
           "views": null,
-          "cover_path": "covers/year-ig/DZXwcuDm0Mn.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1893,7 +2369,7 @@
           "likes": 123,
           "comments": 6,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZaDiSNB-j9.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1909,7 +2385,7 @@
           "likes": 149,
           "comments": 15,
           "views": null,
-          "cover_path": "covers/year-ig/DZc5dcJmyiw.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1925,7 +2401,7 @@
           "likes": 89,
           "comments": 5,
           "views": null,
-          "cover_path": "covers/year-ig/DZcoT9Pm00n.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1941,7 +2417,7 @@
           "likes": 573,
           "comments": 28,
           "views": 60000,
-          "cover_path": "covers/year-ig/DZfh6qkutHJ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1957,7 +2433,7 @@
           "likes": 415,
           "comments": 45,
           "views": 30000,
-          "cover_path": "covers/year-ig/DZhx454BSzy.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1973,7 +2449,7 @@
           "likes": 1262,
           "comments": 26,
           "views": null,
-          "cover_path": "covers/year-ig/DZiDBxFm_RH.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -1989,7 +2465,7 @@
           "likes": 5711,
           "comments": 43,
           "views": 150000,
-          "cover_path": "covers/year-ig/DZkWt-4hwnv.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2005,7 +2481,7 @@
           "likes": 202,
           "comments": 15,
           "views": 20000,
-          "cover_path": "covers/year-ig/DZn0FRFyId7.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2021,7 +2497,7 @@
           "likes": 181,
           "comments": 10,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZnUbMjsfsN.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2037,7 +2513,7 @@
           "likes": 606,
           "comments": 2313,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZsWNluBRyG.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2053,7 +2529,7 @@
           "likes": 769,
           "comments": 2638,
           "views": null,
-          "cover_path": "covers/year-ig/DZu6_zgm00s.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2069,7 +2545,7 @@
           "likes": 597,
           "comments": 2380,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZxf2tVhJGQ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2085,7 +2561,7 @@
           "likes": 461,
           "comments": 3734,
           "views": null,
-          "cover_path": "covers/year-ig/DZ0EmZIG4nr.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2101,7 +2577,7 @@
           "likes": 519,
           "comments": 37,
           "views": 20000,
-          "cover_path": "covers/year-ig/DZ0NzdyppQZ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2117,7 +2593,7 @@
           "likes": 874,
           "comments": 4246,
           "views": null,
-          "cover_path": "covers/year-ig/DZ2paT1GwZ8.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2133,7 +2609,7 @@
           "likes": 153,
           "comments": 11,
           "views": 10000,
-          "cover_path": "covers/year-ig/DZ5NNy8OMBY.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2149,7 +2625,7 @@
           "likes": 301,
           "comments": 30,
           "views": 20000,
-          "cover_path": "covers/year-ig/DZ7rnraRhMm.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2165,7 +2641,7 @@
           "likes": 401,
           "comments": 32,
           "views": 20000,
-          "cover_path": "covers/year-ig/DZ-Ut9fRUdG.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2181,7 +2657,7 @@
           "likes": 156,
           "comments": 20,
           "views": null,
-          "cover_path": "covers/year-ig/DaA5luKG2qY.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2197,7 +2673,7 @@
           "likes": 173,
           "comments": 4,
           "views": 10000,
-          "cover_path": "covers/year-ig/DaGA3WzOdvO.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2213,7 +2689,7 @@
           "likes": 97,
           "comments": 12,
           "views": null,
-          "cover_path": "covers/year-ig/DaIZ1WOm3bc.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2229,7 +2705,7 @@
           "likes": 238,
           "comments": 15,
           "views": 20000,
-          "cover_path": "covers/year-ig/DaOBFNyB41I.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q3_apr_jun_2026"
@@ -2252,7 +2728,7 @@
           "likes": 104,
           "comments": 4,
           "views": 10000,
-          "cover_path": "covers/year-ig/DaSs-35h2l-.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2268,7 +2744,7 @@
           "likes": 234,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/DaTb0Z7ms_K.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2284,7 +2760,7 @@
           "likes": 235,
           "comments": 7,
           "views": 20000,
-          "cover_path": "covers/year-ig/DaVOaAXhSIA.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2300,7 +2776,7 @@
           "likes": 138,
           "comments": 3,
           "views": null,
-          "cover_path": "covers/year-ig/DaVi8KYGNf4.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2332,7 +2808,7 @@
           "likes": 83,
           "comments": 4,
           "views": 10000,
-          "cover_path": "covers/year-ig/DaabXEbBdKJ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2348,7 +2824,7 @@
           "likes": 99,
           "comments": 9,
           "views": null,
-          "cover_path": "covers/year-ig/DaiJzecjvaQ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2364,7 +2840,7 @@
           "likes": 361,
           "comments": 8,
           "views": 10000,
-          "cover_path": "covers/year-ig/Dakuh8dhbIZ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2380,7 +2856,7 @@
           "likes": 162,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/DanTThUGzFo.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2396,7 +2872,7 @@
           "likes": 192,
           "comments": 7,
           "views": 10000,
-          "cover_path": "covers/year-ig/Dap4HBbPs68.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2412,7 +2888,7 @@
           "likes": 151,
           "comments": 2,
           "views": 10000,
-          "cover_path": "covers/year-ig/DasdACrhrcR.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2428,7 +2904,7 @@
           "likes": 191,
           "comments": 16,
           "views": null,
-          "cover_path": "covers/year-ig/DavuwRMkmjx.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2444,7 +2920,7 @@
           "likes": 145,
           "comments": 12,
           "views": null,
-          "cover_path": "covers/year-ig/Dax-c8fG4ye.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2460,7 +2936,7 @@
           "likes": 157,
           "comments": 15,
           "views": 10000,
-          "cover_path": "covers/year-ig/Da0Z_jpQ0zX.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2476,7 +2952,7 @@
           "likes": 89,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/Da3Sfb6GPVd.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2492,7 +2968,7 @@
           "likes": 252,
           "comments": 10,
           "views": 10000,
-          "cover_path": "covers/year-ig/Da75vHthEm5.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2508,7 +2984,7 @@
           "likes": 51,
           "comments": 0,
           "views": null,
-          "cover_path": "covers/year-ig/Da8K1gqAZYg.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2524,7 +3000,7 @@
           "likes": 509,
           "comments": 17,
           "views": 30000,
-          "cover_path": "covers/year-ig/Da-ejHeBWqM.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2540,7 +3016,7 @@
           "likes": 186,
           "comments": 6,
           "views": null,
-          "cover_path": "covers/year-ig/DbB-GG-EmAu.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2556,7 +3032,7 @@
           "likes": 152,
           "comments": 7,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbD6sJzyBsK.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2572,7 +3048,7 @@
           "likes": 540,
           "comments": 19,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbGS_s2BANo.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2588,7 +3064,7 @@
           "likes": 99,
           "comments": 5,
           "views": null,
-          "cover_path": "covers/year-ig/DbJJ-BqGqWh.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2604,7 +3080,7 @@
           "likes": 95,
           "comments": 9,
           "views": null,
-          "cover_path": "covers/year-ig/DbLWfPEjxvT.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2620,7 +3096,7 @@
           "likes": 116,
           "comments": 16,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbN7QbyBX9P.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2636,7 +3112,7 @@
           "likes": 204,
           "comments": 20,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbQgDc-hwML.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2652,7 +3128,7 @@
           "likes": 128,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/DbTat1bm9US.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2668,7 +3144,7 @@
           "likes": 214,
           "comments": 9,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbV_VIip5On.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2684,7 +3160,7 @@
           "likes": 93,
           "comments": 5,
           "views": null,
-          "cover_path": "covers/year-ig/DbZ8GzbvuNo.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2700,7 +3176,7 @@
           "likes": null,
           "comments": 4282,
           "views": null,
-          "cover_path": "covers/year-ig/Dba9hWZFX4F.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2716,7 +3192,7 @@
           "likes": 115,
           "comments": 14,
           "views": null,
-          "cover_path": "covers/year-ig/DbdYGevGmp3.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2732,7 +3208,7 @@
           "likes": 68,
           "comments": 12,
           "views": 10000,
-          "cover_path": "covers/year-ig/Dbf81PCPFS5.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2748,7 +3224,7 @@
           "likes": 71,
           "comments": 8,
           "views": 10000,
-          "cover_path": "covers/year-ig/Dbiho_4P46S.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2764,7 +3240,7 @@
           "likes": 142,
           "comments": 8,
           "views": 10000,
-          "cover_path": "covers/year-ig/DbqSi0tv-M8.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2780,7 +3256,7 @@
           "likes": 343,
           "comments": 31,
           "views": null,
-          "cover_path": "covers/year-ig/Dbq2TcLS9Mn.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2796,7 +3272,7 @@
           "likes": 431,
           "comments": 105,
           "views": null,
-          "cover_path": "covers/year-ig/Dbqwhb3Jg8z.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2812,7 +3288,7 @@
           "likes": 253,
           "comments": 22,
           "views": null,
-          "cover_path": "covers/year-ig/DbrHhRhPxLQ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2828,7 +3304,7 @@
           "likes": 26,
           "comments": 2,
           "views": 0,
-          "cover_path": "covers/year-ig/Dbs00TChi9e.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2844,7 +3320,7 @@
           "likes": 173,
           "comments": 2,
           "views": null,
-          "cover_path": "covers/year-ig/Dbs_-gjlJzl.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2860,7 +3336,7 @@
           "likes": 519,
           "comments": 26,
           "views": null,
-          "cover_path": "covers/year-ig/DbtCdFHkVmJ.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2876,7 +3352,7 @@
           "likes": 81,
           "comments": 8,
           "views": null,
-          "cover_path": "covers/year-ig/DbtF9egGyA1.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2892,7 +3368,7 @@
           "likes": 2502,
           "comments": 24,
           "views": null,
-          "cover_path": "covers/year-ig/Dbv7iHwx-Yh.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2908,7 +3384,7 @@
           "likes": 76,
           "comments": 5,
           "views": null,
-          "cover_path": "covers/year-ig/DbvZpt7Gw8t.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2924,7 +3400,7 @@
           "likes": 376,
           "comments": 3,
           "views": null,
-          "cover_path": "covers/year-ig/DbwHxggFfs7.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2940,7 +3416,7 @@
           "likes": 101,
           "comments": 14,
           "views": 10000,
-          "cover_path": "covers/year-ig/Dbx-bc2BuDN.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2956,7 +3432,7 @@
           "likes": 7419,
           "comments": 583,
           "views": null,
-          "cover_path": "covers/year-ig/DbyG-OXhB6S.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2972,7 +3448,7 @@
           "likes": 148,
           "comments": 15,
           "views": null,
-          "cover_path": "covers/year-ig/DbyF2CVltQC.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -2988,7 +3464,7 @@
           "likes": 449,
           "comments": 14,
           "views": null,
-          "cover_path": "covers/year-ig/DbycihkxUW4.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3004,7 +3480,7 @@
           "likes": 1209,
           "comments": 78,
           "views": null,
-          "cover_path": "covers/year-ig/DbyeKaxR-YB.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3020,7 +3496,7 @@
           "likes": 148,
           "comments": 35,
           "views": null,
-          "cover_path": "covers/year-ig/DbyrRRdD-xq.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3036,7 +3512,7 @@
           "likes": 140,
           "comments": 3,
           "views": 11500,
-          "cover_path": "covers/year-ig/Db0jP3DhgXa.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3052,7 +3528,7 @@
           "likes": 79,
           "comments": 25,
           "views": 4964,
-          "cover_path": "covers/year-ig/Db8gqvPNo3Y.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3068,7 +3544,7 @@
           "likes": 127,
           "comments": 29,
           "views": 5500,
-          "cover_path": "covers/year-ig/DcBbKkBBF3v.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3084,7 +3560,7 @@
           "likes": 271,
           "comments": 26,
           "views": 11200,
-          "cover_path": "covers/year-ig/DcD_8DSBnPl.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3100,7 +3576,7 @@
           "likes": 494,
           "comments": 76,
           "views": 14400,
-          "cover_path": "covers/year-ig/DcGk08vhiYA.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3116,7 +3592,7 @@
           "likes": 274,
           "comments": 32,
           "views": 17300,
-          "cover_path": "covers/year-ig/DcJJhOfB6S4.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3132,7 +3608,7 @@
           "likes": 457,
           "comments": 43,
           "views": 108000,
-          "cover_path": "covers/year-ig/DcL9p5VuEAK.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3148,7 +3624,7 @@
           "likes": 469,
           "comments": 68,
           "views": null,
-          "cover_path": "covers/year-ig/DcOTPdHGwqM.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3164,7 +3640,7 @@
           "likes": 328,
           "comments": 51,
           "views": 10000,
-          "cover_path": "covers/year-ig/DcQ39nVBvi9.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3180,7 +3656,7 @@
           "likes": 196,
           "comments": 56,
           "views": 5452,
-          "cover_path": "covers/year-ig/DcWBffEBvN1.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3196,7 +3672,7 @@
           "likes": 80,
           "comments": 12,
           "views": 5066,
-          "cover_path": "covers/year-ig/DcYmUAdBnHI.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3212,7 +3688,7 @@
           "likes": 83,
           "comments": 12,
           "views": 2325,
-          "cover_path": "covers/year-ig/Dcdv5geBceT.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
           "quarter": "q4_jul_oct_2026"
@@ -3228,7 +3704,7 @@
           "likes": 657,
           "comments": null,
           "views": 13914,
-          "cover_path": "covers/year-ig/DcvxhuPPQ_k.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3244,7 +3720,7 @@
           "likes": 342,
           "comments": null,
           "views": 13683,
-          "cover_path": "covers/year-ig/Dc1LSA3s5dj.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3260,7 +3736,7 @@
           "likes": 211,
           "comments": null,
           "views": 6827,
-          "cover_path": "covers/year-ig/Dc3f7hERxcP.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3276,7 +3752,7 @@
           "likes": 423,
           "comments": null,
           "views": 23650,
-          "cover_path": "covers/year-ig/Dc6En8zRzcC.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3292,7 +3768,7 @@
           "likes": 368,
           "comments": null,
           "views": 18491,
-          "cover_path": "covers/year-ig/Dc8pfN0B_VV.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3308,7 +3784,7 @@
           "likes": 185,
           "comments": null,
           "views": 18267,
-          "cover_path": "covers/year-ig/DdG8lpDv_PA.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3324,7 +3800,7 @@
           "likes": 10493,
           "comments": null,
           "views": 187226,
-          "cover_path": "covers/year-ig/DdMGPUlBd_F.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3340,7 +3816,7 @@
           "likes": 468,
           "comments": null,
           "views": 20644,
-          "cover_path": "covers/year-ig/DdOrCrqhgJP.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3356,7 +3832,7 @@
           "likes": 167,
           "comments": null,
           "views": 10185,
-          "cover_path": "covers/year-ig/DdT0kgChoCX.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3372,7 +3848,7 @@
           "likes": 978,
           "comments": null,
           "views": 18678,
-          "cover_path": "covers/year-ig/DdZPNiLm32a.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3388,7 +3864,7 @@
           "likes": 217,
           "comments": null,
           "views": 9613,
-          "cover_path": "covers/year-ig/DdeH0NPPHcF.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3404,7 +3880,7 @@
           "likes": 67,
           "comments": null,
           "views": 4922,
-          "cover_path": "covers/year-ig/DdgsjqWPSvW.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3420,7 +3896,7 @@
           "likes": 229,
           "comments": null,
           "views": 7716,
-          "cover_path": "covers/year-ig/Ddl2KF1By5S.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3436,7 +3912,7 @@
           "likes": 157,
           "comments": null,
           "views": 9646,
-          "cover_path": "covers/year-ig/Ddrho7Qv6Io.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3452,7 +3928,7 @@
           "likes": 146,
           "comments": null,
           "views": 7861,
-          "cover_path": "covers/year-ig/DdwJVtShPVL.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3468,7 +3944,7 @@
           "likes": 111,
           "comments": null,
           "views": 8113,
-          "cover_path": "covers/year-ig/DdynQAkEZ4i.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3484,7 +3960,7 @@
           "likes": 75,
           "comments": null,
           "views": null,
-          "cover_path": "covers/year-ig/Dd33woThVQ0.jpg",
+          "cover_path": null,
           "platform": "instagram",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -3500,7 +3976,7 @@
           "likes": 347,
           "comments": 4,
           "views": 4132,
-          "cover_path": "covers/year-ig/DeUdstjBz5S.jpg",
+          "cover_path": "covers/public-oct-2026/DeUdstjBz5S.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3516,7 +3992,7 @@
           "likes": 237,
           "comments": 51,
           "views": 2496,
-          "cover_path": "covers/year-ig/DeW0vXXhd3p.jpg",
+          "cover_path": "covers/public-oct-2026/DeW0vXXhd3p.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3532,7 +4008,7 @@
           "likes": 1165,
           "comments": 201,
           "views": 17386,
-          "cover_path": "covers/year-ig/DecPdkDBkRH.jpg",
+          "cover_path": "covers/public-oct-2026/DecPdkDBkRH.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3548,7 +4024,7 @@
           "likes": 144,
           "comments": 14,
           "views": null,
-          "cover_path": "covers/year-ig/DeejFiCD-yR.jpg",
+          "cover_path": "covers/public-oct-2026/DeejFiCD-yR.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3564,7 +4040,7 @@
           "likes": 422,
           "comments": 63,
           "views": 5387,
-          "cover_path": "covers/year-ig/DemRiA-BPUf.jpg",
+          "cover_path": "covers/public-oct-2026/DemRiA-BPUf.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3580,7 +4056,7 @@
           "likes": 382,
           "comments": 38,
           "views": 6067,
-          "cover_path": "covers/year-ig/Deo2TwLBk37.jpg",
+          "cover_path": "covers/public-oct-2026/Deo2TwLBk37.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3596,7 +4072,7 @@
           "likes": 270,
           "comments": 25,
           "views": 3159,
-          "cover_path": "covers/year-ig/DeuNmCahRnZ.jpg",
+          "cover_path": "covers/public-oct-2026/DeuNmCahRnZ.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3612,7 +4088,7 @@
           "likes": 320,
           "comments": 47,
           "views": 3466,
-          "cover_path": "covers/year-ig/DezJawWhnaF.jpg",
+          "cover_path": "covers/public-oct-2026/DezJawWhnaF.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3628,7 +4104,7 @@
           "likes": 1122,
           "comments": 63,
           "views": 17049,
-          "cover_path": "covers/year-ig/De4TED2hF7e.jpg",
+          "cover_path": "covers/public-oct-2026/De4TED2hF7e.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3644,7 +4120,7 @@
           "likes": 91,
           "comments": 15,
           "views": 1082,
-          "cover_path": "covers/year-ig/DfABbM-BX7B.jpg",
+          "cover_path": "covers/public-oct-2026/DfABbM-BX7B.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3660,7 +4136,7 @@
           "likes": 275,
           "comments": 9,
           "views": 2511,
-          "cover_path": "covers/year-ig/DfFLAUPh9Dx.jpg",
+          "cover_path": "covers/public-oct-2026/DfFLAUPh9Dx.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -3680,7 +4156,7 @@
       "likes": 207,
       "comments": 23,
       "views": 16500,
-      "cover_path": "covers/year-ig/DPZHKGzkfmS.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3696,7 +4172,7 @@
       "likes": 830,
       "comments": 2789,
       "views": null,
-      "cover_path": "covers/year-ig/DPbotyHjq86.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3712,7 +4188,7 @@
       "likes": 108,
       "comments": 8,
       "views": 8100,
-      "cover_path": "covers/year-ig/DPgyRZvjgBh.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3728,7 +4204,7 @@
       "likes": 559,
       "comments": 1205,
       "views": 19200,
-      "cover_path": "covers/year-ig/DPrFaYtka-8.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3744,7 +4220,7 @@
       "likes": 133,
       "comments": 24,
       "views": 10000,
-      "cover_path": "covers/year-ig/DPwjLbyDxom.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3760,7 +4236,7 @@
       "likes": 293,
       "comments": 53,
       "views": 10000,
-      "cover_path": "covers/year-ig/DPy5UGjEbIb.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3776,7 +4252,7 @@
       "likes": 246,
       "comments": 12,
       "views": 20000,
-      "cover_path": "covers/year-ig/DP1jE5KESZU.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3792,7 +4268,7 @@
       "likes": 408,
       "comments": 29,
       "views": 20000,
-      "cover_path": "covers/year-ig/DP9G8t1jqUD.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3808,7 +4284,7 @@
       "likes": 325,
       "comments": 15,
       "views": 30000,
-      "cover_path": "covers/year-ig/DQSE8WwEiA-.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3824,7 +4300,7 @@
       "likes": 280,
       "comments": 11,
       "views": 20000,
-      "cover_path": "covers/year-ig/DQckYiKki1P.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3840,7 +4316,7 @@
       "likes": 336,
       "comments": 15,
       "views": 30000,
-      "cover_path": "covers/year-ig/DQhKGweEkgu.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3856,7 +4332,7 @@
       "likes": 118,
       "comments": 15,
       "views": 10000,
-      "cover_path": "covers/year-ig/DQpJxxMj4JL.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3872,7 +4348,7 @@
       "likes": 239,
       "comments": 22,
       "views": null,
-      "cover_path": "covers/year-ig/DQuPy2yD5_m.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3888,7 +4364,7 @@
       "likes": 125,
       "comments": 23,
       "views": null,
-      "cover_path": "covers/year-ig/DQ0B3Jikohp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3904,7 +4380,7 @@
       "likes": 74,
       "comments": 12,
       "views": 10000,
-      "cover_path": "covers/year-ig/DRPumm2jzdR.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3920,7 +4396,7 @@
       "likes": 121,
       "comments": 10,
       "views": 20000,
-      "cover_path": "covers/year-ig/DRSNKWVCXd0.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3936,7 +4412,7 @@
       "likes": 303,
       "comments": 161,
       "views": 20000,
-      "cover_path": "covers/year-ig/DRXG-IeEbMf.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3952,7 +4428,7 @@
       "likes": 391,
       "comments": 25,
       "views": 30000,
-      "cover_path": "covers/year-ig/DRaAHxYidRj.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3968,7 +4444,7 @@
       "likes": 78,
       "comments": 7,
       "views": null,
-      "cover_path": "covers/year-ig/DRcnzwJj_2A.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -3984,7 +4460,7 @@
       "likes": 382,
       "comments": 1738,
       "views": null,
-      "cover_path": "covers/year-ig/DRhbLFlkf7T.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4000,7 +4476,7 @@
       "likes": 69,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/DRkXaixj0oF.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4016,7 +4492,7 @@
       "likes": 197,
       "comments": 2,
       "views": null,
-      "cover_path": "covers/year-ig/DRpP0BQkbDR.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4032,7 +4508,7 @@
       "likes": 149,
       "comments": 30,
       "views": 10000,
-      "cover_path": "covers/year-ig/DRsDitmD556.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4048,7 +4524,7 @@
       "likes": 85,
       "comments": 19,
       "views": 10000,
-      "cover_path": "covers/year-ig/DRuYGX9kczp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4064,7 +4540,7 @@
       "likes": 152,
       "comments": 19,
       "views": 10000,
-      "cover_path": "covers/year-ig/DRzxnqeCYCV.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4080,7 +4556,7 @@
       "likes": 111,
       "comments": 13,
       "views": 20000,
-      "cover_path": "covers/year-ig/DR7j3BEj6Zm.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4096,7 +4572,7 @@
       "likes": 256,
       "comments": 16,
       "views": 20000,
-      "cover_path": "covers/year-ig/DSIZvxSkXyI.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4112,7 +4588,7 @@
       "likes": 61,
       "comments": 0,
       "views": 10000,
-      "cover_path": "covers/year-ig/DSaErvhlRxI.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4128,7 +4604,7 @@
       "likes": 131,
       "comments": 9,
       "views": 10000,
-      "cover_path": "covers/year-ig/DSiEA2RCXqQ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4144,7 +4620,7 @@
       "likes": 59,
       "comments": 2,
       "views": null,
-      "cover_path": "covers/year-ig/DSsdB8Gjvwx.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q1_oct_dec_2025"
@@ -4160,7 +4636,7 @@
       "likes": 108,
       "comments": 5,
       "views": 10000,
-      "cover_path": "covers/year-ig/DS-cZcSCcgz.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4176,7 +4652,7 @@
       "likes": 420,
       "comments": 40,
       "views": null,
-      "cover_path": "covers/year-ig/DTi4BHsEsYn.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4192,7 +4668,7 @@
       "likes": 1946,
       "comments": 1737,
       "views": null,
-      "cover_path": "covers/year-ig/DTnpIZnEXUp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4208,7 +4684,7 @@
       "likes": 134,
       "comments": 15,
       "views": 30000,
-      "cover_path": "covers/year-ig/DULrwruCbrH.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4224,7 +4700,7 @@
       "likes": 124,
       "comments": 9,
       "views": 20000,
-      "cover_path": "covers/year-ig/DUQu7FqEXDN.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4240,7 +4716,7 @@
       "likes": 115,
       "comments": 3,
       "views": null,
-      "cover_path": "covers/year-ig/DUnsaBrjhh-.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4256,7 +4732,7 @@
       "likes": 218,
       "comments": 11,
       "views": 20000,
-      "cover_path": "covers/year-ig/DUtTcbjDz7X.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4272,7 +4748,7 @@
       "likes": 155,
       "comments": 7,
       "views": null,
-      "cover_path": "covers/year-ig/DUvarXwDk6q.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4288,7 +4764,7 @@
       "likes": 103,
       "comments": 14,
       "views": null,
-      "cover_path": "covers/year-ig/DVJoMF8D_Gs.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4304,7 +4780,7 @@
       "likes": 333,
       "comments": 30,
       "views": 50000,
-      "cover_path": "covers/year-ig/DVbjGLWiS9I.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4320,7 +4796,7 @@
       "likes": 163,
       "comments": 26,
       "views": null,
-      "cover_path": "covers/year-ig/DVgvVOAiZKo.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4336,7 +4812,7 @@
       "likes": 217,
       "comments": 5,
       "views": 20000,
-      "cover_path": "covers/year-ig/DVmI1Y9ktZw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4352,7 +4828,7 @@
       "likes": 539,
       "comments": 49,
       "views": null,
-      "cover_path": "covers/year-ig/DVocSeNGqWw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4368,7 +4844,7 @@
       "likes": 119,
       "comments": 20,
       "views": 10000,
-      "cover_path": "covers/year-ig/DVte1izkThv.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4384,7 +4860,7 @@
       "likes": 128,
       "comments": 11,
       "views": null,
-      "cover_path": "covers/year-ig/DVwTNUVgZpL.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4400,7 +4876,7 @@
       "likes": 166,
       "comments": 33,
       "views": 20000,
-      "cover_path": "covers/year-ig/DV3yVu0jqX9.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4416,7 +4892,7 @@
       "likes": 64,
       "comments": 2,
       "views": null,
-      "cover_path": "covers/year-ig/DV_j6EClGp4.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4432,7 +4908,7 @@
       "likes": 158,
       "comments": 5,
       "views": null,
-      "cover_path": "covers/year-ig/DWEVlKOjyCO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4448,7 +4924,7 @@
       "likes": 262,
       "comments": 5,
       "views": 30000,
-      "cover_path": "covers/year-ig/DWHi_8wAbbM.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4464,7 +4940,7 @@
       "likes": 187,
       "comments": 16,
       "views": null,
-      "cover_path": "covers/year-ig/DWJfI_-lKQU.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4480,7 +4956,7 @@
       "likes": 196,
       "comments": 9,
       "views": null,
-      "cover_path": "covers/year-ig/DWMD9FAFTkv.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4496,7 +4972,7 @@
       "likes": 418,
       "comments": 47,
       "views": null,
-      "cover_path": "covers/year-ig/DWRarxtlK9s.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4512,7 +4988,7 @@
       "likes": 175,
       "comments": 17,
       "views": 20000,
-      "cover_path": "covers/year-ig/DWT4A62DEnO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4528,7 +5004,7 @@
       "likes": 211,
       "comments": 15,
       "views": null,
-      "cover_path": "covers/year-ig/DWbgqoGFYxp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4544,7 +5020,7 @@
       "likes": 123,
       "comments": 11,
       "views": null,
-      "cover_path": "covers/year-ig/DWeVOkxlkff.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4560,7 +5036,7 @@
       "likes": 1163,
       "comments": 216,
       "views": 50000,
-      "cover_path": "covers/year-ig/DWjhfPYkZdr.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q2_jan_mar_2026"
@@ -4576,7 +5052,7 @@
       "likes": 618,
       "comments": 76,
       "views": null,
-      "cover_path": "covers/year-ig/DWopL3SEibp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4592,7 +5068,7 @@
       "likes": 524,
       "comments": 41,
       "views": 30000,
-      "cover_path": "covers/year-ig/DWozIjXAqwO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4608,7 +5084,7 @@
       "likes": 1130,
       "comments": 44,
       "views": null,
-      "cover_path": "covers/year-ig/DWtq_YPFKYN.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4624,7 +5100,7 @@
       "likes": 251,
       "comments": 7,
       "views": null,
-      "cover_path": "covers/year-ig/DWwKbi1FYJC.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4640,7 +5116,7 @@
       "likes": 316,
       "comments": 15,
       "views": 30000,
-      "cover_path": "covers/year-ig/DWwboLzBElS.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4656,7 +5132,7 @@
       "likes": 201,
       "comments": 19,
       "views": 20000,
-      "cover_path": "covers/year-ig/DW1hw3Xh04Q.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4672,7 +5148,7 @@
       "likes": 129,
       "comments": 17,
       "views": null,
-      "cover_path": "covers/year-ig/DW4DMj6FFHW.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4688,7 +5164,7 @@
       "likes": 274,
       "comments": 18,
       "views": null,
-      "cover_path": "covers/year-ig/DW6rZP1FP42.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4704,7 +5180,7 @@
       "likes": 110,
       "comments": 10,
       "views": null,
-      "cover_path": "covers/year-ig/DW8_E-fFci_.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4720,7 +5196,7 @@
       "likes": 247,
       "comments": 12,
       "views": 20000,
-      "cover_path": "covers/year-ig/DW_nQ_CBSA2.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4736,7 +5212,7 @@
       "likes": 792,
       "comments": 95,
       "views": null,
-      "cover_path": "covers/year-ig/DXFLKHKmBGz.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4752,7 +5228,7 @@
       "likes": 695,
       "comments": 121,
       "views": 50000,
-      "cover_path": "covers/year-ig/DXHntC1iXqU.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4768,7 +5244,7 @@
       "likes": 24948,
       "comments": 282,
       "views": 870000,
-      "cover_path": "covers/year-ig/DXM3-EFDUh0.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4784,7 +5260,7 @@
       "likes": 264,
       "comments": 15,
       "views": 30000,
-      "cover_path": "covers/year-ig/DXRlZu_B8Fl.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4800,7 +5276,7 @@
       "likes": 160,
       "comments": 14,
       "views": 20000,
-      "cover_path": "covers/year-ig/DXWu_aZh_Uy.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4816,7 +5292,7 @@
       "likes": 190,
       "comments": 22,
       "views": 20000,
-      "cover_path": "covers/year-ig/DXZk5mVBfjh.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4832,7 +5308,7 @@
       "likes": 276,
       "comments": 26,
       "views": null,
-      "cover_path": "covers/year-ig/DXb4mgOFM3A.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4848,7 +5324,7 @@
       "likes": 304,
       "comments": 29,
       "views": 30000,
-      "cover_path": "covers/year-ig/DXedaHgh-iw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4864,7 +5340,7 @@
       "likes": 228,
       "comments": 51,
       "views": 20000,
-      "cover_path": "covers/year-ig/DXjm--ZhQVg.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4880,7 +5356,7 @@
       "likes": 359,
       "comments": 22,
       "views": null,
-      "cover_path": "covers/year-ig/DXrUH5xDvNk.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4896,7 +5372,7 @@
       "likes": 102,
       "comments": 3,
       "views": null,
-      "cover_path": "covers/year-ig/DXwe6aTmye8.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4912,7 +5388,7 @@
       "likes": 20178,
       "comments": 469,
       "views": null,
-      "cover_path": "covers/year-ig/DX1y1eUhe4j.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4928,7 +5404,7 @@
       "likes": 392,
       "comments": 20,
       "views": 30000,
-      "cover_path": "covers/year-ig/DX4Xm2IhYk8.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4944,7 +5420,7 @@
       "likes": 45,
       "comments": 0,
       "views": 10000,
-      "cover_path": "covers/year-ig/DX9W1p7B50q.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4960,7 +5436,7 @@
       "likes": 396,
       "comments": 26,
       "views": 30000,
-      "cover_path": "covers/year-ig/DX9oFJihpCl.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4976,7 +5452,7 @@
       "likes": 202,
       "comments": 10,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYCxqmoBrr1.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -4992,7 +5468,7 @@
       "likes": 942,
       "comments": 65,
       "views": null,
-      "cover_path": "covers/year-ig/DYH7Pd4G0KO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5008,7 +5484,7 @@
       "likes": 345,
       "comments": 40,
       "views": null,
-      "cover_path": "covers/year-ig/DYMzq0fm_E9.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5024,7 +5500,7 @@
       "likes": 330,
       "comments": 17,
       "views": 30000,
-      "cover_path": "covers/year-ig/DYNpQbtSbwq.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5040,7 +5516,7 @@
       "likes": 721,
       "comments": 30,
       "views": null,
-      "cover_path": "covers/year-ig/DYPYb9XG0qt.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5056,7 +5532,7 @@
       "likes": 502,
       "comments": 14,
       "views": 40000,
-      "cover_path": "covers/year-ig/DYPplvjhTaN.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5072,7 +5548,7 @@
       "likes": 203,
       "comments": 16,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYR9P2Zh-rD.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5088,7 +5564,7 @@
       "likes": 161,
       "comments": 11,
       "views": null,
-      "cover_path": "covers/year-ig/DYSOdm6Gx8G.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5104,7 +5580,7 @@
       "likes": 75828,
       "comments": 773,
       "views": 3900000,
-      "cover_path": "covers/year-ig/DYUiBuEhEor.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5120,7 +5596,7 @@
       "likes": 2826,
       "comments": 23,
       "views": 110000,
-      "cover_path": "covers/year-ig/DYX4QIcgwb7.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5136,7 +5612,7 @@
       "likes": 7167,
       "comments": 188,
       "views": 630000,
-      "cover_path": "covers/year-ig/DYZrsKchrDF.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5152,7 +5628,7 @@
       "likes": 265,
       "comments": 22,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYcQZCcBePe.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5168,7 +5644,7 @@
       "likes": 219,
       "comments": 13,
       "views": null,
-      "cover_path": "covers/year-ig/DYhv8OHm65i.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5184,7 +5660,7 @@
       "likes": 621,
       "comments": 105,
       "views": 50000,
-      "cover_path": "covers/year-ig/DYj-1rih-xa.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5200,7 +5676,7 @@
       "likes": 570,
       "comments": 1011,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYllz8mBjQw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5216,7 +5692,7 @@
       "likes": 167,
       "comments": 16,
       "views": null,
-      "cover_path": "covers/year-ig/DYm7nnkm93T.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5232,7 +5708,7 @@
       "likes": 114,
       "comments": 18,
       "views": 10000,
-      "cover_path": "covers/year-ig/DYndHJiS3lG.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5248,7 +5724,7 @@
       "likes": 240,
       "comments": 11,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYpIdDbhW85.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5264,7 +5740,7 @@
       "likes": 478,
       "comments": 24,
       "views": 30000,
-      "cover_path": "covers/year-ig/DYrtMa1ht1h.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5280,7 +5756,7 @@
       "likes": 16598,
       "comments": 86,
       "views": 760000,
-      "cover_path": "covers/year-ig/DYsVHhmPEjS.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-a-2025-10-01_2026-05-23.json",
       "quarter": "q3_apr_jun_2026"
@@ -5296,7 +5772,7 @@
       "likes": 1320,
       "comments": 43,
       "views": 60000,
-      "cover_path": "covers/year-ig/DYuR874BhWp.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5312,7 +5788,7 @@
       "likes": 204,
       "comments": 15,
       "views": null,
-      "cover_path": "covers/year-ig/DYw20KLGuhO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5328,7 +5804,7 @@
       "likes": 945,
       "comments": 35,
       "views": 40000,
-      "cover_path": "covers/year-ig/DYxUNbyv5VS.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5344,7 +5820,7 @@
       "likes": 153,
       "comments": 11,
       "views": 20000,
-      "cover_path": "covers/year-ig/DYzy-B4RCgm.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5360,7 +5836,7 @@
       "likes": 533,
       "comments": 14,
       "views": 60000,
-      "cover_path": "covers/year-ig/DY1_WeajToh.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5376,7 +5852,7 @@
       "likes": 994,
       "comments": 24,
       "views": 50000,
-      "cover_path": "covers/year-ig/DY9uzQjhCyr.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5392,7 +5868,7 @@
       "likes": 579,
       "comments": 15,
       "views": null,
-      "cover_path": "covers/year-ig/DZATiL6jq5I.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5408,7 +5884,7 @@
       "likes": 147,
       "comments": 21,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZFdJ9ihLhw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5424,7 +5900,7 @@
       "likes": 174,
       "comments": 20,
       "views": null,
-      "cover_path": "covers/year-ig/DZLZhMUklQd.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5440,7 +5916,7 @@
       "likes": 2836,
       "comments": 49,
       "views": 120000,
-      "cover_path": "covers/year-ig/DZPwV6TBylM.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5456,7 +5932,7 @@
       "likes": 65,
       "comments": 6,
       "views": null,
-      "cover_path": "covers/year-ig/DZSmU3MGxaL.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5472,7 +5948,7 @@
       "likes": 157,
       "comments": 8,
       "views": 20000,
-      "cover_path": "covers/year-ig/DZSVHC8SwUw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5488,7 +5964,7 @@
       "likes": 171,
       "comments": 20,
       "views": null,
-      "cover_path": "covers/year-ig/DZXwcuDm0Mn.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5504,7 +5980,7 @@
       "likes": 123,
       "comments": 6,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZaDiSNB-j9.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5520,7 +5996,7 @@
       "likes": 149,
       "comments": 15,
       "views": null,
-      "cover_path": "covers/year-ig/DZc5dcJmyiw.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5536,7 +6012,7 @@
       "likes": 89,
       "comments": 5,
       "views": null,
-      "cover_path": "covers/year-ig/DZcoT9Pm00n.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5552,7 +6028,7 @@
       "likes": 573,
       "comments": 28,
       "views": 60000,
-      "cover_path": "covers/year-ig/DZfh6qkutHJ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5568,7 +6044,7 @@
       "likes": 415,
       "comments": 45,
       "views": 30000,
-      "cover_path": "covers/year-ig/DZhx454BSzy.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5584,7 +6060,7 @@
       "likes": 1262,
       "comments": 26,
       "views": null,
-      "cover_path": "covers/year-ig/DZiDBxFm_RH.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5600,7 +6076,7 @@
       "likes": 5711,
       "comments": 43,
       "views": 150000,
-      "cover_path": "covers/year-ig/DZkWt-4hwnv.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5616,7 +6092,7 @@
       "likes": 202,
       "comments": 15,
       "views": 20000,
-      "cover_path": "covers/year-ig/DZn0FRFyId7.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5632,7 +6108,7 @@
       "likes": 181,
       "comments": 10,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZnUbMjsfsN.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5648,7 +6124,7 @@
       "likes": 606,
       "comments": 2313,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZsWNluBRyG.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5664,7 +6140,7 @@
       "likes": 769,
       "comments": 2638,
       "views": null,
-      "cover_path": "covers/year-ig/DZu6_zgm00s.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5680,7 +6156,7 @@
       "likes": 597,
       "comments": 2380,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZxf2tVhJGQ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5696,7 +6172,7 @@
       "likes": 461,
       "comments": 3734,
       "views": null,
-      "cover_path": "covers/year-ig/DZ0EmZIG4nr.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5712,7 +6188,7 @@
       "likes": 519,
       "comments": 37,
       "views": 20000,
-      "cover_path": "covers/year-ig/DZ0NzdyppQZ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5728,7 +6204,7 @@
       "likes": 874,
       "comments": 4246,
       "views": null,
-      "cover_path": "covers/year-ig/DZ2paT1GwZ8.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5744,7 +6220,7 @@
       "likes": 153,
       "comments": 11,
       "views": 10000,
-      "cover_path": "covers/year-ig/DZ5NNy8OMBY.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5760,7 +6236,7 @@
       "likes": 301,
       "comments": 30,
       "views": 20000,
-      "cover_path": "covers/year-ig/DZ7rnraRhMm.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5776,7 +6252,7 @@
       "likes": 401,
       "comments": 32,
       "views": 20000,
-      "cover_path": "covers/year-ig/DZ-Ut9fRUdG.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5792,7 +6268,7 @@
       "likes": 156,
       "comments": 20,
       "views": null,
-      "cover_path": "covers/year-ig/DaA5luKG2qY.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5808,7 +6284,7 @@
       "likes": 173,
       "comments": 4,
       "views": 10000,
-      "cover_path": "covers/year-ig/DaGA3WzOdvO.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5824,7 +6300,7 @@
       "likes": 97,
       "comments": 12,
       "views": null,
-      "cover_path": "covers/year-ig/DaIZ1WOm3bc.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5840,7 +6316,7 @@
       "likes": 238,
       "comments": 15,
       "views": 20000,
-      "cover_path": "covers/year-ig/DaOBFNyB41I.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q3_apr_jun_2026"
@@ -5856,7 +6332,7 @@
       "likes": 104,
       "comments": 4,
       "views": 10000,
-      "cover_path": "covers/year-ig/DaSs-35h2l-.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5872,7 +6348,7 @@
       "likes": 234,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/DaTb0Z7ms_K.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5888,7 +6364,7 @@
       "likes": 235,
       "comments": 7,
       "views": 20000,
-      "cover_path": "covers/year-ig/DaVOaAXhSIA.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5904,7 +6380,7 @@
       "likes": 138,
       "comments": 3,
       "views": null,
-      "cover_path": "covers/year-ig/DaVi8KYGNf4.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5936,7 +6412,7 @@
       "likes": 83,
       "comments": 4,
       "views": 10000,
-      "cover_path": "covers/year-ig/DaabXEbBdKJ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5952,7 +6428,7 @@
       "likes": 99,
       "comments": 9,
       "views": null,
-      "cover_path": "covers/year-ig/DaiJzecjvaQ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5968,7 +6444,7 @@
       "likes": 361,
       "comments": 8,
       "views": 10000,
-      "cover_path": "covers/year-ig/Dakuh8dhbIZ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -5984,7 +6460,7 @@
       "likes": 162,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/DanTThUGzFo.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6000,7 +6476,7 @@
       "likes": 192,
       "comments": 7,
       "views": 10000,
-      "cover_path": "covers/year-ig/Dap4HBbPs68.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6016,7 +6492,7 @@
       "likes": 151,
       "comments": 2,
       "views": 10000,
-      "cover_path": "covers/year-ig/DasdACrhrcR.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6032,7 +6508,7 @@
       "likes": 191,
       "comments": 16,
       "views": null,
-      "cover_path": "covers/year-ig/DavuwRMkmjx.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6048,7 +6524,7 @@
       "likes": 145,
       "comments": 12,
       "views": null,
-      "cover_path": "covers/year-ig/Dax-c8fG4ye.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6064,7 +6540,7 @@
       "likes": 157,
       "comments": 15,
       "views": 10000,
-      "cover_path": "covers/year-ig/Da0Z_jpQ0zX.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6080,7 +6556,7 @@
       "likes": 89,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/Da3Sfb6GPVd.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6096,7 +6572,7 @@
       "likes": 252,
       "comments": 10,
       "views": 10000,
-      "cover_path": "covers/year-ig/Da75vHthEm5.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6112,7 +6588,7 @@
       "likes": 51,
       "comments": 0,
       "views": null,
-      "cover_path": "covers/year-ig/Da8K1gqAZYg.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6128,7 +6604,7 @@
       "likes": 509,
       "comments": 17,
       "views": 30000,
-      "cover_path": "covers/year-ig/Da-ejHeBWqM.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6144,7 +6620,7 @@
       "likes": 186,
       "comments": 6,
       "views": null,
-      "cover_path": "covers/year-ig/DbB-GG-EmAu.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6160,7 +6636,7 @@
       "likes": 152,
       "comments": 7,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbD6sJzyBsK.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6176,7 +6652,7 @@
       "likes": 540,
       "comments": 19,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbGS_s2BANo.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6192,7 +6668,7 @@
       "likes": 99,
       "comments": 5,
       "views": null,
-      "cover_path": "covers/year-ig/DbJJ-BqGqWh.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6208,7 +6684,7 @@
       "likes": 95,
       "comments": 9,
       "views": null,
-      "cover_path": "covers/year-ig/DbLWfPEjxvT.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6224,7 +6700,7 @@
       "likes": 116,
       "comments": 16,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbN7QbyBX9P.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6240,7 +6716,7 @@
       "likes": 204,
       "comments": 20,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbQgDc-hwML.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6256,7 +6732,7 @@
       "likes": 128,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/DbTat1bm9US.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6272,7 +6748,7 @@
       "likes": 214,
       "comments": 9,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbV_VIip5On.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6288,7 +6764,7 @@
       "likes": 93,
       "comments": 5,
       "views": null,
-      "cover_path": "covers/year-ig/DbZ8GzbvuNo.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6304,7 +6780,7 @@
       "likes": null,
       "comments": 4282,
       "views": null,
-      "cover_path": "covers/year-ig/Dba9hWZFX4F.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6320,7 +6796,7 @@
       "likes": 115,
       "comments": 14,
       "views": null,
-      "cover_path": "covers/year-ig/DbdYGevGmp3.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6336,7 +6812,7 @@
       "likes": 68,
       "comments": 12,
       "views": 10000,
-      "cover_path": "covers/year-ig/Dbf81PCPFS5.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6352,7 +6828,7 @@
       "likes": 71,
       "comments": 8,
       "views": 10000,
-      "cover_path": "covers/year-ig/Dbiho_4P46S.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6368,7 +6844,7 @@
       "likes": 142,
       "comments": 8,
       "views": 10000,
-      "cover_path": "covers/year-ig/DbqSi0tv-M8.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6384,7 +6860,7 @@
       "likes": 343,
       "comments": 31,
       "views": null,
-      "cover_path": "covers/year-ig/Dbq2TcLS9Mn.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6400,7 +6876,7 @@
       "likes": 431,
       "comments": 105,
       "views": null,
-      "cover_path": "covers/year-ig/Dbqwhb3Jg8z.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6416,7 +6892,7 @@
       "likes": 253,
       "comments": 22,
       "views": null,
-      "cover_path": "covers/year-ig/DbrHhRhPxLQ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6432,7 +6908,7 @@
       "likes": 26,
       "comments": 2,
       "views": 0,
-      "cover_path": "covers/year-ig/Dbs00TChi9e.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6448,7 +6924,7 @@
       "likes": 173,
       "comments": 2,
       "views": null,
-      "cover_path": "covers/year-ig/Dbs_-gjlJzl.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6464,7 +6940,7 @@
       "likes": 519,
       "comments": 26,
       "views": null,
-      "cover_path": "covers/year-ig/DbtCdFHkVmJ.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6480,7 +6956,7 @@
       "likes": 81,
       "comments": 8,
       "views": null,
-      "cover_path": "covers/year-ig/DbtF9egGyA1.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6496,7 +6972,7 @@
       "likes": 2502,
       "comments": 24,
       "views": null,
-      "cover_path": "covers/year-ig/Dbv7iHwx-Yh.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6512,7 +6988,7 @@
       "likes": 76,
       "comments": 5,
       "views": null,
-      "cover_path": "covers/year-ig/DbvZpt7Gw8t.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6528,7 +7004,7 @@
       "likes": 376,
       "comments": 3,
       "views": null,
-      "cover_path": "covers/year-ig/DbwHxggFfs7.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6544,7 +7020,7 @@
       "likes": 101,
       "comments": 14,
       "views": 10000,
-      "cover_path": "covers/year-ig/Dbx-bc2BuDN.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6560,7 +7036,7 @@
       "likes": 7419,
       "comments": 583,
       "views": null,
-      "cover_path": "covers/year-ig/DbyG-OXhB6S.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6576,7 +7052,7 @@
       "likes": 148,
       "comments": 15,
       "views": null,
-      "cover_path": "covers/year-ig/DbyF2CVltQC.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6592,7 +7068,7 @@
       "likes": 449,
       "comments": 14,
       "views": null,
-      "cover_path": "covers/year-ig/DbycihkxUW4.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6608,7 +7084,7 @@
       "likes": 1209,
       "comments": 78,
       "views": null,
-      "cover_path": "covers/year-ig/DbyeKaxR-YB.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6624,7 +7100,7 @@
       "likes": 148,
       "comments": 35,
       "views": null,
-      "cover_path": "covers/year-ig/DbyrRRdD-xq.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6640,7 +7116,7 @@
       "likes": 140,
       "comments": 3,
       "views": 11500,
-      "cover_path": "covers/year-ig/Db0jP3DhgXa.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6656,7 +7132,7 @@
       "likes": 79,
       "comments": 25,
       "views": 4964,
-      "cover_path": "covers/year-ig/Db8gqvPNo3Y.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6672,7 +7148,7 @@
       "likes": 127,
       "comments": 29,
       "views": 5500,
-      "cover_path": "covers/year-ig/DcBbKkBBF3v.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6688,7 +7164,7 @@
       "likes": 271,
       "comments": 26,
       "views": 11200,
-      "cover_path": "covers/year-ig/DcD_8DSBnPl.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6704,7 +7180,7 @@
       "likes": 494,
       "comments": 76,
       "views": 14400,
-      "cover_path": "covers/year-ig/DcGk08vhiYA.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6720,7 +7196,7 @@
       "likes": 274,
       "comments": 32,
       "views": 17300,
-      "cover_path": "covers/year-ig/DcJJhOfB6S4.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6736,7 +7212,7 @@
       "likes": 457,
       "comments": 43,
       "views": 108000,
-      "cover_path": "covers/year-ig/DcL9p5VuEAK.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6752,7 +7228,7 @@
       "likes": 469,
       "comments": 68,
       "views": null,
-      "cover_path": "covers/year-ig/DcOTPdHGwqM.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6768,7 +7244,7 @@
       "likes": 328,
       "comments": 51,
       "views": 10000,
-      "cover_path": "covers/year-ig/DcQ39nVBvi9.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6784,7 +7260,7 @@
       "likes": 196,
       "comments": 56,
       "views": 5452,
-      "cover_path": "covers/year-ig/DcWBffEBvN1.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6800,7 +7276,7 @@
       "likes": 80,
       "comments": 12,
       "views": 5066,
-      "cover_path": "covers/year-ig/DcYmUAdBnHI.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6816,7 +7292,7 @@
       "likes": 83,
       "comments": 12,
       "views": 2325,
-      "cover_path": "covers/year-ig/Dcdv5geBceT.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "notion:nectarine-batch-b-2026-05-24_2026-08-25.json",
       "quarter": "q4_jul_oct_2026"
@@ -6832,7 +7308,7 @@
       "likes": 657,
       "comments": null,
       "views": 13914,
-      "cover_path": "covers/year-ig/DcvxhuPPQ_k.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6848,7 +7324,7 @@
       "likes": 342,
       "comments": null,
       "views": 13683,
-      "cover_path": "covers/year-ig/Dc1LSA3s5dj.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6864,7 +7340,7 @@
       "likes": 211,
       "comments": null,
       "views": 6827,
-      "cover_path": "covers/year-ig/Dc3f7hERxcP.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6880,7 +7356,7 @@
       "likes": 423,
       "comments": null,
       "views": 23650,
-      "cover_path": "covers/year-ig/Dc6En8zRzcC.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6896,7 +7372,7 @@
       "likes": 368,
       "comments": null,
       "views": 18491,
-      "cover_path": "covers/year-ig/Dc8pfN0B_VV.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6912,7 +7388,7 @@
       "likes": 185,
       "comments": null,
       "views": 18267,
-      "cover_path": "covers/year-ig/DdG8lpDv_PA.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6928,7 +7404,7 @@
       "likes": 10493,
       "comments": null,
       "views": 187226,
-      "cover_path": "covers/year-ig/DdMGPUlBd_F.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6944,7 +7420,7 @@
       "likes": 468,
       "comments": null,
       "views": 20644,
-      "cover_path": "covers/year-ig/DdOrCrqhgJP.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6960,7 +7436,7 @@
       "likes": 167,
       "comments": null,
       "views": 10185,
-      "cover_path": "covers/year-ig/DdT0kgChoCX.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6976,7 +7452,7 @@
       "likes": 978,
       "comments": null,
       "views": 18678,
-      "cover_path": "covers/year-ig/DdZPNiLm32a.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -6992,7 +7468,7 @@
       "likes": 217,
       "comments": null,
       "views": 9613,
-      "cover_path": "covers/year-ig/DdeH0NPPHcF.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7008,7 +7484,7 @@
       "likes": 67,
       "comments": null,
       "views": 4922,
-      "cover_path": "covers/year-ig/DdgsjqWPSvW.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7024,7 +7500,7 @@
       "likes": 229,
       "comments": null,
       "views": 7716,
-      "cover_path": "covers/year-ig/Ddl2KF1By5S.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7040,7 +7516,7 @@
       "likes": 157,
       "comments": null,
       "views": 9646,
-      "cover_path": "covers/year-ig/Ddrho7Qv6Io.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7056,7 +7532,7 @@
       "likes": 146,
       "comments": null,
       "views": 7861,
-      "cover_path": "covers/year-ig/DdwJVtShPVL.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7072,7 +7548,7 @@
       "likes": 111,
       "comments": null,
       "views": 8113,
-      "cover_path": "covers/year-ig/DdynQAkEZ4i.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7088,7 +7564,7 @@
       "likes": 75,
       "comments": null,
       "views": null,
-      "cover_path": "covers/year-ig/Dd33woThVQ0.jpg",
+      "cover_path": null,
       "platform": "instagram",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -7104,7 +7580,7 @@
       "likes": 347,
       "comments": 4,
       "views": 4132,
-      "cover_path": "covers/year-ig/DeUdstjBz5S.jpg",
+      "cover_path": "covers/public-oct-2026/DeUdstjBz5S.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7120,7 +7596,7 @@
       "likes": 237,
       "comments": 51,
       "views": 2496,
-      "cover_path": "covers/year-ig/DeW0vXXhd3p.jpg",
+      "cover_path": "covers/public-oct-2026/DeW0vXXhd3p.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7136,7 +7612,7 @@
       "likes": 1165,
       "comments": 201,
       "views": 17386,
-      "cover_path": "covers/year-ig/DecPdkDBkRH.jpg",
+      "cover_path": "covers/public-oct-2026/DecPdkDBkRH.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7152,7 +7628,7 @@
       "likes": 144,
       "comments": 14,
       "views": null,
-      "cover_path": "covers/year-ig/DeejFiCD-yR.jpg",
+      "cover_path": "covers/public-oct-2026/DeejFiCD-yR.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7168,7 +7644,7 @@
       "likes": 422,
       "comments": 63,
       "views": 5387,
-      "cover_path": "covers/year-ig/DemRiA-BPUf.jpg",
+      "cover_path": "covers/public-oct-2026/DemRiA-BPUf.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7184,7 +7660,7 @@
       "likes": 382,
       "comments": 38,
       "views": 6067,
-      "cover_path": "covers/year-ig/Deo2TwLBk37.jpg",
+      "cover_path": "covers/public-oct-2026/Deo2TwLBk37.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7200,7 +7676,7 @@
       "likes": 270,
       "comments": 25,
       "views": 3159,
-      "cover_path": "covers/year-ig/DeuNmCahRnZ.jpg",
+      "cover_path": "covers/public-oct-2026/DeuNmCahRnZ.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7216,7 +7692,7 @@
       "likes": 320,
       "comments": 47,
       "views": 3466,
-      "cover_path": "covers/year-ig/DezJawWhnaF.jpg",
+      "cover_path": "covers/public-oct-2026/DezJawWhnaF.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7232,7 +7708,7 @@
       "likes": 1122,
       "comments": 63,
       "views": 17049,
-      "cover_path": "covers/year-ig/De4TED2hF7e.jpg",
+      "cover_path": "covers/public-oct-2026/De4TED2hF7e.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7248,7 +7724,7 @@
       "likes": 91,
       "comments": 15,
       "views": 1082,
-      "cover_path": "covers/year-ig/DfABbM-BX7B.jpg",
+      "cover_path": "covers/public-oct-2026/DfABbM-BX7B.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7264,7 +7740,7 @@
       "likes": 275,
       "comments": 9,
       "views": 2511,
-      "cover_path": "covers/year-ig/DfFLAUPh9Dx.jpg",
+      "cover_path": "covers/public-oct-2026/DfFLAUPh9Dx.jpg",
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
@@ -7286,7 +7762,7 @@
           "likes": 69,
           "comments": 0,
           "views": 10000,
-          "cover_path": "covers/year-tt/7571905851670236447.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7301,7 +7777,7 @@
           "likes": 20,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7574484831837359391.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7316,7 +7792,7 @@
           "likes": 47,
           "comments": 3,
           "views": 0,
-          "cover_path": "covers/year-tt/7574494253812845854.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7331,7 +7807,7 @@
           "likes": 100,
           "comments": 1,
           "views": 10000,
-          "cover_path": "covers/year-tt/7579700849065217293.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7346,7 +7822,7 @@
           "likes": 23,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7580844509110586679.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7361,7 +7837,7 @@
           "likes": 75,
           "comments": 4,
           "views": 10000,
-          "cover_path": "covers/year-tt/7581165040569519415.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7376,7 +7852,7 @@
           "likes": 156,
           "comments": 3,
           "views": 10000,
-          "cover_path": "covers/year-tt/7584149186795425037.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7391,7 +7867,7 @@
           "likes": 85,
           "comments": 5,
           "views": 10000,
-          "cover_path": "covers/year-tt/7584618596937075982.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q1_oct_dec_2025"
@@ -7419,7 +7895,7 @@
           "likes": 47,
           "comments": 1,
           "views": 10000,
-          "cover_path": "covers/year-tt/7638842960217378061.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7434,7 +7910,7 @@
           "likes": 95,
           "comments": 2,
           "views": 10000,
-          "cover_path": "covers/year-tt/7639054943499881742.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7449,7 +7925,7 @@
           "likes": 60200,
           "comments": 90,
           "views": 1600000,
-          "cover_path": "covers/year-tt/7639419609501748494.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7464,7 +7940,7 @@
           "likes": 33800,
           "comments": 147,
           "views": 1000000,
-          "cover_path": "covers/year-tt/7639851707161152782.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7479,7 +7955,7 @@
           "likes": 7409,
           "comments": 29,
           "views": 220000,
-          "cover_path": "covers/year-tt/7640535262652681485.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7494,7 +7970,7 @@
           "likes": 67,
           "comments": 4,
           "views": 10000,
-          "cover_path": "covers/year-tt/7640970771757550862.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7509,7 +7985,7 @@
           "likes": 37,
           "comments": 3,
           "views": 0,
-          "cover_path": "covers/year-tt/7642721063591349535.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7524,7 +8000,7 @@
           "likes": 79,
           "comments": 1,
           "views": 0,
-          "cover_path": "covers/year-tt/7643110715418610957.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7539,7 +8015,7 @@
           "likes": 44,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7643504422403804430.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7554,7 +8030,7 @@
           "likes": 77100,
           "comments": 375,
           "views": 1300000,
-          "cover_path": "covers/year-tt/7643551324260289822.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7569,7 +8045,7 @@
           "likes": 2899,
           "comments": 16,
           "views": 200000,
-          "cover_path": "covers/year-tt/7645325102552222990.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7584,7 +8060,7 @@
           "likes": 111,
           "comments": 1,
           "views": 0,
-          "cover_path": "covers/year-tt/7648376190482386189.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7599,7 +8075,7 @@
           "likes": 6,
           "comments": 1,
           "views": 0,
-          "cover_path": "covers/year-tt/7649886282612542750.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7614,7 +8090,7 @@
           "likes": 13,
           "comments": 2,
           "views": 0,
-          "cover_path": "covers/year-tt/7651116007783697678.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7629,7 +8105,7 @@
           "likes": 4535,
           "comments": 24,
           "views": 180000,
-          "cover_path": "covers/year-tt/7651298130205494541.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7644,7 +8120,7 @@
           "likes": 26,
           "comments": 1,
           "views": 0,
-          "cover_path": "covers/year-tt/7651676392165231885.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7659,7 +8135,7 @@
           "likes": 60,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7651751246721830175.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7674,7 +8150,7 @@
           "likes": 26,
           "comments": 2,
           "views": 0,
-          "cover_path": "covers/year-tt/7652611333849992462.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7689,7 +8165,7 @@
           "likes": 150,
           "comments": 6,
           "views": 10000,
-          "cover_path": "covers/year-tt/7654270921280130318.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7704,7 +8180,7 @@
           "likes": 27,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7654708331839376653.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7719,7 +8195,7 @@
           "likes": 58,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7655085331087117581.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7734,7 +8210,7 @@
           "likes": 4883,
           "comments": 20,
           "views": 190000,
-          "cover_path": "covers/year-tt/7655086190449773838.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7749,7 +8225,7 @@
           "likes": 69,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7656637462621572365.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q3_apr_jun_2026"
@@ -7771,7 +8247,7 @@
           "likes": 48,
           "comments": 5,
           "views": 10000,
-          "cover_path": "covers/year-tt/7657410996171984142.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7786,7 +8262,7 @@
           "likes": 18,
           "comments": 6,
           "views": 0,
-          "cover_path": "covers/year-tt/7659065633748880654.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7801,7 +8277,7 @@
           "likes": 19,
           "comments": 1,
           "views": 0,
-          "cover_path": "covers/year-tt/7661517607048187166.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7816,7 +8292,7 @@
           "likes": 38,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7661890404266118414.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7831,7 +8307,7 @@
           "likes": 310,
           "comments": 10,
           "views": 10000,
-          "cover_path": "covers/year-tt/7663235414605516045.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7846,7 +8322,7 @@
           "likes": 37,
           "comments": 3,
           "views": 0,
-          "cover_path": "covers/year-tt/7664663094173404447.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7861,7 +8337,7 @@
           "likes": 53,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7665403746137967885.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7876,7 +8352,7 @@
           "likes": 44,
           "comments": 3,
           "views": 0,
-          "cover_path": "covers/year-tt/7665770940533460238.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7891,7 +8367,7 @@
           "likes": 35,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7667393926667537695.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7906,7 +8382,7 @@
           "likes": 19,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7667630029215468813.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7921,7 +8397,7 @@
           "likes": 25,
           "comments": 0,
           "views": 0,
-          "cover_path": "covers/year-tt/7671979555606809870.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
           "quarter": "q4_jul_oct_2026"
@@ -7936,7 +8412,7 @@
           "likes": 70,
           "comments": null,
           "views": 1377,
-          "cover_path": "covers/year-tt/7685446469884611854.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -7951,7 +8427,7 @@
           "likes": 25,
           "comments": null,
           "views": 706,
-          "cover_path": "covers/year-tt/7685837228647451918.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -7966,7 +8442,7 @@
           "likes": 9,
           "comments": null,
           "views": 561,
-          "cover_path": "covers/year-tt/7686381611146874142.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -7981,7 +8457,7 @@
           "likes": 33,
           "comments": null,
           "views": 1381,
-          "cover_path": "covers/year-tt/7686537942646443277.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -7996,7 +8472,7 @@
           "likes": 207,
           "comments": null,
           "views": 10800,
-          "cover_path": "covers/year-tt/7687008135369788702.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -8011,7 +8487,7 @@
           "likes": 17,
           "comments": null,
           "views": 565,
-          "cover_path": "covers/year-tt/7688079052757798175.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -8026,7 +8502,7 @@
           "likes": 32,
           "comments": null,
           "views": 645,
-          "cover_path": "covers/year-tt/7688378309792648478.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -8041,7 +8517,7 @@
           "likes": 5,
           "comments": null,
           "views": 282,
-          "cover_path": "covers/year-tt/7690631705828330765.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -8056,7 +8532,7 @@
           "likes": 7,
           "comments": null,
           "views": 260,
-          "cover_path": "covers/year-tt/7691013355225500942.jpg",
+          "cover_path": null,
           "platform": "tiktok",
           "source": "september-2026-recap.html",
           "quarter": "q4_jul_oct_2026"
@@ -8075,7 +8551,7 @@
       "likes": 69,
       "comments": 0,
       "views": 10000,
-      "cover_path": "covers/year-tt/7571905851670236447.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8090,7 +8566,7 @@
       "likes": 20,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7574484831837359391.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8105,7 +8581,7 @@
       "likes": 47,
       "comments": 3,
       "views": 0,
-      "cover_path": "covers/year-tt/7574494253812845854.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8120,7 +8596,7 @@
       "likes": 100,
       "comments": 1,
       "views": 10000,
-      "cover_path": "covers/year-tt/7579700849065217293.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8135,7 +8611,7 @@
       "likes": 23,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7580844509110586679.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8150,7 +8626,7 @@
       "likes": 75,
       "comments": 4,
       "views": 10000,
-      "cover_path": "covers/year-tt/7581165040569519415.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8165,7 +8641,7 @@
       "likes": 156,
       "comments": 3,
       "views": 10000,
-      "cover_path": "covers/year-tt/7584149186795425037.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8180,7 +8656,7 @@
       "likes": 85,
       "comments": 5,
       "views": 10000,
-      "cover_path": "covers/year-tt/7584618596937075982.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q1_oct_dec_2025"
@@ -8195,7 +8671,7 @@
       "likes": 47,
       "comments": 1,
       "views": 10000,
-      "cover_path": "covers/year-tt/7638842960217378061.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8210,7 +8686,7 @@
       "likes": 95,
       "comments": 2,
       "views": 10000,
-      "cover_path": "covers/year-tt/7639054943499881742.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8225,7 +8701,7 @@
       "likes": 60200,
       "comments": 90,
       "views": 1600000,
-      "cover_path": "covers/year-tt/7639419609501748494.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8240,7 +8716,7 @@
       "likes": 33800,
       "comments": 147,
       "views": 1000000,
-      "cover_path": "covers/year-tt/7639851707161152782.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8255,7 +8731,7 @@
       "likes": 7409,
       "comments": 29,
       "views": 220000,
-      "cover_path": "covers/year-tt/7640535262652681485.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8270,7 +8746,7 @@
       "likes": 67,
       "comments": 4,
       "views": 10000,
-      "cover_path": "covers/year-tt/7640970771757550862.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8285,7 +8761,7 @@
       "likes": 37,
       "comments": 3,
       "views": 0,
-      "cover_path": "covers/year-tt/7642721063591349535.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8300,7 +8776,7 @@
       "likes": 79,
       "comments": 1,
       "views": 0,
-      "cover_path": "covers/year-tt/7643110715418610957.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8315,7 +8791,7 @@
       "likes": 44,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7643504422403804430.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8330,7 +8806,7 @@
       "likes": 77100,
       "comments": 375,
       "views": 1300000,
-      "cover_path": "covers/year-tt/7643551324260289822.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8345,7 +8821,7 @@
       "likes": 2899,
       "comments": 16,
       "views": 200000,
-      "cover_path": "covers/year-tt/7645325102552222990.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8360,7 +8836,7 @@
       "likes": 111,
       "comments": 1,
       "views": 0,
-      "cover_path": "covers/year-tt/7648376190482386189.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8375,7 +8851,7 @@
       "likes": 6,
       "comments": 1,
       "views": 0,
-      "cover_path": "covers/year-tt/7649886282612542750.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8390,7 +8866,7 @@
       "likes": 13,
       "comments": 2,
       "views": 0,
-      "cover_path": "covers/year-tt/7651116007783697678.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8405,7 +8881,7 @@
       "likes": 4535,
       "comments": 24,
       "views": 180000,
-      "cover_path": "covers/year-tt/7651298130205494541.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8420,7 +8896,7 @@
       "likes": 26,
       "comments": 1,
       "views": 0,
-      "cover_path": "covers/year-tt/7651676392165231885.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8435,7 +8911,7 @@
       "likes": 60,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7651751246721830175.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8450,7 +8926,7 @@
       "likes": 26,
       "comments": 2,
       "views": 0,
-      "cover_path": "covers/year-tt/7652611333849992462.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8465,7 +8941,7 @@
       "likes": 150,
       "comments": 6,
       "views": 10000,
-      "cover_path": "covers/year-tt/7654270921280130318.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8480,7 +8956,7 @@
       "likes": 27,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7654708331839376653.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8495,7 +8971,7 @@
       "likes": 58,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7655085331087117581.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8510,7 +8986,7 @@
       "likes": 4883,
       "comments": 20,
       "views": 190000,
-      "cover_path": "covers/year-tt/7655086190449773838.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8525,7 +9001,7 @@
       "likes": 69,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7656637462621572365.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q3_apr_jun_2026"
@@ -8540,7 +9016,7 @@
       "likes": 48,
       "comments": 5,
       "views": 10000,
-      "cover_path": "covers/year-tt/7657410996171984142.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8555,7 +9031,7 @@
       "likes": 18,
       "comments": 6,
       "views": 0,
-      "cover_path": "covers/year-tt/7659065633748880654.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8570,7 +9046,7 @@
       "likes": 19,
       "comments": 1,
       "views": 0,
-      "cover_path": "covers/year-tt/7661517607048187166.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8585,7 +9061,7 @@
       "likes": 38,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7661890404266118414.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8600,7 +9076,7 @@
       "likes": 310,
       "comments": 10,
       "views": 10000,
-      "cover_path": "covers/year-tt/7663235414605516045.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8615,7 +9091,7 @@
       "likes": 37,
       "comments": 3,
       "views": 0,
-      "cover_path": "covers/year-tt/7664663094173404447.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8630,7 +9106,7 @@
       "likes": 53,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7665403746137967885.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8645,7 +9121,7 @@
       "likes": 44,
       "comments": 3,
       "views": 0,
-      "cover_path": "covers/year-tt/7665770940533460238.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8660,7 +9136,7 @@
       "likes": 35,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7667393926667537695.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8675,7 +9151,7 @@
       "likes": 19,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7667630029215468813.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8690,7 +9166,7 @@
       "likes": 25,
       "comments": 0,
       "views": 0,
-      "cover_path": "covers/year-tt/7671979555606809870.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "notion:nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
       "quarter": "q4_jul_oct_2026"
@@ -8705,7 +9181,7 @@
       "likes": 70,
       "comments": null,
       "views": 1377,
-      "cover_path": "covers/year-tt/7685446469884611854.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8720,7 +9196,7 @@
       "likes": 25,
       "comments": null,
       "views": 706,
-      "cover_path": "covers/year-tt/7685837228647451918.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8735,7 +9211,7 @@
       "likes": 9,
       "comments": null,
       "views": 561,
-      "cover_path": "covers/year-tt/7686381611146874142.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8750,7 +9226,7 @@
       "likes": 33,
       "comments": null,
       "views": 1381,
-      "cover_path": "covers/year-tt/7686537942646443277.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8765,7 +9241,7 @@
       "likes": 207,
       "comments": null,
       "views": 10800,
-      "cover_path": "covers/year-tt/7687008135369788702.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8780,7 +9256,7 @@
       "likes": 17,
       "comments": null,
       "views": 565,
-      "cover_path": "covers/year-tt/7688079052757798175.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8795,7 +9271,7 @@
       "likes": 32,
       "comments": null,
       "views": 645,
-      "cover_path": "covers/year-tt/7688378309792648478.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8810,7 +9286,7 @@
       "likes": 5,
       "comments": null,
       "views": 282,
-      "cover_path": "covers/year-tt/7690631705828330765.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
@@ -8825,7 +9301,7 @@
       "likes": 7,
       "comments": null,
       "views": 260,
-      "cover_path": "covers/year-tt/7691013355225500942.jpg",
+      "cover_path": null,
       "platform": "tiktok",
       "source": "september-2026-recap.html",
       "quarter": "q4_jul_oct_2026"
