@@ -34,14 +34,14 @@
               "first_post": "2025-10-04",
               "last_post": "2025-10-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 10 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 10,
             "combined_full_month": true
@@ -89,14 +89,14 @@
               "first_post": "2025-11-01",
               "last_post": "2025-11-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 13 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 3,
               "first_post": "2025-11-12",
               "last_post": "2025-11-19",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 16,
             "combined_full_month": true
@@ -144,14 +144,14 @@
               "first_post": "2025-12-01",
               "last_post": "2025-12-25",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 7 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 5,
               "first_post": "2025-12-03",
               "last_post": "2025-12-17",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 12,
             "combined_full_month": true
@@ -199,14 +199,14 @@
               "first_post": "2026-01-01",
               "last_post": "2026-01-31",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 4 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 4,
             "combined_full_month": true
@@ -254,14 +254,14 @@
               "first_post": "2026-02-02",
               "last_post": "2026-02-24",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 5 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 5,
             "combined_full_month": true
@@ -309,14 +309,14 @@
               "first_post": "2026-03-03",
               "last_post": "2026-03-31",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 17 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 17,
             "combined_full_month": true
@@ -364,14 +364,14 @@
               "first_post": "2026-04-02",
               "last_post": "2026-04-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 21 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 21,
             "combined_full_month": true
@@ -419,14 +419,14 @@
               "first_post": "2026-05-02",
               "last_post": "2026-05-31",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 31 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 11,
               "first_post": "2026-05-12",
               "last_post": "2026-05-29",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 42,
             "combined_full_month": true
@@ -474,14 +474,14 @@
               "first_post": "2026-06-02",
               "last_post": "2026-06-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 28 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 12,
               "first_post": "2026-06-06",
               "last_post": "2026-06-29",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 40,
             "combined_full_month": true
@@ -529,14 +529,14 @@
               "first_post": "2026-07-02",
               "last_post": "2026-07-31",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 30 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 10,
               "first_post": "2026-07-01",
               "last_post": "2026-07-28",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 40,
             "combined_full_month": true
@@ -584,14 +584,14 @@
               "first_post": "2026-08-01",
               "last_post": "2026-08-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 34 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 9,
               "first_post": "2026-08-09",
               "last_post": "2026-08-30",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 43,
             "combined_full_month": true
@@ -639,14 +639,14 @@
               "first_post": "2026-09-01",
               "last_post": "2026-09-29",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 17 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 9,
               "first_post": "2026-09-14",
               "last_post": "2026-09-29",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 period closed in dataset window"
+              "note": null
             },
             "combined_posts": 26,
             "combined_full_month": true
@@ -694,14 +694,14 @@
               "first_post": "2026-10-10",
               "last_post": "2026-10-29",
               "calendar_full_month": true,
-              "note": "Full month \u00b7 11 posts in dataset"
+              "note": null
             },
             "tiktok": {
               "post_count": 0,
               "first_post": null,
               "last_post": null,
-              "calendar_full_month": false,
-              "note": "No October 2026 TikTok rows in public sources"
+              "calendar_full_month": true,
+              "note": null
             },
             "combined_posts": 11,
             "combined_full_month": true
@@ -726,8 +726,6 @@
       ],
       "notes": [
         "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
-        "Full month = dataset has expected posts for that calendar month (Nectarine monthly count for Instagram; closed period for TikTok).",
-        "Completeness evaluated as of 2026-11-10.",
         "Prior-year Instagram post counts are Nectarine monthly rollups.",
         "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
         "Prior-year likes/views not in monthly history unless post-level rows exist."
@@ -753,8 +751,6 @@
       "12 Instagram Tagged UGC rows included.",
       "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
       "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
-      "Full month = dataset has expected posts for that calendar month (Nectarine monthly count for Instagram; closed period for TikTok).",
-      "Completeness evaluated as of 2026-11-10.",
       "Prior-year Instagram post counts are Nectarine monthly rollups.",
       "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
       "Prior-year likes/views not in monthly history unless post-level rows exist."

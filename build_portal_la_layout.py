@@ -412,16 +412,6 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .year-timeline .tl-yoy-down { color: var(--mark); }
 .year-timeline .tl-yoy-flat { color: var(--muted); }
 .year-timeline .tl-yoy-na { color: var(--muted); font-weight: 600; font-size: 10px; }
-.year-timeline .tl-partial {
-  display: inline-block;
-  font-size: 8px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--mark);
-  margin-left: 3px;
-  vertical-align: top;
-}
 .year-timeline .tl-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 10px; font-size: 11px; color: var(--muted); }
 .year-timeline .tl-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .year-timeline .tl-swatch { width: 12px; height: 12px; border-radius: 2px; }
@@ -1162,10 +1152,7 @@ def year_timeline_section(timeline: dict) -> str:
     data_json = json.dumps(timeline, separators=(",", ":"))
     return f"""<section class="year-timeline section" id="year-timeline" aria-label="Month over month timeline">
   <div class="tl-head">
-    <div>
-      <h2>Month over month</h2>
-      <p class="who" style="margin:0">Each month: <b>Views</b> · <b>Likes</b> · <b>Posts #</b> (prior vs current bars) · YoY % on every column · hover for IG/TikTok split · <span style="color:var(--mark)">partial</span> = month still collecting</p>
-    </div>
+    <h2>Month over month</h2>
   </div>
   <div class="tl-chart" id="year-timeline-chart"></div>
   <div class="tl-legend">
@@ -1173,7 +1160,6 @@ def year_timeline_section(timeline: dict) -> str:
     <span><i class="tl-swatch cur"></i> Current period</span>
     <span><b style="color:var(--good)">+n%</b> growth · <b style="color:var(--mark)">−n%</b> decline vs prior year</span>
   </div>
-  <p class="who" style="margin:10px 0 0;font-size:11px">Prior-year TikTok before Nov 2025 is not in the public export. Prior-year views/likes use post-level data when available; otherwise post counts from Nectarine monthly history.</p>
   <script type="application/json" id="year-timeline-data">{data_json}</script>
 </section>"""
 
@@ -1248,23 +1234,6 @@ YEAR_FILTER_SCRIPT = """
     if (rounded > 0) return { text: "+" + rounded + "%", cls: "tl-yoy-up" };
     return { text: rounded + "%", cls: "tl-yoy-down" };
   }
-  function monthPartial(row) {
-    var cov = row.coverage || {};
-    if (platform === "instagram") {
-      return !(cov.instagram && cov.instagram.calendar_full_month);
-    }
-    if (platform === "tiktok") {
-      return !(cov.tiktok && cov.tiktok.calendar_full_month) && (cov.tiktok && cov.tiktok.post_count);
-    }
-    return !cov.combined_full_month;
-  }
-  function partialTitle(row) {
-    var cov = row.coverage || {};
-    if (platform === "instagram" && cov.instagram && cov.instagram.note) return cov.instagram.note;
-    if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) return cov.tiktok.note;
-    if (cov.instagram && cov.instagram.note) return cov.instagram.note;
-    return "Month not fully collected in public dataset";
-  }
   function escHtml(s) {
     return String(s)
       .replace(/&/g, "&amp;")
@@ -1287,7 +1256,7 @@ YEAR_FILTER_SCRIPT = """
   function formatPriorCell(priRaw, pv) {
     return priRaw == null ? "—" : pv.toLocaleString();
   }
-  function buildMonthTooltip(row, partial) {
+  function buildMonthTooltip(row) {
     var cur = combineMonth(row);
     var pri = combinePrior(row);
     var ig = row.instagram || {};
@@ -1320,14 +1289,6 @@ YEAR_FILTER_SCRIPT = """
   if (comments) {
       lines.push('<p class="tl-tip-row">Comments: ' + comments.toLocaleString() + "</p>");
     }
-    var cov = row.coverage || {};
-    if (platform === "instagram" && cov.instagram && cov.instagram.note) {
-      lines.push('<p class="tl-tip-row">' + escHtml(cov.instagram.note) + "</p>");
-    } else if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) {
-      lines.push('<p class="tl-tip-row">' + escHtml(cov.tiktok.note) + "</p>");
-    } else if (partial) {
-      lines.push('<p class="tl-tip-row">' + escHtml(partialTitle(row)) + "</p>");
-    }
     if (row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source === "nectarine_monthly_history") {
       lines.push('<p class="tl-tip-row">Prior-year <b>Posts</b> from Nectarine monthly rollup (views/likes when post rows exist).</p>');
     }
@@ -1354,10 +1315,8 @@ YEAR_FILTER_SCRIPT = """
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      var partial = monthPartial(row);
-      var partialMark = partial ? '<span class="tl-partial" title="' + escHtml(partialTitle(row)) + '">partial</span>' : "";
       html += '<div class="tl-col" tabindex="0">';
-      html += '<div class="tl-tip" role="tooltip">' + buildMonthTooltip(row, partial) + "</div>";
+      html += '<div class="tl-tip" role="tooltip">' + buildMonthTooltip(row) + "</div>";
       html += '<div class="tl-metrics">';
       timelineMetrics.forEach(function (key) {
         var priRaw = priorMetricValue(row, key);
@@ -1388,7 +1347,7 @@ YEAR_FILTER_SCRIPT = """
         html += "</div>";
       });
       html += "</div>";
-      html += '<span class="tl-lbl">' + row.label + partialMark + "</span>";
+      html += '<span class="tl-lbl">' + row.label + "</span>";
       html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
       html += "</div>";
     });

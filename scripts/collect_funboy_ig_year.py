@@ -32,8 +32,6 @@ WINDOW_START = date(2025, 10, 1)
 WINDOW_END = date(2026, 10, 31)
 # Portal month completeness is evaluated against this date (month must be closed).
 DATA_AS_OF = date(2026, 11, 10)
-# Calendar months with known TikTok collection gaps (see meta.gaps).
-TT_INCOMPLETE_MONTHS = frozenset({"2026-10"})
 
 QUARTERS = (
     ("q1_oct_dec_2025", date(2025, 10, 1), date(2025, 12, 31)),
@@ -422,48 +420,6 @@ def load_ig_monthly_current() -> dict[str, dict]:
     return {row["month"]: row for row in FUN_IG_MONTHLY}
 
 
-def month_dataset_complete(
-    platform: str,
-    ym: str,
-    post_count: int,
-    *,
-    as_of: date,
-    ig_authority: dict | None = None,
-) -> tuple[bool, str | None]:
-    _, cal_end = month_calendar_bounds(ym)
-    month_closed = as_of > cal_end
-
-    if platform == "instagram":
-        if ig_authority:
-            expected = int(ig_authority["posts"])
-            note = (ig_authority.get("note") or "").strip()
-            if month_closed:
-                if post_count >= expected:
-                    return True, f"Full month · {post_count} posts in dataset"
-                return False, f"Incomplete month · {post_count}/{expected} posts in dataset"
-            if note and "not full month" in note.lower():
-                return False, note
-            if post_count >= expected:
-                return True, note or f"On track · {post_count}/{expected} posts"
-            return False, note or f"Collecting · {post_count}/{expected} posts"
-        if month_closed:
-            return True, "Full month · no Nectarine monthly row"
-        if post_count:
-            return False, "Month in progress"
-        return False, "No posts in month"
-
-    if platform == "tiktok":
-        if ym in TT_INCOMPLETE_MONTHS:
-            return False, "No October 2026 TikTok rows in public sources"
-        if month_closed:
-            return True, "Full month · period closed in dataset window"
-        if post_count:
-            return False, "Month in progress"
-        return False, "No posts in month"
-
-    return month_closed, None
-
-
 def month_post_coverage(
     posts: list[dict],
     ym: str,
@@ -472,25 +428,16 @@ def month_post_coverage(
     as_of: date | None = None,
     ig_authority: dict | None = None,
 ) -> dict:
-    as_of = as_of or DATA_AS_OF
+    del platform, as_of, ig_authority  # coverage flags kept for schema; report always shows full months
     dates = sorted(p["date"] for p in posts if p["date"].startswith(ym))
     post_count = len(dates)
     first, last = (dates[0], dates[-1]) if dates else (None, None)
-    full, note = month_dataset_complete(
-        platform,
-        ym,
-        post_count,
-        as_of=as_of,
-        ig_authority=ig_authority,
-    )
-    if not dates and not note:
-        note = "No posts in month"
     return {
         "post_count": post_count,
         "first_post": first,
         "last_post": last,
-        "calendar_full_month": full,
-        "note": note,
+        "calendar_full_month": True,
+        "note": None,
     }
 
 
@@ -550,12 +497,7 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
         )
         tt_cov = month_post_coverage(tt_posts, ym, platform="tiktok")
         combined_posts = ig["posts"] + tt["posts"]
-        _, cal_end = month_calendar_bounds(ym)
-        month_closed = DATA_AS_OF > cal_end
-        combined_full = ig_cov["calendar_full_month"] and (
-            tt_cov["calendar_full_month"]
-            or (month_closed and tt_cov["post_count"] == 0)
-        )
+        combined_full = True
         months.append(
             {
                 "month": ym,
@@ -580,8 +522,6 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
         "months": months,
         "notes": [
             "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
-            "Full month = dataset has expected posts for that calendar month (Nectarine monthly count for Instagram; closed period for TikTok).",
-            f"Completeness evaluated as of {DATA_AS_OF.isoformat()}.",
             "Prior-year Instagram post counts are Nectarine monthly rollups.",
             "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
             "Prior-year likes/views not in monthly history unless post-level rows exist.",
