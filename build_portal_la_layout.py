@@ -346,6 +346,16 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .year-timeline .tl-yoy-down { color: var(--mark); }
 .year-timeline .tl-yoy-flat { color: var(--muted); }
 .year-timeline .tl-yoy-na { color: var(--muted); font-weight: 600; font-size: 10px; }
+.year-timeline .tl-partial {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mark);
+  margin-left: 3px;
+  vertical-align: top;
+}
 .year-timeline .tl-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 10px; font-size: 11px; color: var(--muted); }
 .year-timeline .tl-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .year-timeline .tl-swatch { width: 12px; height: 12px; border-radius: 2px; }
@@ -1088,10 +1098,10 @@ def year_timeline_section(timeline: dict) -> str:
   <div class="tl-head">
     <div>
       <h2>Month over month</h2>
-      <p class="who" style="margin:0">Each month vs same month prior year · % change is YoY on the selected metric · Oct 2025–Oct 2026</p>
+      <p class="who" style="margin:0">Calendar months · <b>Posts</b> = number of public posts in the month · YoY % vs same month last year · <span style="color:var(--mark)">partial</span> = not a full calendar month in the dataset</p>
     </div>
     <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
-      <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts</button>
+      <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts (count)</button>
       <button type="button" class="filter-btn" data-timeline-metric="views">Views</button>
       <button type="button" class="filter-btn" data-timeline-metric="likes">Likes</button>
     </div>
@@ -1176,6 +1186,23 @@ YEAR_FILTER_SCRIPT = """
     if (rounded > 0) return { text: "+" + rounded + "%", cls: "tl-yoy-up" };
     return { text: rounded + "%", cls: "tl-yoy-down" };
   }
+  function monthPartial(row) {
+    var cov = row.coverage || {};
+    if (platform === "instagram") {
+      return !(cov.instagram && cov.instagram.calendar_full_month);
+    }
+    if (platform === "tiktok") {
+      return !(cov.tiktok && cov.tiktok.calendar_full_month) && (cov.tiktok && cov.tiktok.post_count);
+    }
+    return !cov.combined_full_month;
+  }
+  function partialTitle(row) {
+    var cov = row.coverage || {};
+    if (platform === "instagram" && cov.instagram && cov.instagram.note) return cov.instagram.note;
+    if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) return cov.tiktok.note;
+    if (cov.instagram && cov.instagram.note) return cov.instagram.note;
+    return "Partial calendar month in public dataset";
+  }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
     if (!root || !timelineData || !timelineData.months) return;
@@ -1195,17 +1222,25 @@ YEAR_FILTER_SCRIPT = """
       var cv = cur[timelineMetric] || 0;
       var pv = pri[timelineMetric] || 0;
       var yoy = formatYoYChange(cv, priRaw);
+      var partial = monthPartial(row);
+      var yoyTitle = "Year over year";
+      if (partial) yoyTitle += " · " + partialTitle(row);
+      if (priRaw != null && row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source) {
+        yoyTitle += " · prior month from Nectarine monthly rollup (usually full month)";
+      }
       var hCur = Math.round((cv / maxV) * 100);
       var hPri = Math.round((pv / maxV) * 100);
       var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
       var priLabel = priRaw == null ? "—" : pv.toLocaleString();
+      var partialMark = partial ? '<span class="tl-partial" title="' + partialTitle(row) + '">partial</span>' : "";
+      var metricLabel = timelineMetric === "posts" ? " posts" : "";
       html += '<div class="tl-col"><div class="tl-pair">';
       html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + priLabel + '"></i>';
-      html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + '"></i>';
-      html += '</div><span class="tl-lbl">' + row.label + '</span>';
+      html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + metricLabel + '"></i>';
+      html += '</div><span class="tl-lbl">' + row.label + partialMark + "</span>";
       html += '<span class="tl-sub">vs ' + row.prior_label + '</span>';
-      html += '<span class="tl-yoy ' + yoy.cls + '" title="Year over year">' + yoy.text + "</span>";
-      html += '<span class="tl-val">' + cv.toLocaleString() + " · " + priLabel + "</span>";
+      html += '<span class="tl-yoy ' + yoy.cls + '" title="' + yoyTitle + '">' + yoy.text + "</span>";
+      html += '<span class="tl-val">' + cv.toLocaleString() + metricLabel + " · " + priLabel + "</span>";
       html += "</div>";
     });
     root.innerHTML = html;

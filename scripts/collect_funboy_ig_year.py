@@ -17,6 +17,7 @@ Regenerate:
 
 from __future__ import annotations
 
+import calendar
 import json
 import re
 import sys
@@ -402,6 +403,41 @@ def prior_year_month(ym: str) -> str:
     return f"{int(y) - 1}-{m}"
 
 
+def month_calendar_bounds(ym: str) -> tuple[date, date]:
+    y, m = map(int, ym.split("-"))
+    return date(y, m, 1), date(y, m, calendar.monthrange(y, m)[1])
+
+
+def month_post_coverage(posts: list[dict], ym: str) -> dict:
+    cal_start, cal_end = month_calendar_bounds(ym)
+    dates = sorted(p["date"] for p in posts if p["date"].startswith(ym))
+    if not dates:
+        return {
+            "post_count": 0,
+            "first_post": None,
+            "last_post": None,
+            "calendar_full_month": False,
+            "note": "No posts in month",
+        }
+    first, last = dates[0], dates[-1]
+    full = first == cal_start.isoformat() and last == cal_end.isoformat()
+    note = None
+    if not full:
+        bits = []
+        if first != cal_start.isoformat():
+            bits.append(f"first post {first}")
+        if last != cal_end.isoformat():
+            bits.append(f"last post {last}")
+        note = "Partial calendar month · " + " · ".join(bits)
+    return {
+        "post_count": len(dates),
+        "first_post": first,
+        "last_post": last,
+        "calendar_full_month": full,
+        "note": note,
+    }
+
+
 def aggregate_posts_by_month(posts: list[dict]) -> dict[str, dict]:
     out: dict[str, dict] = {}
     for p in posts:
@@ -449,6 +485,14 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
             "source": "nectarine_monthly_history" if hist else None,
         }
         prior_tt = {"posts": 0, "likes": None, "comments": None, "views": None, "source": None}
+        ig_cov = month_post_coverage(ig_posts, ym)
+        tt_cov = month_post_coverage(tt_posts, ym)
+        combined_posts = ig["posts"] + tt["posts"]
+        combined_dates = sorted(
+            p["date"] for p in ig_posts + tt_posts if p["date"].startswith(ym)
+        )
+        cal_start, cal_end = month_calendar_bounds(ym)
+        combined_full = bool(combined_dates) and combined_dates[0] == cal_start.isoformat() and combined_dates[-1] == cal_end.isoformat()
         months.append(
             {
                 "month": ym,
@@ -457,6 +501,13 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
                 "prior_label": month_label_short(pym),
                 "instagram": dict(ig),
                 "tiktok": dict(tt),
+                "posts_total": combined_posts,
+                "coverage": {
+                    "instagram": ig_cov,
+                    "tiktok": tt_cov,
+                    "combined_posts": combined_posts,
+                    "combined_full_month": combined_full,
+                },
                 "prior_year": {"instagram": prior_ig, "tiktok": prior_tt},
             }
         )
@@ -465,10 +516,12 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
         "window_end": WINDOW_END.isoformat(),
         "months": months,
         "notes": [
-            "Current-year metrics from public post-level dataset (Oct 2025–Oct 2026).",
-            "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024–Sep 2025); Oct 2024 not in export.",
+            "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
+            "Current-year months are calendar buckets; several months are partial (dataset start, Nectarine lag, Oct 2026 window).",
+            "Prior-year Instagram post counts are Nectarine monthly rollups (usually full calendar months).",
             "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
-            "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists.",
+            "YoY % on posts compares partial months to full prior months where noted — interpret with care.",
+            "Prior-year likes/views not in monthly history unless post-level rows exist.",
         ],
     }
 

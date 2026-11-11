@@ -27,6 +27,25 @@
             "views": 0,
             "views_posts": 0
           },
+          "posts_total": 10,
+          "coverage": {
+            "instagram": {
+              "post_count": 10,
+              "first_post": "2025-10-04",
+              "last_post": "2025-10-30",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2025-10-04 \u00b7 last post 2025-10-30"
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 10,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": null,
@@ -62,6 +81,25 @@
             "comments": 3,
             "views": 10000,
             "views_posts": 3
+          },
+          "posts_total": 16,
+          "coverage": {
+            "instagram": {
+              "post_count": 13,
+              "first_post": "2025-11-01",
+              "last_post": "2025-11-30",
+              "calendar_full_month": true,
+              "note": null
+            },
+            "tiktok": {
+              "post_count": 3,
+              "first_post": "2025-11-12",
+              "last_post": "2025-11-19",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2025-11-12 \u00b7 last post 2025-11-19"
+            },
+            "combined_posts": 16,
+            "combined_full_month": true
           },
           "prior_year": {
             "instagram": {
@@ -99,6 +137,25 @@
             "views": 40000,
             "views_posts": 5
           },
+          "posts_total": 12,
+          "coverage": {
+            "instagram": {
+              "post_count": 7,
+              "first_post": "2025-12-01",
+              "last_post": "2025-12-25",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 last post 2025-12-25"
+            },
+            "tiktok": {
+              "post_count": 5,
+              "first_post": "2025-12-03",
+              "last_post": "2025-12-17",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2025-12-03 \u00b7 last post 2025-12-17"
+            },
+            "combined_posts": 12,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 12,
@@ -134,6 +191,25 @@
             "comments": 0,
             "views": 0,
             "views_posts": 0
+          },
+          "posts_total": 4,
+          "coverage": {
+            "instagram": {
+              "post_count": 4,
+              "first_post": "2026-01-01",
+              "last_post": "2026-01-31",
+              "calendar_full_month": true,
+              "note": null
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 4,
+            "combined_full_month": true
           },
           "prior_year": {
             "instagram": {
@@ -171,6 +247,25 @@
             "views": 0,
             "views_posts": 0
           },
+          "posts_total": 5,
+          "coverage": {
+            "instagram": {
+              "post_count": 5,
+              "first_post": "2026-02-02",
+              "last_post": "2026-02-24",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-02-02 \u00b7 last post 2026-02-24"
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 5,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 11,
@@ -206,6 +301,25 @@
             "comments": 0,
             "views": 0,
             "views_posts": 0
+          },
+          "posts_total": 17,
+          "coverage": {
+            "instagram": {
+              "post_count": 17,
+              "first_post": "2026-03-03",
+              "last_post": "2026-03-31",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-03-03"
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 17,
+            "combined_full_month": false
           },
           "prior_year": {
             "instagram": {
@@ -243,6 +357,25 @@
             "views": 0,
             "views_posts": 0
           },
+          "posts_total": 21,
+          "coverage": {
+            "instagram": {
+              "post_count": 21,
+              "first_post": "2026-04-02",
+              "last_post": "2026-04-30",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-04-02"
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 21,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 27,
@@ -278,6 +411,25 @@
             "comments": 668,
             "views": 4350000,
             "views_posts": 11
+          },
+          "posts_total": 42,
+          "coverage": {
+            "instagram": {
+              "post_count": 31,
+              "first_post": "2026-05-02",
+              "last_post": "2026-05-31",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-05-02"
+            },
+            "tiktok": {
+              "post_count": 11,
+              "first_post": "2026-05-12",
+              "last_post": "2026-05-29",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-05-12 \u00b7 last post 2026-05-29"
+            },
+            "combined_posts": 42,
+            "combined_full_month": false
           },
           "prior_year": {
             "instagram": {
@@ -315,6 +467,25 @@
             "views": 380000,
             "views_posts": 12
           },
+          "posts_total": 40,
+          "coverage": {
+            "instagram": {
+              "post_count": 28,
+              "first_post": "2026-06-02",
+              "last_post": "2026-06-30",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-06-02"
+            },
+            "tiktok": {
+              "post_count": 12,
+              "first_post": "2026-06-06",
+              "last_post": "2026-06-29",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-06-06 \u00b7 last post 2026-06-29"
+            },
+            "combined_posts": 40,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 21,
@@ -350,6 +521,25 @@
             "comments": 28,
             "views": 20000,
             "views_posts": 10
+          },
+          "posts_total": 40,
+          "coverage": {
+            "instagram": {
+              "post_count": 30,
+              "first_post": "2026-07-02",
+              "last_post": "2026-07-31",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-07-02"
+            },
+            "tiktok": {
+              "post_count": 10,
+              "first_post": "2026-07-01",
+              "last_post": "2026-07-28",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 last post 2026-07-28"
+            },
+            "combined_posts": 40,
+            "combined_full_month": true
           },
           "prior_year": {
             "instagram": {
@@ -387,6 +577,25 @@
             "views": 0,
             "views_posts": 1
           },
+          "posts_total": 32,
+          "coverage": {
+            "instagram": {
+              "post_count": 31,
+              "first_post": "2026-08-01",
+              "last_post": "2026-08-25",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 last post 2026-08-25"
+            },
+            "tiktok": {
+              "post_count": 1,
+              "first_post": "2026-08-09",
+              "last_post": "2026-08-09",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-08-09 \u00b7 last post 2026-08-09"
+            },
+            "combined_posts": 32,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 14,
@@ -422,6 +631,25 @@
             "comments": 0,
             "views": 16577,
             "views_posts": 9
+          },
+          "posts_total": 26,
+          "coverage": {
+            "instagram": {
+              "post_count": 17,
+              "first_post": "2026-09-01",
+              "last_post": "2026-09-29",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 last post 2026-09-29"
+            },
+            "tiktok": {
+              "post_count": 9,
+              "first_post": "2026-09-14",
+              "last_post": "2026-09-29",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-09-14 \u00b7 last post 2026-09-29"
+            },
+            "combined_posts": 26,
+            "combined_full_month": false
           },
           "prior_year": {
             "instagram": {
@@ -459,6 +687,25 @@
             "views": 0,
             "views_posts": 0
           },
+          "posts_total": 11,
+          "coverage": {
+            "instagram": {
+              "post_count": 11,
+              "first_post": "2026-10-10",
+              "last_post": "2026-10-29",
+              "calendar_full_month": false,
+              "note": "Partial calendar month \u00b7 first post 2026-10-10 \u00b7 last post 2026-10-29"
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": false,
+              "note": "No posts in month"
+            },
+            "combined_posts": 11,
+            "combined_full_month": false
+          },
           "prior_year": {
             "instagram": {
               "posts": 10,
@@ -478,10 +725,12 @@
         }
       ],
       "notes": [
-        "Current-year metrics from public post-level dataset (Oct 2025\u2013Oct 2026).",
-        "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024\u2013Sep 2025); Oct 2024 not in export.",
+        "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
+        "Current-year months are calendar buckets; several months are partial (dataset start, Nectarine lag, Oct 2026 window).",
+        "Prior-year Instagram post counts are Nectarine monthly rollups (usually full calendar months).",
         "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
-        "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists."
+        "YoY % on posts compares partial months to full prior months where noted \u2014 interpret with care.",
+        "Prior-year likes/views not in monthly history unless post-level rows exist."
       ]
     },
     "instagram": {
@@ -503,10 +752,12 @@
       "Instagram carousels often have null views in Nectarine; reels use Views (Million).",
       "12 Instagram Tagged UGC rows included.",
       "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
-      "Current-year metrics from public post-level dataset (Oct 2025\u2013Oct 2026).",
-      "Prior-year Instagram post counts from Nectarine monthly history (Nov 2024\u2013Sep 2025); Oct 2024 not in export.",
+      "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
+      "Current-year months are calendar buckets; several months are partial (dataset start, Nectarine lag, Oct 2026 window).",
+      "Prior-year Instagram post counts are Nectarine monthly rollups (usually full calendar months).",
       "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
-      "Prior-year likes/views not in monthly history; chart shows posts only for gray prior bars unless post-level data exists."
+      "YoY % on posts compares partial months to full prior months where noted \u2014 interpret with care.",
+      "Prior-year likes/views not in monthly history unless post-level rows exist."
     ],
     "planned_page_parts": [
       "year_report_quarters_ig_tiktok",
