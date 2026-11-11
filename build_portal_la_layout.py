@@ -228,6 +228,56 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
   margin-bottom: 4px;
 }
 .subplatform { margin: 18px 0 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.year-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-end;
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  background: var(--ice);
+  border: 1px solid color-mix(in srgb, var(--black) 8%, transparent);
+  border-radius: 6px;
+}
+.year-filters .filter-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.year-filters .filter-group { min-width: 0; }
+.filter-switch,
+.filter-quarters {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.year-filters .filter-btn {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--black) 18%, transparent);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--black);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.year-filters .filter-btn:hover { border-color: var(--black); }
+.year-filters .filter-btn.is-active {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+.year-filter-card[hidden],
+.year-quarter[hidden],
+.year-subplatform[hidden],
+.year-filter-note[hidden] { display: none !important; }
 .quarter-block { margin-top: 28px; }
 .quarter-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; font-weight: 500; }
 .ads-waiting {
@@ -897,7 +947,12 @@ def year_cover_thumb(post: dict) -> str:
     return f'<div class="year-thumb year-thumb-ph"><span>{label}</span></div>'
 
 
-def year_post_cards(posts: list[dict], *, platform: str = "instagram") -> str:
+def year_post_cards(
+    posts: list[dict],
+    *,
+    platform: str = "instagram",
+    quarter_id: str = "",
+) -> str:
     """La-realtor-style cards: compact cover, link, stats (not full-height tiles)."""
     html = '<div class="grid grid-year">'
     is_tt = platform == "tiktok"
@@ -927,7 +982,8 @@ def year_post_cards(posts: list[dict], *, platform: str = "instagram") -> str:
         likes = fmt(likes_n) if p.get("likes") is not None else "—"
         comments_s = str(comments_n) if p.get("comments") is not None else "—"
         handle = "@funboy · TikTok" if is_tt else "@funboy"
-        html += f"""<a class="card{card_extra}" href="{href}" target="_blank" rel="noopener">
+        plat = "tiktok" if is_tt else "instagram"
+        html += f"""<a class="card year-filter-card{card_extra}" href="{href}" target="_blank" rel="noopener" data-platform="{plat}" data-quarter="{quarter_id}">
       {thumb}
       <div class="meta">
         {platform_badge}
@@ -949,6 +1005,84 @@ def ads_placeholder_section() -> str:
 <p class="eyebrow">Waiting for data</p>
 <p class="lead" style="margin:0;font-size:15px">Paid social performance will be added here when exports are available. No ad metrics are shown as placeholders.</p>
 </div></div>"""
+
+
+YEAR_FILTER_SCRIPT = """
+<script>
+(function () {
+  var platform = "both";
+  var quarter = "all";
+  function applyYearFilters() {
+    document.querySelectorAll(".year-quarter").forEach(function (el) {
+      var show = quarter === "all" || el.id === quarter;
+      el.hidden = !show;
+    });
+    document.querySelectorAll(".year-filter-card").forEach(function (card) {
+      var p = card.getAttribute("data-platform");
+      var q = card.getAttribute("data-quarter");
+      var showPlatform = platform === "both" || p === platform;
+      var showQuarter = quarter === "all" || q === quarter;
+      card.hidden = !(showPlatform && showQuarter);
+    });
+    document.querySelectorAll(".year-subplatform, .year-filter-note").forEach(function (el) {
+      var p = el.getAttribute("data-platform");
+      var q = el.getAttribute("data-quarter");
+      var parent = el.closest(".year-quarter");
+      var parentId = parent ? parent.id : q;
+      var showPlatform = platform === "both" || p === platform;
+      var showQuarter = quarter === "all" || parentId === quarter || q === quarter;
+      el.hidden = !(showPlatform && showQuarter);
+    });
+  }
+  document.querySelectorAll("[data-filter-platform]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      platform = btn.getAttribute("data-filter-platform") || "both";
+      document.querySelectorAll("[data-filter-platform]").forEach(function (b) {
+        b.classList.toggle("is-active", b === btn);
+      });
+      applyYearFilters();
+    });
+  });
+  document.querySelectorAll("[data-filter-quarter]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      quarter = btn.getAttribute("data-filter-quarter") || "all";
+      document.querySelectorAll("[data-filter-quarter]").forEach(function (b) {
+        b.classList.toggle("is-active", b === btn);
+      });
+      applyYearFilters();
+      if (quarter !== "all") {
+        var target = document.getElementById(quarter);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+  applyYearFilters();
+})();
+</script>
+"""
+
+
+def year_filter_toolbar() -> str:
+    return """<div class="year-filters" id="year-filters">
+  <div class="filter-group">
+    <span class="filter-label">Platform</span>
+    <div class="filter-switch" role="group" aria-label="Filter by platform">
+      <button type="button" class="filter-btn" data-filter-platform="instagram">Instagram</button>
+      <button type="button" class="filter-btn" data-filter-platform="tiktok">TikTok</button>
+      <button type="button" class="filter-btn is-active" data-filter-platform="both">Both</button>
+    </div>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Quarter</span>
+    <div class="filter-quarters" role="group" aria-label="Filter by quarter">
+      <button type="button" class="filter-btn is-active" data-filter-quarter="all">All</button>
+      <button type="button" class="filter-btn" data-filter-quarter="q1_oct_dec_2025">Q1</button>
+      <button type="button" class="filter-btn" data-filter-quarter="q2_jan_mar_2026">Q2</button>
+      <button type="button" class="filter-btn" data-filter-quarter="q3_apr_jun_2026">Q3</button>
+      <button type="button" class="filter-btn" data-filter-quarter="q4_jul_oct_2026">Q4</button>
+    </div>
+  </div>
+</div>"""
 
 
 def competitor_watch_embed() -> str:
@@ -1001,15 +1135,18 @@ def build_year_report() -> str:
         tt_posts = (tt_by_id.get(qid) or {}).get("posts") or []
         tt_block = ""
         if tt_posts:
-            tt_block = f"""<p class="subplatform">TikTok · {len(tt_posts)} videos</p>
-{year_post_cards(tt_posts, platform="tiktok")}"""
+            tt_block = f"""<p class="subplatform year-subplatform" data-platform="tiktok" data-quarter="{qid}">TikTok · {len(tt_posts)} videos</p>
+{year_post_cards(tt_posts, platform="tiktok", quarter_id=qid)}"""
         elif qid == "q2_jan_mar_2026":
-            tt_block = '<p class="who">No TikTok videos in Nectarine or recaps for this quarter.</p>'
-        quarter_html += f"""<div class="quarter-block" id="{qid}">
+            tt_block = (
+                f'<p class="who year-filter-note" data-platform="tiktok" data-quarter="{qid}">'
+                "No TikTok videos in Nectarine or recaps for this quarter.</p>"
+            )
+        quarter_html += f"""<div class="quarter-block year-quarter" id="{qid}">
 <h3>{label}</h3>
-<p class="subplatform">Instagram · {len(ig_posts)} posts</p>
-<p class="who">Newest last · tap opens Instagram</p>
-{year_post_cards(ig_posts)}
+<p class="subplatform year-subplatform" data-platform="instagram" data-quarter="{qid}">Instagram · {len(ig_posts)} posts</p>
+<p class="who year-filter-note" data-platform="instagram" data-quarter="{qid}">Newest last · tap opens Instagram</p>
+{year_post_cards(ig_posts, quarter_id=qid)}
 {tt_block}
 </div>"""
 
@@ -1031,11 +1168,13 @@ def build_year_report() -> str:
 <div class="section" id="year-report">
 <h2>Year · by quarter</h2>
 <p class="volume-note">La-realtor-style cards: compact cover (≈160px wide), link, public likes / comments / views. {ig_miss + tt_miss} cards still use date tiles (no public image available). Organic TikTok is listed under each quarter—not in Ads.</p>
+{year_filter_toolbar()}
 {quarter_html}
 </div>
 {ads_placeholder_section()}
 {competitor_watch_embed()}
-<p class="foot">Dataset: <code>data/funboy-ig-year-oct2025-oct2026.json</code> · regenerated via <code>scripts/collect_funboy_ig_year.py</code>. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
+<p class="foot">Dataset: <code>data/funboy-ig-year-oct2025-oct2026.json</code> · regenerated via <code>scripts/collect_funboy_ig_year.py</code>. Layout from la-reels ({LA_REELS_SOURCE}).</p>
+{YEAR_FILTER_SCRIPT}"""
     return page_shell("FUNBOY · Year report", "year", body)
 
 
