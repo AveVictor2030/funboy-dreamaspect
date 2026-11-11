@@ -30,6 +30,10 @@ OUT_PATH = ROOT / "data" / "funboy-ig-year-oct2025-oct2026.json"
 
 WINDOW_START = date(2025, 10, 1)
 WINDOW_END = date(2026, 10, 31)
+# Portal month completeness is evaluated against this date (month must be closed).
+DATA_AS_OF = date(2026, 11, 10)
+# Calendar months with known TikTok collection gaps (see meta.gaps).
+TT_INCOMPLETE_MONTHS = frozenset({"2026-10"})
 
 QUARTERS = (
     ("q1_oct_dec_2025", date(2025, 10, 1), date(2025, 12, 31)),
@@ -137,6 +141,11 @@ def normalize_nectarine_row(row: dict, source: str) -> dict | None:
     }
 
 
+def extract_recap_post_date(inner: str) -> str | None:
+    m = re.search(r'class="post-date">\s*([A-Za-z]{3,9}\s+\d{1,2})', inner)
+    return m.group(1).strip() if m else None
+
+
 def parse_tiktok_recap_html(path: Path, source_label: str) -> list[dict]:
     html = path.read_text(encoding="utf-8", errors="replace")
     block_pat = re.compile(
@@ -147,15 +156,14 @@ def parse_tiktok_recap_html(path: Path, source_label: str) -> list[dict]:
     out: list[dict] = []
     for m in block_pat.finditer(html):
         permalink, video_id, inner = m.group(1), m.group(2), m.group(3)
-        date_m = re.search(r'class="post-date">([^<]+)</div>', inner)
-        if not date_m:
+        date_txt = extract_recap_post_date(inner)
+        if not date_txt:
             continue
-        date_txt = date_m.group(1).split("<")[0].strip()
         posted = parse_recap_date(date_txt)
         if not posted:
             continue
         likes = comments = views = None
-        stat_m = re.search(r'class="post-stat">([^<]+)</div>', inner)
+        stat_m = re.search(r'class="post-stat">(.+?)</div>', inner, re.S)
         if stat_m:
             stat = stat_m.group(1).replace("&middot;", "·")
             sm = re.search(r"([\d,]+)\s+likes", stat)
@@ -196,14 +204,13 @@ def parse_recap_html(path: Path, source_label: str) -> list[dict]:
     out: list[dict] = []
     for m in block_pat.finditer(html):
         permalink, shortcode, inner = m.group(1), m.group(2), m.group(3)
-        date_m = re.search(r'class="post-date">([^<]+)</div>', inner)
-        if not date_m:
+        date_txt = extract_recap_post_date(inner)
+        if not date_txt:
             continue
-        date_txt = date_m.group(1).split("<")[0].strip()
         posted = parse_recap_date(date_txt)
         if not posted:
             continue
-        stat_m = re.search(r'class="post-stat">([^<]+)</div>', inner)
+        stat_m = re.search(r'class="post-stat">(.+?)</div>', inner, re.S)
         likes = comments = views = None
         if stat_m:
             stat = stat_m.group(1).replace("&middot;", "·")
@@ -408,29 +415,78 @@ def month_calendar_bounds(ym: str) -> tuple[date, date]:
     return date(y, m, 1), date(y, m, calendar.monthrange(y, m)[1])
 
 
-def month_post_coverage(posts: list[dict], ym: str) -> dict:
-    cal_start, cal_end = month_calendar_bounds(ym)
+def load_ig_monthly_current() -> dict[str, dict]:
+    sys.path.insert(0, str(ROOT))
+    from build_public_report import FUN_IG_MONTHLY  # noqa: WPS433
+
+    return {row["month"]: row for row in FUN_IG_MONTHLY}
+
+
+def month_dataset_complete(
+    platform: str,
+    ym: str,
+    post_count: int,
+    *,
+    as_of: date,
+    ig_authority: dict | None = None,
+) -> tuple[bool, str | None]:
+    _, cal_end = month_calendar_bounds(ym)
+    month_closed = as_of > cal_end
+
+    if platform == "instagram":
+        if ig_authority:
+            expected = int(ig_authority["posts"])
+            note = (ig_authority.get("note") or "").strip()
+            if month_closed:
+                if post_count >= expected:
+                    return True, f"Full month · {post_count} posts in dataset"
+                return False, f"Incomplete month · {post_count}/{expected} posts in dataset"
+            if note and "not full month" in note.lower():
+                return False, note
+            if post_count >= expected:
+                return True, note or f"On track · {post_count}/{expected} posts"
+            return False, note or f"Collecting · {post_count}/{expected} posts"
+        if month_closed:
+            return True, "Full month · no Nectarine monthly row"
+        if post_count:
+            return False, "Month in progress"
+        return False, "No posts in month"
+
+    if platform == "tiktok":
+        if ym in TT_INCOMPLETE_MONTHS:
+            return False, "No October 2026 TikTok rows in public sources"
+        if month_closed:
+            return True, "Full month · period closed in dataset window"
+        if post_count:
+            return False, "Month in progress"
+        return False, "No posts in month"
+
+    return month_closed, None
+
+
+def month_post_coverage(
+    posts: list[dict],
+    ym: str,
+    *,
+    platform: str = "generic",
+    as_of: date | None = None,
+    ig_authority: dict | None = None,
+) -> dict:
+    as_of = as_of or DATA_AS_OF
     dates = sorted(p["date"] for p in posts if p["date"].startswith(ym))
-    if not dates:
-        return {
-            "post_count": 0,
-            "first_post": None,
-            "last_post": None,
-            "calendar_full_month": False,
-            "note": "No posts in month",
-        }
-    first, last = dates[0], dates[-1]
-    full = first == cal_start.isoformat() and last == cal_end.isoformat()
-    note = None
-    if not full:
-        bits = []
-        if first != cal_start.isoformat():
-            bits.append(f"first post {first}")
-        if last != cal_end.isoformat():
-            bits.append(f"last post {last}")
-        note = "Partial calendar month · " + " · ".join(bits)
+    post_count = len(dates)
+    first, last = (dates[0], dates[-1]) if dates else (None, None)
+    full, note = month_dataset_complete(
+        platform,
+        ym,
+        post_count,
+        as_of=as_of,
+        ig_authority=ig_authority,
+    )
+    if not dates and not note:
+        note = "No posts in month"
     return {
-        "post_count": len(dates),
+        "post_count": post_count,
         "first_post": first,
         "last_post": last,
         "calendar_full_month": full,
@@ -470,6 +526,7 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
     ig_by_month = aggregate_posts_by_month(ig_posts)
     tt_by_month = aggregate_posts_by_month(tt_posts)
     ig_history = load_ig_monthly_history()
+    ig_current = load_ig_monthly_current()
     months: list[dict] = []
     for ym in iter_year_months(WINDOW_START, WINDOW_END):
         pym = prior_year_month(ym)
@@ -485,14 +542,20 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
             "source": "nectarine_monthly_history" if hist else None,
         }
         prior_tt = {"posts": 0, "likes": None, "comments": None, "views": None, "source": None}
-        ig_cov = month_post_coverage(ig_posts, ym)
-        tt_cov = month_post_coverage(tt_posts, ym)
-        combined_posts = ig["posts"] + tt["posts"]
-        combined_dates = sorted(
-            p["date"] for p in ig_posts + tt_posts if p["date"].startswith(ym)
+        ig_cov = month_post_coverage(
+            ig_posts,
+            ym,
+            platform="instagram",
+            ig_authority=ig_current.get(ym),
         )
-        cal_start, cal_end = month_calendar_bounds(ym)
-        combined_full = bool(combined_dates) and combined_dates[0] == cal_start.isoformat() and combined_dates[-1] == cal_end.isoformat()
+        tt_cov = month_post_coverage(tt_posts, ym, platform="tiktok")
+        combined_posts = ig["posts"] + tt["posts"]
+        _, cal_end = month_calendar_bounds(ym)
+        month_closed = DATA_AS_OF > cal_end
+        combined_full = ig_cov["calendar_full_month"] and (
+            tt_cov["calendar_full_month"]
+            or (month_closed and tt_cov["post_count"] == 0)
+        )
         months.append(
             {
                 "month": ym,
@@ -517,10 +580,10 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
         "months": months,
         "notes": [
             "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
-            "Current-year months are calendar buckets; several months are partial (dataset start, Nectarine lag, Oct 2026 window).",
-            "Prior-year Instagram post counts are Nectarine monthly rollups (usually full calendar months).",
+            "Full month = dataset has expected posts for that calendar month (Nectarine monthly count for Instagram; closed period for TikTok).",
+            f"Completeness evaluated as of {DATA_AS_OF.isoformat()}.",
+            "Prior-year Instagram post counts are Nectarine monthly rollups.",
             "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
-            "YoY % on posts compares partial months to full prior months where noted — interpret with care.",
             "Prior-year likes/views not in monthly history unless post-level rows exist.",
         ],
     }
@@ -578,7 +641,7 @@ def build_dataset() -> dict:
 
     gaps = [
         "Instagram: Nectarine export stops at ~2026-08-25; Aug 26–Sep 2026 from recap HTML; Oct from FUN_POSTS.",
-        "TikTok: 42 organic videos from Nectarine (Nov 2025–Aug 9 2026) plus recap HTML for Aug 10–Sep 2026 (18 videos).",
+        "TikTok: Nectarine batches plus August/September recap HTML (recap date tiles include nested spans).",
         "TikTok: no Oct 2025–Oct 2026 posts in Nectarine before Nov 12, 2025; no October 2026 TikTok rows collected.",
         "TikTok: logged-out https://www.tiktok.com/@funboy returns HTTP 403 from this environment; no grid scrape.",
         "Public counts only (likes, comments, views on the open video page / recap tiles). No TikTok Insights.",

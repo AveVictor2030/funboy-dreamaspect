@@ -1098,7 +1098,7 @@ def year_timeline_section(timeline: dict) -> str:
   <div class="tl-head">
     <div>
       <h2>Month over month</h2>
-      <p class="who" style="margin:0">Calendar months · <b>Posts</b> = number of public posts in the month · YoY % vs same month last year · <span style="color:var(--mark)">partial</span> = not a full calendar month in the dataset</p>
+      <p class="who" style="margin:0">Calendar months · <b>Posts</b> = number of public posts in the month · YoY % vs same month last year · <span style="color:var(--mark)">partial</span> = month still missing posts in the public dataset</p>
     </div>
     <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
       <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts (count)</button>
@@ -1201,7 +1201,7 @@ YEAR_FILTER_SCRIPT = """
     if (platform === "instagram" && cov.instagram && cov.instagram.note) return cov.instagram.note;
     if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) return cov.tiktok.note;
     if (cov.instagram && cov.instagram.note) return cov.instagram.note;
-    return "Partial calendar month in public dataset";
+    return "Month not fully collected in public dataset";
   }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");

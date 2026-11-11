@@ -173,7 +173,7 @@ FUN_IG_MONTHLY = [
         "reels": 10,
         "feed_posts": 1,
         "carousels": 0,
-        "note": "Public grid through Oct 29 · not full month",
+        "note": "Public grid through Oct 29 (closed month; no further owned posts in window)",
     },
 ]
 # Optional context before the Oct–Oct year (not in headline totals).
