@@ -334,6 +334,18 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
 .year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
 .year-timeline .tl-val { display: block; font-size: 9px; font-variant-numeric: tabular-nums; color: var(--black); margin-top: 3px; }
+.year-timeline .tl-yoy {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+.year-timeline .tl-yoy-up { color: var(--good); }
+.year-timeline .tl-yoy-down { color: var(--mark); }
+.year-timeline .tl-yoy-flat { color: var(--muted); }
+.year-timeline .tl-yoy-na { color: var(--muted); font-weight: 600; font-size: 10px; }
 .year-timeline .tl-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin-top: 10px; font-size: 11px; color: var(--muted); }
 .year-timeline .tl-legend span { display: inline-flex; align-items: center; gap: 6px; }
 .year-timeline .tl-swatch { width: 12px; height: 12px; border-radius: 2px; }
@@ -1076,7 +1088,7 @@ def year_timeline_section(timeline: dict) -> str:
   <div class="tl-head">
     <div>
       <h2>Month over month</h2>
-      <p class="who" style="margin:0">Each month vs same month prior year · Oct 2025–Oct 2026 window</p>
+      <p class="who" style="margin:0">Each month vs same month prior year · % change is YoY on the selected metric · Oct 2025–Oct 2026</p>
     </div>
     <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
       <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts</button>
@@ -1088,6 +1100,7 @@ def year_timeline_section(timeline: dict) -> str:
   <div class="tl-legend">
     <span><i class="tl-swatch prior"></i> Prior year (same month)</span>
     <span><i class="tl-swatch cur"></i> Current period</span>
+    <span><b style="color:var(--good)">+n%</b> growth · <b style="color:var(--mark)">−n%</b> decline vs prior year</span>
   </div>
   <p class="who" style="margin:10px 0 0;font-size:11px">Prior-year TikTok before Nov 2025 is not in the public export. Prior-year views/likes use post-level data when available; otherwise post counts from Nectarine monthly history.</p>
   <script type="application/json" id="year-timeline-data">{data_json}</script>
@@ -1126,26 +1139,42 @@ YEAR_FILTER_SCRIPT = """
       views: ig.views + tt.views,
     };
   }
-  function combinePrior(row) {
+  function priorMetricValue(row, key) {
     var ig = row.prior_year && row.prior_year.instagram ? row.prior_year.instagram : {};
     var tt = row.prior_year && row.prior_year.tiktok ? row.prior_year.tiktok : {};
-    var igM = {
-      posts: ig.posts == null ? 0 : ig.posts,
-      likes: ig.likes == null ? 0 : ig.likes,
-      views: ig.views == null ? 0 : ig.views,
-    };
-    var ttM = {
-      posts: tt.posts || 0,
-      likes: tt.likes || 0,
-      views: tt.views || 0,
-    };
-  if (platform === "instagram") return igM;
-  if (platform === "tiktok") return ttM;
-    return {
-      posts: igM.posts + ttM.posts,
-      likes: igM.likes + ttM.likes,
-      views: igM.views + ttM.views,
-    };
+    var igVal = ig[key];
+    var ttVal = tt[key];
+    if (platform === "instagram") {
+      return igVal == null ? null : igVal;
+    }
+    if (platform === "tiktok") {
+      return ttVal == null ? null : ttVal;
+    }
+    var igKnown = igVal != null;
+    var ttKnown = ttVal != null;
+    if (!igKnown && !ttKnown) return null;
+    return (igKnown ? igVal : 0) + (ttKnown ? ttVal : 0);
+  }
+  function combinePrior(row) {
+    var keys = ["posts", "likes", "views"];
+    var out = {};
+    keys.forEach(function (key) {
+      var raw = priorMetricValue(row, key);
+      out[key] = raw == null ? 0 : raw;
+    });
+    return out;
+  }
+  function formatYoYChange(current, priorRaw) {
+    if (priorRaw == null) return { text: "—", cls: "tl-yoy-na" };
+    if (priorRaw === 0) {
+      if (current === 0) return { text: "0%", cls: "tl-yoy-flat" };
+      return { text: "new", cls: "tl-yoy-up" };
+    }
+    var ch = ((current - priorRaw) / priorRaw) * 100;
+    var rounded = Math.round(ch);
+    if (rounded === 0) return { text: "0%", cls: "tl-yoy-flat" };
+    if (rounded > 0) return { text: "+" + rounded + "%", cls: "tl-yoy-up" };
+    return { text: rounded + "%", cls: "tl-yoy-down" };
   }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
@@ -1162,17 +1191,21 @@ YEAR_FILTER_SCRIPT = """
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
+      var priRaw = priorMetricValue(row, timelineMetric);
       var cv = cur[timelineMetric] || 0;
       var pv = pri[timelineMetric] || 0;
+      var yoy = formatYoYChange(cv, priRaw);
       var hCur = Math.round((cv / maxV) * 100);
       var hPri = Math.round((pv / maxV) * 100);
       var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
+      var priLabel = priRaw == null ? "—" : pv.toLocaleString();
       html += '<div class="tl-col"><div class="tl-pair">';
-      html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + pv + '"></i>';
+      html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + priLabel + '"></i>';
       html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + '"></i>';
       html += '</div><span class="tl-lbl">' + row.label + '</span>';
       html += '<span class="tl-sub">vs ' + row.prior_label + '</span>';
-      html += '<span class="tl-val">' + cv.toLocaleString() + " · " + (pv ? pv.toLocaleString() : "—") + "</span>";
+      html += '<span class="tl-yoy ' + yoy.cls + '" title="Year over year">' + yoy.text + "</span>";
+      html += '<span class="tl-val">' + cv.toLocaleString() + " · " + priLabel + "</span>";
       html += "</div>";
     });
     root.innerHTML = html;
