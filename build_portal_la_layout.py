@@ -2,11 +2,13 @@
 """Build Funboy portal pages using the la-reels layout (Dream Aspect report chrome)."""
 from __future__ import annotations
 
+import json
 import math
 import os
 import re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+YEAR_DATA_PATH = os.path.join(ROOT, "data", "funboy-ig-year-oct2025-oct2026.json")
 
 # Reuse collected public data from the prior generator.
 from build_public_report import (  # noqa: E402
@@ -177,6 +179,65 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .grid-dense .stats b { font-size: 11px; }
 .grid-dense .eng { font-size: 10px; padding: 1px 4px; }
 .grid-dense .counts, .grid-dense .tag { display: none; }
+.grid-year { grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 10px; }
+.grid-year .card { border-radius: 4px; }
+.grid-year .year-thumb {
+  height: 72px;
+  max-height: 72px;
+  aspect-ratio: auto;
+  background: linear-gradient(135deg, var(--fog) 0%, var(--ice) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.grid-year .year-thumb img {
+  width: 100%;
+  height: 72px;
+  max-height: 72px;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+.grid-year .year-thumb-ph span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 1;
+}
+.grid-year .meta { padding: 8px 9px 10px; }
+.grid-year .place { font-size: 12px; margin: 0 0 3px; line-height: 1.25; }
+.grid-year .who { font-size: 10px; margin: 0 0 6px; }
+.grid-year .stats { font-size: 11px; }
+.grid-year .stats b { font-size: 12px; }
+.grid-year .counts { font-size: 10px; margin-top: 4px; }
+.grid-year .eng { font-size: 10px; padding: 1px 5px; }
+.grid-year .card.is-tiktok { border-color: color-mix(in srgb, var(--black) 72%, transparent); }
+.grid-year .platform-tt {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--black);
+  color: var(--white);
+  padding: 1px 5px;
+  margin-bottom: 4px;
+}
+.subplatform { margin: 18px 0 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.quarter-block { margin-top: 28px; }
+.quarter-block h3 { font-family: Nohemi, sans-serif; font-size: 20px; margin: 0 0 10px; font-weight: 500; }
+.ads-waiting {
+  border: 1px dashed var(--gray);
+  border-radius: 6px;
+  padding: 22px 20px;
+  background: var(--fog);
+  max-width: 40rem;
+}
+.ads-waiting .eyebrow { margin-bottom: 6px; }
 .card {
   display: flex;
   flex-direction: column;
@@ -403,7 +464,7 @@ table.data th { background: var(--fog); font-weight: 700; }
 
 def nav(current: str) -> str:
     items = [
-        ("index.html", "October report", "october"),
+        ("index.html", "Year report", "year"),
         ("benchmarks.html", "Benchmarks", "benchmarks"),
         ("competitor-watch.html", "Competitor watch", "competitor"),
         ("all-reports.html", "All reports", "all"),
@@ -809,6 +870,158 @@ def all_collected_reels() -> list[dict]:
     return rows
 
 
+def year_dataset() -> dict:
+    with open(YEAR_DATA_PATH, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def year_cover_thumb(post: dict) -> str:
+    candidates: list[str] = []
+    if post.get("cover_path"):
+        candidates.append(post["cover_path"])
+    candidates.append(cover_path(post["shortcode"]))
+    for rel in candidates:
+        fs = os.path.join(ROOT, rel)
+        if os.path.isfile(fs) and os.path.getsize(fs) > 400:
+            return f'<div class="year-thumb"><img src="{rel}" alt="" loading="lazy" decoding="async" /></div>'
+    return f'<div class="year-thumb year-thumb-ph"><span>{post["date"][5:]}</span></div>'
+
+
+def year_post_cards(posts: list[dict], *, platform: str = "instagram") -> str:
+    """La-realtor-style cards: compact cover, link, stats (not full-height tiles)."""
+    html = '<div class="grid grid-year">'
+    is_tt = platform == "tiktok"
+    card_extra = " is-tiktok" if is_tt else ""
+    platform_badge = '<span class="platform-tt">TikTok</span>' if is_tt else ""
+    for p in posts:
+        ptype = p.get("type") or ("video" if is_tt else "reel")
+        if is_tt:
+            href = p.get("permalink") or f"https://www.tiktok.com/@funboy/video/{p['shortcode']}/"
+            thumb = f'<div class="year-thumb year-thumb-ph"><span>TT · {p["date"][5:]}</span></div>'
+        else:
+            href = p.get("permalink") or ig_url(p["shortcode"], ptype)
+            thumb = year_cover_thumb(p)
+        title = (p.get("title") or p.get("shortcode") or "Post")[:48]
+        typ = (p.get("post_type_raw") or ptype or "").replace("_", " ")
+        views_line = f"<li><b>{fmt(p['views'])}</b> views</li>" if p.get("views") else ""
+        eng = ""
+        likes_n = p.get("likes") or 0
+        comments_n = p.get("comments") or 0
+        if p.get("views"):
+            er = (likes_n + comments_n) / p["views"] * 100
+            eng = f'<span class="eng">{er:.2f}%</span>'
+        tagged = '<span class="tag">Tagged UGC</span>' if p.get("is_tagged") else ""
+        likes = fmt(likes_n) if p.get("likes") is not None else "—"
+        comments_s = str(comments_n) if p.get("comments") is not None else "—"
+        handle = "@funboy · TikTok" if is_tt else "@funboy"
+        html += f"""<a class="card{card_extra}" href="{href}" target="_blank" rel="noopener">
+      {thumb}
+      <div class="meta">
+        {platform_badge}
+        <p class="place">{title}</p>
+        <p class="who">{handle} · {p['date']} · {typ}</p>
+        <div class="stats"><span><b>{likes}</b> likes</span>{eng}</div>
+        <ul class="counts">{views_line}<li><b>{comments_s}</b> comments</li></ul>
+        {tagged}
+      </div>
+    </a>"""
+    html += "</div>"
+    return html
+
+
+def ads_placeholder_section() -> str:
+    return """<div class="section" id="ads">
+<h2>Ads</h2>
+<div class="ads-waiting">
+<p class="eyebrow">Waiting for data</p>
+<p class="lead" style="margin:0;font-size:15px">Paid social performance will be added here when exports are available. No ad metrics are shown as placeholders.</p>
+</div></div>"""
+
+
+def competitor_watch_embed() -> str:
+    """Shelf + competitor profiles (not a FUNBOY year grid duplicate)."""
+    fun = funboy_window_stats()
+    profiles = ""
+    for c in COMPETITOR_SHELF:
+        if c.get("brand"):
+            continue
+        profiles += competitor_profile_block(c, fun)
+    return f"""<div class="section" id="competitor-watch">
+<h2>Competitor watch</h2>
+<p class="who">Shelf comparison and peer reel profiles · {WINDOW_LABEL} · public Instagram</p>
+{competitor_watch_table(fun)}
+<div class="section" style="margin-top:24px;padding-top:0;border-top:0">
+<h3 style="font-family:Nohemi,sans-serif;font-size:18px;margin:0 0 10px">Reel profiles (competitors)</h3>
+{profiles}
+<p class="who" style="margin-top:8px">@bigshinyballs pinned outside window: {BSB_PINNED['date']} reel ({fmt(BSB_PINNED['views'])} public views) — excluded from Oct medians.</p>
+</div>
+</div>"""
+
+
+def build_year_report() -> str:
+    data = year_dataset()
+    meta = data["meta"]
+    quarters = data["quarters"]
+    tiktok_quarters = data.get("tiktok_quarters") or []
+    ig_meta = meta.get("instagram") or {
+        "post_count": meta.get("post_count", len(data.get("posts", []))),
+        "owned_post_count": meta.get("owned_post_count", 0),
+        "tagged_post_count": meta.get("tagged_post_count", 0),
+        "null_views_count": meta.get("null_views_count", 0),
+    }
+    tt_meta = meta.get("tiktok") or {"post_count": len(data.get("tiktok_posts", [])), "null_views_count": 0}
+    quarter_html = ""
+    tt_by_id = {b["id"]: b for b in tiktok_quarters}
+    labels = {
+        "q1_oct_dec_2025": "Q1 · Oct–Dec 2025",
+        "q2_jan_mar_2026": "Q2 · Jan–Mar 2026",
+        "q3_apr_jun_2026": "Q3 · Apr–Jun 2026",
+        "q4_jul_oct_2026": "Q4 · Jul–Oct 2026",
+    }
+    for block in quarters:
+        qid = block["id"]
+        label = labels.get(qid, block.get("label", qid))
+        ig_posts = block.get("posts") or []
+        tt_posts = (tt_by_id.get(qid) or {}).get("posts") or []
+        tt_block = ""
+        if tt_posts:
+            tt_block = f"""<p class="subplatform">TikTok · {len(tt_posts)} videos</p>
+{year_post_cards(tt_posts, platform="tiktok")}"""
+        elif qid == "q2_jan_mar_2026":
+            tt_block = '<p class="who">No TikTok videos in Nectarine or recaps for this quarter.</p>'
+        quarter_html += f"""<div class="quarter-block" id="{qid}">
+<h3>{label}</h3>
+<p class="subplatform">Instagram · {len(ig_posts)} posts</p>
+<p class="who">Newest last · tap opens Instagram</p>
+{year_post_cards(ig_posts)}
+{tt_block}
+</div>"""
+
+    gap_list = "".join(f"<li>{g}</li>" for g in meta.get("gaps", []))
+
+    body = f"""<p class="eyebrow">Year report · public social</p>
+<h1>Instagram & TikTok year report</h1>
+<p class="lead">@funboy organic posts · {meta.get("window_start", "2025-10-01")} through {meta.get("window_end", "2026-10-31")} · Instagram {ig_meta.get("post_count", 0)} ({ig_meta.get("owned_post_count", 0)} owned · {ig_meta.get("tagged_post_count", 0)} tagged UGC) · TikTok {tt_meta.get("post_count", 0)} public videos.</p>
+<div class="kpi-row">
+  <div class="kpi"><b>{ig_meta.get("post_count", 0)}</b><span>Instagram posts</span></div>
+  <div class="kpi"><b>{tt_meta.get("post_count", 0)}</b><span>TikTok videos</span></div>
+  <div class="kpi"><b>{quarters[0]["post_count"]}</b><span>IG Q1</span></div>
+  <div class="kpi"><b>{quarters[2]["post_count"]}</b><span>IG Q3</span></div>
+  <div class="kpi"><b>{(tt_by_id.get("q3_apr_jun_2026") or {}).get("post_count", 0)}</b><span>TT Q3</span></div>
+  <div class="kpi"><b>{(tt_by_id.get("q4_jul_oct_2026") or {}).get("post_count", 0)}</b><span>TT Q4</span></div>
+</div>
+<details class="volume-prior"><summary>Collection notes (public data only)</summary><ul style="margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.45">{gap_list}</ul></details>
+<div class="section" id="year-report">
+<h2>Year · by quarter</h2>
+<p class="volume-note">La-realtor-style cards: compact cover or date tile, link, public likes / comments / views. Organic TikTok is listed under each quarter—not in Ads.</p>
+{quarter_html}
+</div>
+{ads_placeholder_section()}
+{competitor_watch_embed()}
+<p class="foot">Dataset: <code>data/funboy-ig-year-oct2025-oct2026.json</code> · regenerated via <code>scripts/collect_funboy_ig_year.py</code>. Layout from la-reels ({LA_REELS_SOURCE}).</p>"""
+    return page_shell("FUNBOY · Year report", "year", body)
+
+
 def post_cards(posts: list[dict], reels_only: bool = False) -> str:
     html = '<div class="grid">'
     for p in posts:
@@ -1177,12 +1390,14 @@ def build_competitor() -> str:
 def build_all_reports() -> str:
     body = """<p class="eyebrow">Archive · mold 2</p>
 <h1>All reports</h1>
-<p class="lead">Earlier full-month recaps. Legacy brown styling on August and September; active window is the October public report.</p>
+<p class="lead">Earlier windows. Active home is the Instagram year report (index). October public window kept as a subpage.</p>
 <div class="archive-list mold2">
+  <a class="mold2-card" href="index.html"><span><strong>Instagram year report</strong><br><span class="who">Oct 2025 – Oct 2026 · quarterly cards</span></span><span class="pill">Active</span></a>
+  <a class="mold2-card" href="october-report.html"><span><strong>October 2026 (public)</strong><br><span class="who">Oct 10–Nov 1 grid</span></span><span class="pill">Archive</span></a>
   <a class="mold2-card" href="september-2026-recap.html"><span><strong>September 2026</strong><br><span class="who">Full month · Instagram Insights + TikTok</span></span><span class="pill">Archive</span></a>
   <a class="mold2-card" href="august-2026-recap.html"><span><strong>August 2026</strong><br><span class="who">Full month · Instagram + TikTok</span></span><span class="pill">Archive</span></a>
 </div>
-<p class="foot">Card edge glow matches the Dream Aspect pricing selector animation. Return to the <a href="index.html">October report</a> for the active public-only window.</p>"""
+<p class="foot">Card edge glow matches the Dream Aspect pricing selector animation. Return to the <a href="index.html">year report</a> for the active report.</p>"""
     return page_shell("FUNBOY · All reports", "all", body)
 
 
@@ -1190,7 +1405,7 @@ def patch_archives() -> None:
     shell = nav("all")
     note = """<link rel="stylesheet" href="portal-styles.css" />
 <style>.report-nav{display:none!important}</style>
-<p class="archive-note">Archived report — not the current window. Active report: <a href="index.html">October public report</a> · <a href="all-reports.html">All reports</a></p>"""
+<p class="archive-note">Archived report — not the current window. Active report: <a href="index.html">Instagram year report</a> · <a href="all-reports.html">All reports</a></p>"""
     for name in ("august-2026-recap.html", "september-2026-recap.html"):
         path = os.path.join(ROOT, name)
         text = open(path, encoding="utf-8").read()
@@ -1208,6 +1423,7 @@ def sync_funboy_path() -> None:
 
     for fn in (
         "index.html",
+        "october-report.html",
         "benchmarks.html",
         "competitor-watch.html",
         "competitor-research.html",
@@ -1216,9 +1432,16 @@ def sync_funboy_path() -> None:
         "august-2026-recap.html",
         "september-2026-recap.html",
     ):
-        shutil.copy2(os.path.join(ROOT, fn), os.path.join(dst, fn))
+        src = os.path.join(ROOT, fn)
+        if os.path.isfile(src):
+            shutil.copy2(src, os.path.join(dst, fn))
     shutil.copytree(os.path.join(ROOT, "fonts"), os.path.join(dst, "fonts"), dirs_exist_ok=True)
     shutil.copytree(os.path.join(ROOT, "covers"), os.path.join(dst, "covers"), dirs_exist_ok=True)
+    data_src = os.path.join(ROOT, "data", "funboy-ig-year-oct2025-oct2026.json")
+    if os.path.isfile(data_src):
+        data_dst = os.path.join(dst, "data")
+        os.makedirs(data_dst, exist_ok=True)
+        shutil.copy2(data_src, os.path.join(data_dst, "funboy-ig-year-oct2025-oct2026.json"))
 
 
 def main() -> None:
@@ -1227,7 +1450,8 @@ def main() -> None:
     except Exception:
         pass
     open(os.path.join(ROOT, "portal-styles.css"), "w", encoding="utf-8").write(CSS)
-    open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(build_october())
+    open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(build_year_report())
+    open(os.path.join(ROOT, "october-report.html"), "w", encoding="utf-8").write(build_october())
     open(os.path.join(ROOT, "benchmarks.html"), "w", encoding="utf-8").write(build_benchmarks())
     comp_html = build_competitor()
     open(os.path.join(ROOT, "competitor-watch.html"), "w", encoding="utf-8").write(comp_html)

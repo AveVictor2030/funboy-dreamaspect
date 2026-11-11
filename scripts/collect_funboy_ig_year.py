@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Build FUNBOY public Instagram year dataset (Oct 2025–Oct 2026, quartered).
+"""Build FUNBOY public Instagram + TikTok year dataset (Oct 2025–Oct 2026, quartered).
 
-Sources (merged, deduped by shortcode):
-  - Notion Nectarine SQL exports in data/sources/nectarine-q*.json
+Instagram sources (deduped by shortcode):
+  - Notion Nectarine SQL exports in data/sources/nectarine-batch-*.json
   - august-2026-recap.html / september-2026-recap.html (Nectarine lag after ~2026-08-25)
   - build_public_report.FUN_POSTS (October 2026 public window)
+
+TikTok sources (deduped by video id):
+  - Notion Nectarine tiktok-batch-*.json (public likes/comments/views only)
+  - August / September recap HTML for late-Aug–Sep posts Nectarine missed
+  - No logged-out @funboy grid scrape (TikTok blocks datacenter fetches).
 
 Regenerate:
   python3 scripts/collect_funboy_ig_year.py
@@ -42,10 +47,19 @@ SOURCE_BATCH_FILES = (
     "nectarine-batch-a-2025-10-01_2026-05-23.json",
     "nectarine-batch-b-2026-05-24_2026-08-25.json",
 )
+TIKTOK_BATCH_FILES = (
+    "nectarine-tiktok-batch-a-2025-10-01_2026-05-31.json",
+    "nectarine-tiktok-batch-b-2026-06-01_2026-10-31.json",
+)
 
 
 def shortcode_from_permalink(permalink: str) -> str | None:
     m = re.search(r"instagram\.com/(?:funboy/)?(?:reel|p)/([^/?#]+)", permalink or "")
+    return m.group(1) if m else None
+
+
+def tiktok_id_from_permalink(permalink: str) -> str | None:
+    m = re.search(r"tiktok\.com/@funboy/video/(\d+)", permalink or "")
     return m.group(1) if m else None
 
 
@@ -72,6 +86,30 @@ def normalize_type(post_type: str | None, permalink: str) -> str:
     return pt or "unknown"
 
 
+def normalize_nectarine_tiktok_row(row: dict, source: str) -> dict | None:
+    posted = row.get("posted")
+    if not posted:
+        return None
+    permalink = row.get("Permalink") or ""
+    video_id = tiktok_id_from_permalink(permalink)
+    if not video_id:
+        return None
+    return {
+        "shortcode": video_id,
+        "date": posted,
+        "title": row.get("Name"),
+        "permalink": permalink,
+        "type": "video",
+        "post_type_raw": row.get("Post Type") or "TikTok",
+        "likes": row.get("Likes"),
+        "comments": row.get("comments") if "comments" in row else row.get("Comment Count"),
+        "views": views_from_million(row.get("views_m")),
+        "cover_path": None,
+        "platform": "tiktok",
+        "source": source,
+    }
+
+
 def normalize_nectarine_row(row: dict, source: str) -> dict | None:
     posted = row.get("posted")
     if not posted:
@@ -93,8 +131,58 @@ def normalize_nectarine_row(row: dict, source: str) -> dict | None:
         "comments": row.get("comments") if "comments" in row else row.get("Comment Count"),
         "views": views_from_million(row.get("views_m")),
         "cover_path": None,
+        "platform": "instagram",
         "source": source,
     }
+
+
+def parse_tiktok_recap_html(path: Path, source_label: str) -> list[dict]:
+    html = path.read_text(encoding="utf-8", errors="replace")
+    block_pat = re.compile(
+        r'<a class="post-cell[^"]*" href="(https://www\.tiktok\.com/@funboy/video/(\d+))"[^>]*>'
+        r"(.*?)</a>",
+        re.S,
+    )
+    out: list[dict] = []
+    for m in block_pat.finditer(html):
+        permalink, video_id, inner = m.group(1), m.group(2), m.group(3)
+        date_m = re.search(r'class="post-date">([^<]+)</div>', inner)
+        if not date_m:
+            continue
+        date_txt = date_m.group(1).split("<")[0].strip()
+        posted = parse_recap_date(date_txt)
+        if not posted:
+            continue
+        likes = comments = views = None
+        stat_m = re.search(r'class="post-stat">([^<]+)</div>', inner)
+        if stat_m:
+            stat = stat_m.group(1).replace("&middot;", "·")
+            sm = re.search(r"([\d,]+)\s+likes", stat)
+            if sm:
+                likes = int(sm.group(1).replace(",", ""))
+            cm = re.search(r"([\d,]+)\s+comments", stat)
+            if cm:
+                comments = int(cm.group(1).replace(",", ""))
+            vm = re.search(r"([\d,]+)\s+views", stat)
+            if vm:
+                views = int(vm.group(1).replace(",", ""))
+        out.append(
+            {
+                "shortcode": video_id,
+                "date": posted.isoformat(),
+                "title": None,
+                "permalink": permalink,
+                "type": "video",
+                "post_type_raw": "TikTok",
+                "likes": likes,
+                "comments": comments,
+                "views": views,
+                "cover_path": None,
+                "platform": "tiktok",
+                "source": source_label,
+            }
+        )
+    return out
 
 
 def parse_recap_html(path: Path, source_label: str) -> list[dict]:
@@ -145,6 +233,7 @@ def parse_recap_html(path: Path, source_label: str) -> list[dict]:
                 "comments": comments,
                 "views": views,
                 "cover_path": None,
+                "platform": "instagram",
                 "source": source_label,
             }
         )
@@ -206,9 +295,25 @@ def load_fun_posts() -> list[dict]:
                 "comments": p.get("comments"),
                 "views": p.get("views"),
                 "cover_path": f"covers/public-oct-2026/{p['shortcode']}.jpg",
+                "platform": "instagram",
                 "source": "build_public_report.FUN_POSTS",
             }
         )
+    return rows
+
+
+def load_nectarine_tiktok_rows() -> list[dict]:
+    rows: list[dict] = []
+    for name in TIKTOK_BATCH_FILES:
+        path = SOURCES_DIR / name
+        if not path.is_file():
+            raise FileNotFoundError(f"Missing TikTok source file: {path}")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for raw in payload.get("results", payload):
+            if isinstance(raw, dict) and "Permalink" in raw:
+                norm = normalize_nectarine_tiktok_row(raw, f"notion:{name}")
+                if norm:
+                    rows.append(norm)
     return rows
 
 
@@ -259,38 +364,11 @@ def assign_quarter(d: date) -> str | None:
     return None
 
 
-def build_dataset() -> dict:
-    nectarine = load_nectarine_rows()
-    aug_gap = parse_recap_html(ROOT / "august-2026-recap.html", "august-2026-recap.html")
-    sep_gap = parse_recap_html(ROOT / "september-2026-recap.html", "september-2026-recap.html")
-    fun_oct = load_fun_posts()
-
-    # Recap/fun posts override Nectarine for overlapping shortcodes (fresher metrics).
-    all_posts = merge_posts(nectarine, aug_gap, sep_gap, fun_oct)
-
-    filtered = []
-    for p in all_posts:
-        d = date.fromisoformat(p["date"])
-        if not in_window(d):
-            continue
-        p = dict(p)
-        p["quarter"] = assign_quarter(d)
-        filtered.append(p)
-
-    null_views = sum(1 for p in filtered if p.get("views") is None)
-    tagged = sum(1 for p in filtered if p.get("is_tagged"))
-    gaps = [
-        "Nectarine Social export stops at ~2026-08-25; Aug 26–Sep 2026 from recap HTML.",
-        "October 2026 through 2026-10-31 from build_public_report.FUN_POSTS (partial month).",
-        "Many carousels/posts have null views in Nectarine; reels use Views (Million).",
-        f"{tagged} Tagged UGC rows included (post_type Tagged); year UI may filter to owned-only.",
-        "Cover images not bulk-fetched for the year set; October window covers may exist under covers/public-oct-2026/.",
-    ]
-
-    quarters_out = []
+def quarter_blocks(posts: list[dict]) -> list[dict]:
+    out = []
     for qid, start, end in QUARTERS:
-        q_posts = [p for p in filtered if p.get("quarter") == qid]
-        quarters_out.append(
+        q_posts = [p for p in posts if p.get("quarter") == qid]
+        out.append(
             {
                 "id": qid,
                 "label": f"{start.isoformat()} – {end.isoformat()}",
@@ -298,27 +376,82 @@ def build_dataset() -> dict:
                 "posts": q_posts,
             }
         )
+    return out
+
+
+def build_dataset() -> dict:
+    nectarine = load_nectarine_rows()
+    aug_gap = parse_recap_html(ROOT / "august-2026-recap.html", "august-2026-recap.html")
+    sep_gap = parse_recap_html(ROOT / "september-2026-recap.html", "september-2026-recap.html")
+    fun_oct = load_fun_posts()
+    all_ig = merge_posts(nectarine, aug_gap, sep_gap, fun_oct)
+
+    ig_filtered: list[dict] = []
+    for p in all_ig:
+        d = date.fromisoformat(p["date"])
+        if not in_window(d):
+            continue
+        p = dict(p)
+        p["quarter"] = assign_quarter(d)
+        ig_filtered.append(p)
+
+    null_views_ig = sum(1 for p in ig_filtered if p.get("views") is None)
+    tagged = sum(1 for p in ig_filtered if p.get("is_tagged"))
+
+    tiktok_nectarine = load_nectarine_tiktok_rows()
+    tik_aug = parse_tiktok_recap_html(ROOT / "august-2026-recap.html", "august-2026-recap.html")
+    tik_sep = parse_tiktok_recap_html(ROOT / "september-2026-recap.html", "september-2026-recap.html")
+    all_tt = merge_posts(tiktok_nectarine, tik_aug, tik_sep)
+
+    tt_filtered: list[dict] = []
+    for p in all_tt:
+        d = date.fromisoformat(p["date"])
+        if not in_window(d):
+            continue
+        p = dict(p)
+        p["quarter"] = assign_quarter(d)
+        tt_filtered.append(p)
+
+    null_views_tt = sum(1 for p in tt_filtered if p.get("views") is None)
+
+    gaps = [
+        "Instagram: Nectarine export stops at ~2026-08-25; Aug 26–Sep 2026 from recap HTML; Oct from FUN_POSTS.",
+        "TikTok: 42 organic videos from Nectarine (Nov 2025–Aug 9 2026) plus recap HTML for Aug 10–Sep 2026 (18 videos).",
+        "TikTok: no Oct 2025–Oct 2026 posts in Nectarine before Nov 12, 2025; no October 2026 TikTok rows collected.",
+        "TikTok: logged-out https://www.tiktok.com/@funboy returns HTTP 403 from this environment; no grid scrape.",
+        "Public counts only (likes, comments, views on the open video page / recap tiles). No TikTok Insights.",
+        "Instagram carousels often have null views in Nectarine; reels use Views (Million).",
+        f"{tagged} Instagram Tagged UGC rows included.",
+        "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
+    ]
 
     return {
         "meta": {
             "account": "funboy",
-            "platform": "instagram",
             "window_start": WINDOW_START.isoformat(),
             "window_end": WINDOW_END.isoformat(),
             "generated_by": "scripts/collect_funboy_ig_year.py",
-            "post_count": len(filtered),
-            "owned_post_count": len(filtered) - tagged,
-            "tagged_post_count": tagged,
-            "null_views_count": null_views,
+            "instagram": {
+                "post_count": len(ig_filtered),
+                "owned_post_count": len(ig_filtered) - tagged,
+                "tagged_post_count": tagged,
+                "null_views_count": null_views_ig,
+            },
+            "tiktok": {
+                "post_count": len(tt_filtered),
+                "null_views_count": null_views_tt,
+            },
             "gaps": gaps,
             "planned_page_parts": [
-                "year_report_quarters",
+                "year_report_quarters_ig_tiktok",
                 "ads_placeholder",
                 "competitor_watch_existing",
             ],
         },
-        "quarters": quarters_out,
-        "posts": filtered,
+        "quarters": quarter_blocks(ig_filtered),
+        "posts": ig_filtered,
+        "tiktok_quarters": quarter_blocks(tt_filtered),
+        "tiktok_posts": tt_filtered,
     }
 
 
@@ -326,9 +459,13 @@ def main() -> int:
     dataset = build_dataset()
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(dataset, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {OUT_PATH} ({dataset['meta']['post_count']} posts)")
+    ig_n = dataset["meta"]["instagram"]["post_count"]
+    tt_n = dataset["meta"]["tiktok"]["post_count"]
+    print(f"Wrote {OUT_PATH} (Instagram {ig_n}, TikTok {tt_n})")
     for q in dataset["quarters"]:
-        print(f"  {q['id']}: {q['post_count']} posts")
+        print(f"  IG {q['id']}: {q['post_count']}")
+    for q in dataset["tiktok_quarters"]:
+        print(f"  TT {q['id']}: {q['post_count']}")
     return 0
 
 
