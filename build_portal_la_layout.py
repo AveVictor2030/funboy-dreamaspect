@@ -876,15 +876,25 @@ def year_dataset() -> dict:
 
 
 def year_cover_thumb(post: dict) -> str:
+    platform = post.get("platform") or "instagram"
     candidates: list[str] = []
     if post.get("cover_path"):
         candidates.append(post["cover_path"])
-    candidates.append(cover_path(post["shortcode"]))
+    if platform == "tiktok":
+        candidates.append(f"covers/year-tt/{post['shortcode']}.jpg")
+    else:
+        candidates.extend(
+            (
+                f"covers/year-ig/{post['shortcode']}.jpg",
+                cover_path(post["shortcode"]),
+            )
+        )
     for rel in candidates:
         fs = os.path.join(ROOT, rel)
         if os.path.isfile(fs) and os.path.getsize(fs) > 400:
             return f'<div class="year-thumb"><img src="{rel}" alt="" loading="lazy" decoding="async" /></div>'
-    return f'<div class="year-thumb year-thumb-ph"><span>{post["date"][5:]}</span></div>'
+    label = f"TT · {post['date'][5:]}" if platform == "tiktok" else post["date"][5:]
+    return f'<div class="year-thumb year-thumb-ph"><span>{label}</span></div>'
 
 
 def year_post_cards(posts: list[dict], *, platform: str = "instagram") -> str:
@@ -895,12 +905,15 @@ def year_post_cards(posts: list[dict], *, platform: str = "instagram") -> str:
     platform_badge = '<span class="platform-tt">TikTok</span>' if is_tt else ""
     for p in posts:
         ptype = p.get("type") or ("video" if is_tt else "reel")
-        if is_tt:
-            href = p.get("permalink") or f"https://www.tiktok.com/@funboy/video/{p['shortcode']}/"
-            thumb = f'<div class="year-thumb year-thumb-ph"><span>TT · {p["date"][5:]}</span></div>'
-        else:
-            href = p.get("permalink") or ig_url(p["shortcode"], ptype)
-            thumb = year_cover_thumb(p)
+        href = (
+            p.get("permalink")
+            or (
+                f"https://www.tiktok.com/@funboy/video/{p['shortcode']}/"
+                if is_tt
+                else ig_url(p["shortcode"], ptype)
+            )
+        )
+        thumb = year_cover_thumb(p)
         title = (p.get("title") or p.get("shortcode") or "Post")[:48]
         typ = (p.get("post_type_raw") or ptype or "").replace("_", " ")
         views_line = f"<li><b>{fmt(p['views'])}</b> views</li>" if p.get("views") else ""
@@ -970,6 +983,9 @@ def build_year_report() -> str:
         "null_views_count": meta.get("null_views_count", 0),
     }
     tt_meta = meta.get("tiktok") or {"post_count": len(data.get("tiktok_posts", [])), "null_views_count": 0}
+    cover_meta = meta.get("covers") or {}
+    ig_miss = cover_meta.get("instagram_missing_photo", 0)
+    tt_miss = cover_meta.get("tiktok_missing_photo", 0)
     quarter_html = ""
     tt_by_id = {b["id"]: b for b in tiktok_quarters}
     labels = {
@@ -1009,11 +1025,12 @@ def build_year_report() -> str:
   <div class="kpi"><b>{quarters[2]["post_count"]}</b><span>IG Q3</span></div>
   <div class="kpi"><b>{(tt_by_id.get("q3_apr_jun_2026") or {}).get("post_count", 0)}</b><span>TT Q3</span></div>
   <div class="kpi"><b>{(tt_by_id.get("q4_jul_oct_2026") or {}).get("post_count", 0)}</b><span>TT Q4</span></div>
+  <div class="kpi"><b>{ig_miss + tt_miss}</b><span>Cards without photo</span></div>
 </div>
 <details class="volume-prior"><summary>Collection notes (public data only)</summary><ul style="margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.45">{gap_list}</ul></details>
 <div class="section" id="year-report">
 <h2>Year · by quarter</h2>
-<p class="volume-note">La-realtor-style cards: compact cover or date tile, link, public likes / comments / views. Organic TikTok is listed under each quarter—not in Ads.</p>
+<p class="volume-note">La-realtor-style cards: compact cover (≈160px wide), link, public likes / comments / views. {ig_miss + tt_miss} cards still use date tiles (no public image available). Organic TikTok is listed under each quarter—not in Ads.</p>
 {quarter_html}
 </div>
 {ads_placeholder_section()}
