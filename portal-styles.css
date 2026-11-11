@@ -326,7 +326,24 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 }
 .year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
 .year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
-.year-timeline .tl-val { display: none; }
+.year-timeline .tl-val {
+  display: block;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  color: var(--black);
+  margin-top: 3px;
+}
+.year-timeline .tl-col-single .tl-pair-single {
+  height: 120px;
+  margin-bottom: 6px;
+}
+.year-timeline .tl-col-single .tl-bar {
+  width: 18px;
+}
+.year-timeline .tl-col-single {
+  flex: 1 0 54px;
+  max-width: 72px;
+}
 .year-timeline .tl-yoy {
   display: block;
   font-size: 11px;

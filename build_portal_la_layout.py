@@ -399,7 +399,24 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 }
 .year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
 .year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
-.year-timeline .tl-val { display: none; }
+.year-timeline .tl-val {
+  display: block;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  color: var(--black);
+  margin-top: 3px;
+}
+.year-timeline .tl-col-single .tl-pair-single {
+  height: 120px;
+  margin-bottom: 6px;
+}
+.year-timeline .tl-col-single .tl-bar {
+  width: 18px;
+}
+.year-timeline .tl-col-single {
+  flex: 1 0 54px;
+  max-width: 72px;
+}
 .year-timeline .tl-yoy {
   display: block;
   font-size: 11px;
@@ -1153,6 +1170,12 @@ def year_timeline_section(timeline: dict) -> str:
     return f"""<section class="year-timeline section" id="year-timeline" aria-label="Month over month timeline">
   <div class="tl-head">
     <h2>Month over month</h2>
+    <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
+      <button type="button" class="filter-btn is-active" data-timeline-metric="views">Views</button>
+      <button type="button" class="filter-btn" data-timeline-metric="likes">Likes</button>
+      <button type="button" class="filter-btn" data-timeline-metric="posts">Posts #</button>
+      <button type="button" class="filter-btn" data-timeline-metric="all">All three</button>
+    </div>
   </div>
   <div class="tl-chart" id="year-timeline-chart"></div>
   <div class="tl-legend">
@@ -1169,8 +1192,10 @@ YEAR_FILTER_SCRIPT = """
 (function () {
   var platform = "both";
   var quarter = "all";
+  var timelineMetric = "views";
+  var timelineDisplay = "single";
   var timelineMetrics = ["views", "likes", "posts"];
-  var timelineMetricLabels = { views: "Views", likes: "Likes", posts: "Posts" };
+  var timelineMetricLabels = { views: "Views", likes: "Likes", posts: "Posts #", posts_short: "Posts" };
   var timelineData = null;
   try {
     var el = document.getElementById("year-timeline-data");
@@ -1267,7 +1292,7 @@ YEAR_FILTER_SCRIPT = """
     timelineMetrics.forEach(function (key) {
       var priRaw = priorMetricValue(row, key);
       var yoy = formatYoYChange(cur[key] || 0, priRaw);
-      var label = timelineMetricLabels[key];
+      var label = metricLabel(key);
       lines.push(
         '<p class="tl-tip-row"><b>' +
           label +
@@ -1298,57 +1323,73 @@ YEAR_FILTER_SCRIPT = """
     if (key === "posts") return "#";
     return timelineMetricLabels[key];
   }
+  function metricLabel(key) {
+    return key === "posts" ? timelineMetricLabels.posts_short : timelineMetricLabels[key];
+  }
+  function metricsToRender() {
+    if (timelineDisplay === "all") return timelineMetrics;
+    return [timelineMetric];
+  }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
     if (!root || !timelineData || !timelineData.months) return;
     var rows = timelineData.months;
+    var activeKeys = metricsToRender();
     var maxByMetric = { views: 1, likes: 1, posts: 1 };
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      timelineMetrics.forEach(function (key) {
+      activeKeys.forEach(function (key) {
         maxByMetric[key] = Math.max(maxByMetric[key], cur[key] || 0, pri[key] || 0);
       });
     });
     var html = "";
     var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
+    var single = activeKeys.length === 1;
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      html += '<div class="tl-col" tabindex="0">';
+      html += '<div class="tl-col' + (single ? " tl-col-single" : "") + '" tabindex="0">';
       html += '<div class="tl-tip" role="tooltip">' + buildMonthTooltip(row) + "</div>";
-      html += '<div class="tl-metrics">';
-      timelineMetrics.forEach(function (key) {
+      if (single) {
+        var key = activeKeys[0];
         var priRaw = priorMetricValue(row, key);
         var cv = cur[key] || 0;
         var pv = pri[key] || 0;
         var yoy = formatYoYChange(cv, priRaw);
-        var hCur = Math.round((cv / maxByMetric[key]) * 100);
-        var hPri = Math.round((pv / maxByMetric[key]) * 100);
-        var barTitle =
-          timelineMetricLabels[key] +
-          " · " +
-          row.label +
-          " " +
-          cv.toLocaleString() +
-          " vs " +
-          row.prior_label +
-          " " +
-          formatPriorCell(priRaw, pv) +
-          " · YoY " +
-          yoy.text;
-        html += '<div class="tl-metric" title="' + escHtml(barTitle) + '">';
-        html += '<span class="tl-metric-k">' + metricColLabel(key) + "</span>";
-        html += '<div class="tl-pair">';
+        var maxV = maxByMetric[key];
+        var hCur = Math.round((cv / maxV) * 100);
+        var hPri = Math.round((pv / maxV) * 100);
+        html += '<div class="tl-pair tl-pair-single">';
         html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
         html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
         html += "</div>";
+        html += '<span class="tl-lbl">' + row.label + "</span>";
+        html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
         html += '<span class="tl-yoy ' + yoy.cls + '">' + yoy.text + "</span>";
+        html += '<span class="tl-val">' + cv.toLocaleString() + " · " + formatPriorCell(priRaw, pv) + "</span>";
+      } else {
+        html += '<div class="tl-metrics">';
+        activeKeys.forEach(function (key) {
+          var priRaw = priorMetricValue(row, key);
+          var cv = cur[key] || 0;
+          var pv = pri[key] || 0;
+          var yoy = formatYoYChange(cv, priRaw);
+          var hCur = Math.round((cv / maxByMetric[key]) * 100);
+          var hPri = Math.round((pv / maxByMetric[key]) * 100);
+          html += '<div class="tl-metric">';
+          html += '<span class="tl-metric-k">' + metricColLabel(key) + "</span>";
+          html += '<div class="tl-pair">';
+          html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
+          html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
+          html += "</div>";
+          html += '<span class="tl-yoy ' + yoy.cls + '">' + yoy.text + "</span>";
+          html += "</div>";
+        });
         html += "</div>";
-      });
-      html += "</div>";
-      html += '<span class="tl-lbl">' + row.label + "</span>";
-      html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
+        html += '<span class="tl-lbl">' + row.label + "</span>";
+        html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
+      }
       html += "</div>";
     });
     root.innerHTML = html;
@@ -1397,6 +1438,21 @@ YEAR_FILTER_SCRIPT = """
         var target = document.getElementById(quarter);
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+    });
+  });
+  document.querySelectorAll("[data-timeline-metric]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var mode = btn.getAttribute("data-timeline-metric") || "views";
+      if (mode === "all") {
+        timelineDisplay = "all";
+      } else {
+        timelineDisplay = "single";
+        timelineMetric = mode;
+      }
+      document.querySelectorAll("[data-timeline-metric]").forEach(function (b) {
+        b.classList.toggle("is-active", b === btn);
+      });
+      renderYearTimeline();
     });
   });
   applyYearFilters();

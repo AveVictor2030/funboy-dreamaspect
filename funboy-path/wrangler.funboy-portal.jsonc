@@ -3,6 +3,10 @@
   "main": "worker-portal-live.js",
   "account_id": "8e1333787eb91fa4fd21ef2a27ea6287",
   "compatibility_date": "2026-09-29",
+  "routes": [
+    { "pattern": "www.dreamaspect.co/funboy*", "zone_name": "dreamaspect.co" },
+    { "pattern": "dreamaspect.co/funboy*", "zone_name": "dreamaspect.co" }
+  ],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
