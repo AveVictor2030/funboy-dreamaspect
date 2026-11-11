@@ -298,26 +298,92 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
   overflow-x: auto;
 }
 .year-timeline .tl-col {
-  flex: 1 0 54px;
-  max-width: 72px;
+  flex: 1 0 88px;
+  max-width: 108px;
   text-align: center;
   font-size: 10px;
   color: var(--muted);
+  position: relative;
+}
+.year-timeline .tl-metrics {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 132px;
+  margin-bottom: 6px;
+}
+.year-timeline .tl-metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  cursor: help;
+}
+.year-timeline .tl-metric-k {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--muted);
+  margin-bottom: 2px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.year-timeline .tl-metric .tl-yoy {
+  font-size: 9px;
+  margin-top: 3px;
+  line-height: 1.15;
 }
 .year-timeline .tl-pair {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 4px;
-  height: 140px;
-  margin-bottom: 6px;
+  gap: 3px;
+  height: 100px;
+  width: 100%;
 }
 .year-timeline .tl-bar {
   display: block;
-  width: 18px;
+  width: 10px;
   min-height: 3px;
   border-radius: 3px 3px 0 0;
   transition: height 0.2s ease;
+}
+.year-timeline .tl-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  width: max(210px, 16vw);
+  max-width: 280px;
+  padding: 10px 12px;
+  background: var(--black);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  border-radius: 6px;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 30;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+.year-timeline .tl-tip b { color: #b8dcfa; font-weight: 600; }
+.year-timeline .tl-tip .tl-yoy-up { color: #7ee8a8; }
+.year-timeline .tl-tip .tl-yoy-down { color: #ff9e9e; }
+.year-timeline .tl-tip .tl-yoy-flat,
+.year-timeline .tl-tip .tl-yoy-na { color: #c8c8c8; }
+.year-timeline .tl-tip .tl-tip-row { margin: 0 0 6px; }
+.year-timeline .tl-tip .tl-tip-row:last-child { margin-bottom: 0; }
+.year-timeline .tl-col:hover .tl-tip,
+.year-timeline .tl-col:focus-within .tl-tip {
+  opacity: 1;
+  visibility: visible;
 }
 .year-timeline .tl-bar.tl-prior {
   background: color-mix(in srgb, var(--muted) 35%, var(--fog));
@@ -333,7 +399,7 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 }
 .year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
 .year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
-.year-timeline .tl-val { display: block; font-size: 9px; font-variant-numeric: tabular-nums; color: var(--black); margin-top: 3px; }
+.year-timeline .tl-val { display: none; }
 .year-timeline .tl-yoy {
   display: block;
   font-size: 11px;
@@ -1098,12 +1164,7 @@ def year_timeline_section(timeline: dict) -> str:
   <div class="tl-head">
     <div>
       <h2>Month over month</h2>
-      <p class="who" style="margin:0">Calendar months · <b>Posts</b> = number of public posts in the month · YoY % vs same month last year · <span style="color:var(--mark)">partial</span> = month still missing posts in the public dataset</p>
-    </div>
-    <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
-      <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts (count)</button>
-      <button type="button" class="filter-btn" data-timeline-metric="views">Views</button>
-      <button type="button" class="filter-btn" data-timeline-metric="likes">Likes</button>
+      <p class="who" style="margin:0">Each month: <b>Views</b> · <b>Likes</b> · <b>Posts #</b> (prior vs current bars) · YoY % on every column · hover for IG/TikTok split · <span style="color:var(--mark)">partial</span> = month still collecting</p>
     </div>
   </div>
   <div class="tl-chart" id="year-timeline-chart"></div>
@@ -1122,7 +1183,8 @@ YEAR_FILTER_SCRIPT = """
 (function () {
   var platform = "both";
   var quarter = "all";
-  var timelineMetric = "posts";
+  var timelineMetrics = ["views", "likes", "posts"];
+  var timelineMetricLabels = { views: "Views", likes: "Likes", posts: "Posts" };
   var timelineData = null;
   try {
     var el = document.getElementById("year-timeline-data");
@@ -1203,44 +1265,131 @@ YEAR_FILTER_SCRIPT = """
     if (cov.instagram && cov.instagram.note) return cov.instagram.note;
     return "Month not fully collected in public dataset";
   }
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function platformBreakdown(row, key) {
+    var ig = pickMetrics(row.instagram);
+    var tt = pickMetrics(row.tiktok);
+    if (platform === "instagram") return "Instagram: " + (ig[key] || 0).toLocaleString();
+    if (platform === "tiktok") return "TikTok: " + (tt[key] || 0).toLocaleString();
+    return (
+      "Instagram: " +
+      (ig[key] || 0).toLocaleString() +
+      " · TikTok: " +
+      (tt[key] || 0).toLocaleString()
+    );
+  }
+  function formatPriorCell(priRaw, pv) {
+    return priRaw == null ? "—" : pv.toLocaleString();
+  }
+  function buildMonthTooltip(row, partial) {
+    var cur = combineMonth(row);
+    var pri = combinePrior(row);
+    var ig = row.instagram || {};
+    var tt = row.tiktok || {};
+    var lines = [
+      '<p class="tl-tip-row"><b>' + escHtml(row.label) + "</b> vs " + escHtml(row.prior_label) + "</p>",
+    ];
+    timelineMetrics.forEach(function (key) {
+      var priRaw = priorMetricValue(row, key);
+      var yoy = formatYoYChange(cur[key] || 0, priRaw);
+      var label = timelineMetricLabels[key];
+      lines.push(
+        '<p class="tl-tip-row"><b>' +
+          label +
+          "</b> · " +
+          (cur[key] || 0).toLocaleString() +
+          " (prior " +
+          formatPriorCell(priRaw, pri[key] || 0) +
+          ') · <span class="' +
+          yoy.cls +
+          '">' +
+          yoy.text +
+          "</span><br>" +
+          escHtml(platformBreakdown(row, key)) +
+          "</p>"
+      );
+    });
+    var comments =
+      (ig.comments || 0) + (tt.comments || 0);
+  if (comments) {
+      lines.push('<p class="tl-tip-row">Comments: ' + comments.toLocaleString() + "</p>");
+    }
+    var cov = row.coverage || {};
+    if (platform === "instagram" && cov.instagram && cov.instagram.note) {
+      lines.push('<p class="tl-tip-row">' + escHtml(cov.instagram.note) + "</p>");
+    } else if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) {
+      lines.push('<p class="tl-tip-row">' + escHtml(cov.tiktok.note) + "</p>");
+    } else if (partial) {
+      lines.push('<p class="tl-tip-row">' + escHtml(partialTitle(row)) + "</p>");
+    }
+    if (row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source === "nectarine_monthly_history") {
+      lines.push('<p class="tl-tip-row">Prior-year <b>Posts</b> from Nectarine monthly rollup (views/likes when post rows exist).</p>');
+    }
+    return lines.join("");
+  }
+  function metricColLabel(key) {
+    if (key === "posts") return "#";
+    return timelineMetricLabels[key];
+  }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
     if (!root || !timelineData || !timelineData.months) return;
     var rows = timelineData.months;
-    var vals = [];
+    var maxByMetric = { views: 1, likes: 1, posts: 1 };
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      vals.push(cur[timelineMetric] || 0, pri[timelineMetric] || 0);
+      timelineMetrics.forEach(function (key) {
+        maxByMetric[key] = Math.max(maxByMetric[key], cur[key] || 0, pri[key] || 0);
+      });
     });
-    var maxV = Math.max.apply(null, vals.concat([1]));
     var html = "";
+    var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      var priRaw = priorMetricValue(row, timelineMetric);
-      var cv = cur[timelineMetric] || 0;
-      var pv = pri[timelineMetric] || 0;
-      var yoy = formatYoYChange(cv, priRaw);
       var partial = monthPartial(row);
-      var yoyTitle = "Year over year";
-      if (partial) yoyTitle += " · " + partialTitle(row);
-      if (priRaw != null && row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source) {
-        yoyTitle += " · prior month from Nectarine monthly rollup (usually full month)";
-      }
-      var hCur = Math.round((cv / maxV) * 100);
-      var hPri = Math.round((pv / maxV) * 100);
-      var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
-      var priLabel = priRaw == null ? "—" : pv.toLocaleString();
-      var partialMark = partial ? '<span class="tl-partial" title="' + partialTitle(row) + '">partial</span>' : "";
-      var metricLabel = timelineMetric === "posts" ? " posts" : "";
-      html += '<div class="tl-col"><div class="tl-pair">';
-      html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + priLabel + '"></i>';
-      html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + metricLabel + '"></i>';
-      html += '</div><span class="tl-lbl">' + row.label + partialMark + "</span>";
-      html += '<span class="tl-sub">vs ' + row.prior_label + '</span>';
-      html += '<span class="tl-yoy ' + yoy.cls + '" title="' + yoyTitle + '">' + yoy.text + "</span>";
-      html += '<span class="tl-val">' + cv.toLocaleString() + metricLabel + " · " + priLabel + "</span>";
+      var partialMark = partial ? '<span class="tl-partial" title="' + escHtml(partialTitle(row)) + '">partial</span>' : "";
+      html += '<div class="tl-col" tabindex="0">';
+      html += '<div class="tl-tip" role="tooltip">' + buildMonthTooltip(row, partial) + "</div>";
+      html += '<div class="tl-metrics">';
+      timelineMetrics.forEach(function (key) {
+        var priRaw = priorMetricValue(row, key);
+        var cv = cur[key] || 0;
+        var pv = pri[key] || 0;
+        var yoy = formatYoYChange(cv, priRaw);
+        var hCur = Math.round((cv / maxByMetric[key]) * 100);
+        var hPri = Math.round((pv / maxByMetric[key]) * 100);
+        var barTitle =
+          timelineMetricLabels[key] +
+          " · " +
+          row.label +
+          " " +
+          cv.toLocaleString() +
+          " vs " +
+          row.prior_label +
+          " " +
+          formatPriorCell(priRaw, pv) +
+          " · YoY " +
+          yoy.text;
+        html += '<div class="tl-metric" title="' + escHtml(barTitle) + '">';
+        html += '<span class="tl-metric-k">' + metricColLabel(key) + "</span>";
+        html += '<div class="tl-pair">';
+        html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
+        html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
+        html += "</div>";
+        html += '<span class="tl-yoy ' + yoy.cls + '">' + yoy.text + "</span>";
+        html += "</div>";
+      });
+      html += "</div>";
+      html += '<span class="tl-lbl">' + row.label + partialMark + "</span>";
+      html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
       html += "</div>";
     });
     root.innerHTML = html;
@@ -1289,15 +1438,6 @@ YEAR_FILTER_SCRIPT = """
         var target = document.getElementById(quarter);
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    });
-  });
-  document.querySelectorAll("[data-timeline-metric]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      timelineMetric = btn.getAttribute("data-timeline-metric") || "posts";
-      document.querySelectorAll("[data-timeline-metric]").forEach(function (b) {
-        b.classList.toggle("is-active", b === btn);
-      });
-      renderYearTimeline();
     });
   });
   applyYearFilters();

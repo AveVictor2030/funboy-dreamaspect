@@ -225,26 +225,92 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
   overflow-x: auto;
 }
 .year-timeline .tl-col {
-  flex: 1 0 54px;
-  max-width: 72px;
+  flex: 1 0 88px;
+  max-width: 108px;
   text-align: center;
   font-size: 10px;
   color: var(--muted);
+  position: relative;
+}
+.year-timeline .tl-metrics {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 132px;
+  margin-bottom: 6px;
+}
+.year-timeline .tl-metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  cursor: help;
+}
+.year-timeline .tl-metric-k {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--muted);
+  margin-bottom: 2px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.year-timeline .tl-metric .tl-yoy {
+  font-size: 9px;
+  margin-top: 3px;
+  line-height: 1.15;
 }
 .year-timeline .tl-pair {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 4px;
-  height: 140px;
-  margin-bottom: 6px;
+  gap: 3px;
+  height: 100px;
+  width: 100%;
 }
 .year-timeline .tl-bar {
   display: block;
-  width: 18px;
+  width: 10px;
   min-height: 3px;
   border-radius: 3px 3px 0 0;
   transition: height 0.2s ease;
+}
+.year-timeline .tl-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  width: max(210px, 16vw);
+  max-width: 280px;
+  padding: 10px 12px;
+  background: var(--black);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  border-radius: 6px;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 30;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+.year-timeline .tl-tip b { color: #b8dcfa; font-weight: 600; }
+.year-timeline .tl-tip .tl-yoy-up { color: #7ee8a8; }
+.year-timeline .tl-tip .tl-yoy-down { color: #ff9e9e; }
+.year-timeline .tl-tip .tl-yoy-flat,
+.year-timeline .tl-tip .tl-yoy-na { color: #c8c8c8; }
+.year-timeline .tl-tip .tl-tip-row { margin: 0 0 6px; }
+.year-timeline .tl-tip .tl-tip-row:last-child { margin-bottom: 0; }
+.year-timeline .tl-col:hover .tl-tip,
+.year-timeline .tl-col:focus-within .tl-tip {
+  opacity: 1;
+  visibility: visible;
 }
 .year-timeline .tl-bar.tl-prior {
   background: color-mix(in srgb, var(--muted) 35%, var(--fog));
@@ -260,7 +326,7 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 }
 .year-timeline .tl-lbl { display: block; font-weight: 700; color: var(--black); font-size: 10px; }
 .year-timeline .tl-sub { display: block; font-size: 9px; line-height: 1.2; margin-top: 2px; }
-.year-timeline .tl-val { display: block; font-size: 9px; font-variant-numeric: tabular-nums; color: var(--black); margin-top: 3px; }
+.year-timeline .tl-val { display: none; }
 .year-timeline .tl-yoy {
   display: block;
   font-size: 11px;

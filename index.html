@@ -20,12 +20,7 @@
   <div class="tl-head">
     <div>
       <h2>Month over month</h2>
-      <p class="who" style="margin:0">Calendar months · <b>Posts</b> = number of public posts in the month · YoY % vs same month last year · <span style="color:var(--mark)">partial</span> = month still missing posts in the public dataset</p>
-    </div>
-    <div class="tl-metric-switch" role="group" aria-label="Timeline metric">
-      <button type="button" class="filter-btn is-active" data-timeline-metric="posts">Posts (count)</button>
-      <button type="button" class="filter-btn" data-timeline-metric="views">Views</button>
-      <button type="button" class="filter-btn" data-timeline-metric="likes">Likes</button>
+      <p class="who" style="margin:0">Each month: <b>Views</b> · <b>Likes</b> · <b>Posts #</b> (prior vs current bars) · YoY % on every column · hover for IG/TikTok split · <span style="color:var(--mark)">partial</span> = month still collecting</p>
     </div>
   </div>
   <div class="tl-chart" id="year-timeline-chart"></div>
@@ -3114,7 +3109,8 @@
 (function () {
   var platform = "both";
   var quarter = "all";
-  var timelineMetric = "posts";
+  var timelineMetrics = ["views", "likes", "posts"];
+  var timelineMetricLabels = { views: "Views", likes: "Likes", posts: "Posts" };
   var timelineData = null;
   try {
     var el = document.getElementById("year-timeline-data");
@@ -3195,44 +3191,131 @@
     if (cov.instagram && cov.instagram.note) return cov.instagram.note;
     return "Month not fully collected in public dataset";
   }
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function platformBreakdown(row, key) {
+    var ig = pickMetrics(row.instagram);
+    var tt = pickMetrics(row.tiktok);
+    if (platform === "instagram") return "Instagram: " + (ig[key] || 0).toLocaleString();
+    if (platform === "tiktok") return "TikTok: " + (tt[key] || 0).toLocaleString();
+    return (
+      "Instagram: " +
+      (ig[key] || 0).toLocaleString() +
+      " · TikTok: " +
+      (tt[key] || 0).toLocaleString()
+    );
+  }
+  function formatPriorCell(priRaw, pv) {
+    return priRaw == null ? "—" : pv.toLocaleString();
+  }
+  function buildMonthTooltip(row, partial) {
+    var cur = combineMonth(row);
+    var pri = combinePrior(row);
+    var ig = row.instagram || {};
+    var tt = row.tiktok || {};
+    var lines = [
+      '<p class="tl-tip-row"><b>' + escHtml(row.label) + "</b> vs " + escHtml(row.prior_label) + "</p>",
+    ];
+    timelineMetrics.forEach(function (key) {
+      var priRaw = priorMetricValue(row, key);
+      var yoy = formatYoYChange(cur[key] || 0, priRaw);
+      var label = timelineMetricLabels[key];
+      lines.push(
+        '<p class="tl-tip-row"><b>' +
+          label +
+          "</b> · " +
+          (cur[key] || 0).toLocaleString() +
+          " (prior " +
+          formatPriorCell(priRaw, pri[key] || 0) +
+          ') · <span class="' +
+          yoy.cls +
+          '">' +
+          yoy.text +
+          "</span><br>" +
+          escHtml(platformBreakdown(row, key)) +
+          "</p>"
+      );
+    });
+    var comments =
+      (ig.comments || 0) + (tt.comments || 0);
+  if (comments) {
+      lines.push('<p class="tl-tip-row">Comments: ' + comments.toLocaleString() + "</p>");
+    }
+    var cov = row.coverage || {};
+    if (platform === "instagram" && cov.instagram && cov.instagram.note) {
+      lines.push('<p class="tl-tip-row">' + escHtml(cov.instagram.note) + "</p>");
+    } else if (platform === "tiktok" && cov.tiktok && cov.tiktok.note) {
+      lines.push('<p class="tl-tip-row">' + escHtml(cov.tiktok.note) + "</p>");
+    } else if (partial) {
+      lines.push('<p class="tl-tip-row">' + escHtml(partialTitle(row)) + "</p>");
+    }
+    if (row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source === "nectarine_monthly_history") {
+      lines.push('<p class="tl-tip-row">Prior-year <b>Posts</b> from Nectarine monthly rollup (views/likes when post rows exist).</p>');
+    }
+    return lines.join("");
+  }
+  function metricColLabel(key) {
+    if (key === "posts") return "#";
+    return timelineMetricLabels[key];
+  }
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
     if (!root || !timelineData || !timelineData.months) return;
     var rows = timelineData.months;
-    var vals = [];
+    var maxByMetric = { views: 1, likes: 1, posts: 1 };
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      vals.push(cur[timelineMetric] || 0, pri[timelineMetric] || 0);
+      timelineMetrics.forEach(function (key) {
+        maxByMetric[key] = Math.max(maxByMetric[key], cur[key] || 0, pri[key] || 0);
+      });
     });
-    var maxV = Math.max.apply(null, vals.concat([1]));
     var html = "";
+    var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
     rows.forEach(function (row) {
       var cur = combineMonth(row);
       var pri = combinePrior(row);
-      var priRaw = priorMetricValue(row, timelineMetric);
-      var cv = cur[timelineMetric] || 0;
-      var pv = pri[timelineMetric] || 0;
-      var yoy = formatYoYChange(cv, priRaw);
       var partial = monthPartial(row);
-      var yoyTitle = "Year over year";
-      if (partial) yoyTitle += " · " + partialTitle(row);
-      if (priRaw != null && row.prior_year && row.prior_year.instagram && row.prior_year.instagram.source) {
-        yoyTitle += " · prior month from Nectarine monthly rollup (usually full month)";
-      }
-      var hCur = Math.round((cv / maxV) * 100);
-      var hPri = Math.round((pv / maxV) * 100);
-      var curClass = platform === "tiktok" ? " tl-cur tt-only" : " tl-cur";
-      var priLabel = priRaw == null ? "—" : pv.toLocaleString();
-      var partialMark = partial ? '<span class="tl-partial" title="' + partialTitle(row) + '">partial</span>' : "";
-      var metricLabel = timelineMetric === "posts" ? " posts" : "";
-      html += '<div class="tl-col"><div class="tl-pair">';
-      html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" title="' + row.prior_label + ": " + priLabel + '"></i>';
-      html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" title="' + row.label + ": " + cv + metricLabel + '"></i>';
-      html += '</div><span class="tl-lbl">' + row.label + partialMark + "</span>";
-      html += '<span class="tl-sub">vs ' + row.prior_label + '</span>';
-      html += '<span class="tl-yoy ' + yoy.cls + '" title="' + yoyTitle + '">' + yoy.text + "</span>";
-      html += '<span class="tl-val">' + cv.toLocaleString() + metricLabel + " · " + priLabel + "</span>";
+      var partialMark = partial ? '<span class="tl-partial" title="' + escHtml(partialTitle(row)) + '">partial</span>' : "";
+      html += '<div class="tl-col" tabindex="0">';
+      html += '<div class="tl-tip" role="tooltip">' + buildMonthTooltip(row, partial) + "</div>";
+      html += '<div class="tl-metrics">';
+      timelineMetrics.forEach(function (key) {
+        var priRaw = priorMetricValue(row, key);
+        var cv = cur[key] || 0;
+        var pv = pri[key] || 0;
+        var yoy = formatYoYChange(cv, priRaw);
+        var hCur = Math.round((cv / maxByMetric[key]) * 100);
+        var hPri = Math.round((pv / maxByMetric[key]) * 100);
+        var barTitle =
+          timelineMetricLabels[key] +
+          " · " +
+          row.label +
+          " " +
+          cv.toLocaleString() +
+          " vs " +
+          row.prior_label +
+          " " +
+          formatPriorCell(priRaw, pv) +
+          " · YoY " +
+          yoy.text;
+        html += '<div class="tl-metric" title="' + escHtml(barTitle) + '">';
+        html += '<span class="tl-metric-k">' + metricColLabel(key) + "</span>";
+        html += '<div class="tl-pair">';
+        html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
+        html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
+        html += "</div>";
+        html += '<span class="tl-yoy ' + yoy.cls + '">' + yoy.text + "</span>";
+        html += "</div>";
+      });
+      html += "</div>";
+      html += '<span class="tl-lbl">' + row.label + partialMark + "</span>";
+      html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
       html += "</div>";
     });
     root.innerHTML = html;
@@ -3281,15 +3364,6 @@
         var target = document.getElementById(quarter);
         if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    });
-  });
-  document.querySelectorAll("[data-timeline-metric]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      timelineMetric = btn.getAttribute("data-timeline-metric") || "posts";
-      document.querySelectorAll("[data-timeline-metric]").forEach(function (b) {
-        b.classList.toggle("is-active", b === btn);
-      });
-      renderYearTimeline();
     });
   });
   applyYearFilters();
