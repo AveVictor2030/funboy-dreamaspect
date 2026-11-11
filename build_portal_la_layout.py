@@ -1494,8 +1494,6 @@ def build_year_report() -> str:
 {tt_block}
 </div>"""
 
-    gap_list = "".join(f"<li>{g}</li>" for g in meta.get("gaps", []))
-
     body = f"""<p class="eyebrow">Year report · public social</p>
 <h1>Instagram & TikTok year report</h1>
 <p class="lead">@funboy organic posts · {meta.get("window_start", "2025-10-01")} through {meta.get("window_end", "2026-10-31")} · Instagram {ig_meta.get("post_count", 0)} ({ig_meta.get("owned_post_count", 0)} owned · {ig_meta.get("tagged_post_count", 0)} tagged UGC) · TikTok {tt_meta.get("post_count", 0)} public videos.</p>
@@ -1509,7 +1507,6 @@ def build_year_report() -> str:
   <div class="kpi"><b>{(tt_by_id.get("q4_jul_oct_2026") or {}).get("post_count", 0)}</b><span>TT Q4</span></div>
   <div class="kpi"><b>{ig_miss + tt_miss}</b><span>Cards without photo</span></div>
 </div>
-<details class="volume-prior"><summary>Collection notes (public data only)</summary><ul style="margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.45">{gap_list}</ul></details>
 <div class="section" id="year-report">
 <h2>Year · by quarter</h2>
 <p class="volume-note">La-realtor-style cards: compact cover (≈160px wide), link, public likes / comments / views. {ig_miss + tt_miss} cards still use date tiles (no public image available). Organic TikTok is listed under each quarter—not in Ads.</p>
