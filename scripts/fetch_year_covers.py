@@ -127,6 +127,45 @@ def harvest_recap_images() -> dict[tuple[str, str], bytes]:
     return out
 
 
+def ig_permalink_og_image(shortcode: str, permalink: str) -> bytes | None:
+    """Open-graph preview from public permalink / reel page (carousels, some reels)."""
+    candidates = []
+    if permalink:
+        candidates.append(permalink)
+        if "/p/" in permalink:
+            candidates.append(permalink.replace("/p/", "/reel/", 1))
+    candidates.append(f"https://www.instagram.com/p/{shortcode}/")
+    candidates.append(f"https://www.instagram.com/reel/{shortcode}/")
+    seen: set[str] = set()
+    for url in candidates:
+        if not url or url in seen:
+            continue
+        seen.add(url)
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "en-US,en;q=0.9"})
+            with urllib.request.urlopen(req, context=ssl.create_default_context(), timeout=25) as r:
+                html = r.read().decode("utf-8", "replace")
+            if "content unavailable" in html.lower() or ">unavailable<" in html.lower():
+                continue
+            m = re.search(r'property="og:image" content="([^"]+)"', html)
+            if not m:
+                m = re.search(r'name="twitter:image" content="([^"]+)"', html)
+            if m:
+                img_url = m.group(1).replace("&amp;", "&")
+                if "scontent" in img_url or "cdninstagram" in img_url:
+                    data = download_url(img_url)
+                    if data and len(data) > MIN_BYTES:
+                        return data
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                time.sleep(RETRY_SLEEP_S)
+            continue
+        except Exception:
+            continue
+        time.sleep(0.8)
+    return None
+
+
 def ig_media_jpeg(shortcode: str) -> bytes | None:
     url = f"https://www.instagram.com/p/{shortcode}/media/?size=l"
     data = download_url(url)
@@ -216,6 +255,8 @@ def ensure_cover(
             src = ig_embed_src(post_id, permalink)
             if src:
                 remote = download_url(src)
+        if not remote:
+            remote = ig_permalink_og_image(post_id, permalink)
         time.sleep(0.45 if remote else SLEEP_S)
     else:
         src = tiktok_page_cover(post_id)
