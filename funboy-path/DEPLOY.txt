@@ -1,0 +1,28 @@
+Funboy path worker (October public report)
+
+Worker name: funboy-path
+Account: 8e1333787eb91fa4fd21ef2a27ea6287
+Routes: dreamaspect.co/funboy* and www.dreamaspect.co/funboy* only
+
+Does not modify funboy-portal, DNS record 09cd7d477d300cde37b0eb129f8db538, or other site paths.
+
+Before first deploy, set secrets on the worker (not in git):
+
+  npx wrangler secret put FUNBOY_PASSWORD
+  npx wrangler secret put COOKIE_SALT
+
+FUNBOY_PASSWORD must match the gate password Victor shares with FUNBOY.
+COOKIE_SALT can be any random string; changing it invalidates existing cookies.
+
+Deploy to the live Worker funboy-portal (keeps PORTAL_PASSWORD on Cloudflare; do not create funboy-path routes):
+
+  cd funboy-path
+  npm install
+  npx wrangler login
+  npx wrangler deploy -c wrangler.funboy-portal.jsonc
+
+Alternate new-worker package (not used for www.dreamaspect.co/funboy today):
+
+  npx wrangler deploy -c wrangler.jsonc
+
+After deploy, verify logged-out GET shows the login form; after POST to /funboy/enter, GET /funboy/ title should be the October public recap (Oct 10–Nov 1, public only). benchmarks.html and competitor-watch.html should return 200 with the same cookie.
