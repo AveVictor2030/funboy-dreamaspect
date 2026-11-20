@@ -1356,10 +1356,13 @@ YEAR_FILTER_SCRIPT = """
     if (timelineDisplay === "all") return timelineMetrics;
     return [timelineMetric];
   }
+  var TIMELINE_CHART_LAST_MONTH = "2026-10";
   function renderYearTimeline() {
     var root = document.getElementById("year-timeline-chart");
     if (!root || !timelineData || !timelineData.months) return;
-    var rows = timelineData.months;
+    var rows = timelineData.months.filter(function (row) {
+      return row.month <= TIMELINE_CHART_LAST_MONTH;
+    });
     var activeKeys = metricsToRender();
     var maxByMetric = { views: 1, likes: 1, posts: 1 };
     rows.forEach(function (row) {
