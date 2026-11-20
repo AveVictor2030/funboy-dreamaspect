@@ -1526,7 +1526,7 @@ def build_year_report() -> str:
         "q1_oct_dec_2025": "Q1 · Oct–Dec 2025",
         "q2_jan_mar_2026": "Q2 · Jan–Mar 2026",
         "q3_apr_jun_2026": "Q3 · Apr–Jun 2026",
-        "q4_jul_oct_2026": "Q4 · Jul–Oct 2026",
+        "q4_jul_oct_2026": "Q4 · Jul–Nov 2026",
     }
     for block in quarters:
         qid = block["id"]

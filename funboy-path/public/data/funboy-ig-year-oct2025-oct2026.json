@@ -2,11 +2,15 @@
   "meta": {
     "account": "funboy",
     "window_start": "2025-10-01",
-    "window_end": "2026-10-31",
+    "window_end": "2026-11-20",
+    "data_as_of": "2026-11-20",
+    "latest_instagram_post": "2026-11-01",
+    "latest_tiktok_post": "2026-09-29",
     "generated_by": "scripts/collect_funboy_ig_year.py",
     "timeline": {
       "window_start": "2025-10-01",
-      "window_end": "2026-10-31",
+      "window_end": "2026-11-20",
+      "data_as_of": "2026-11-20",
       "months": [
         {
           "month": "2025-10",
@@ -722,6 +726,61 @@
               "source": null
             }
           }
+        },
+        {
+          "month": "2026-11",
+          "label": "Nov '26",
+          "prior_month": "2025-11",
+          "prior_label": "Nov '25",
+          "instagram": {
+            "posts": 1,
+            "likes": 263,
+            "comments": 20,
+            "views": 6254,
+            "views_posts": 1
+          },
+          "tiktok": {
+            "posts": 0,
+            "likes": 0,
+            "comments": 0,
+            "views": 0,
+            "views_posts": 0
+          },
+          "posts_total": 1,
+          "coverage": {
+            "instagram": {
+              "post_count": 1,
+              "first_post": "2026-11-01",
+              "last_post": "2026-11-01",
+              "calendar_full_month": true,
+              "note": null
+            },
+            "tiktok": {
+              "post_count": 0,
+              "first_post": null,
+              "last_post": null,
+              "calendar_full_month": true,
+              "note": null
+            },
+            "combined_posts": 1,
+            "combined_full_month": true
+          },
+          "prior_year": {
+            "instagram": {
+              "posts": 13,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": "nectarine_monthly_history"
+            },
+            "tiktok": {
+              "posts": 0,
+              "likes": null,
+              "comments": null,
+              "views": null,
+              "source": null
+            }
+          }
         }
       ],
       "notes": [
@@ -732,8 +791,8 @@
       ]
     },
     "instagram": {
-      "post_count": 228,
-      "owned_post_count": 216,
+      "post_count": 229,
+      "owned_post_count": 217,
       "tagged_post_count": 12,
       "null_views_count": 83
     },
@@ -742,14 +801,15 @@
       "null_views_count": 0
     },
     "gaps": [
-      "Instagram: Nectarine export stops at ~2026-08-25; Aug 26\u2013Sep 2026 from recap HTML; Oct from FUN_POSTS.",
+      "Instagram: Nectarine export stops at ~2026-08-25; Aug 26\u2013Sep 2026 from recap HTML; Oct\u2013Nov 1 from FUN_POSTS / public grid.",
+      "Instagram: latest owned post in window 2026-11-01; collection through 2026-11-20 (no posts after Nov 1 in this pass).",
       "TikTok: Nectarine batches plus August/September recap HTML (recap date tiles include nested spans).",
-      "TikTok: no Oct 2025\u2013Oct 2026 posts in Nectarine before Nov 12, 2025; no October 2026 TikTok rows collected.",
+      "TikTok: latest post in window 2026-09-29; no Oct\u2013Nov 2026 TikTok rows (Notion + recap stop Sep 29; grid scrape blocked).",
       "TikTok: logged-out https://www.tiktok.com/@funboy returns HTTP 403 from this environment; no grid scrape.",
       "Public counts only (likes, comments, views on the open video page / recap tiles). No TikTok Insights.",
       "Instagram carousels often have null views in Nectarine; reels use Views (Million).",
       "12 Instagram Tagged UGC rows included.",
-      "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
+      "Cover images: Oct\u2013Nov 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
       "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
       "Prior-year Instagram post counts are Nectarine monthly rollups.",
       "Prior-year TikTok: no public export before Nov 2025; prior bars are zero for TikTok.",
@@ -2961,8 +3021,8 @@
     },
     {
       "id": "q4_jul_oct_2026",
-      "label": "2026-07-01 \u2013 2026-10-31",
-      "post_count": 92,
+      "label": "2026-07-01 \u2013 2026-11-20",
+      "post_count": 93,
       "posts": [
         {
           "shortcode": "DaSs-35h2l-",
@@ -4432,6 +4492,22 @@
           "comments": 9,
           "views": 2511,
           "cover_path": "covers/public-oct-2026/DfFLAUPh9Dx.jpg",
+          "platform": "instagram",
+          "source": "build_public_report.FUN_POSTS",
+          "quarter": "q4_jul_oct_2026"
+        },
+        {
+          "shortcode": "DfNAVN7Bnao",
+          "date": "2026-11-01",
+          "title": "Weekend plans: float.",
+          "permalink": "https://www.instagram.com/reel/DfNAVN7Bnao/",
+          "type": "reel",
+          "post_type_raw": "reel",
+          "is_tagged": false,
+          "likes": 263,
+          "comments": 20,
+          "views": 6254,
+          "cover_path": "covers/public-oct-2026/DfNAVN7Bnao.jpg",
           "platform": "instagram",
           "source": "build_public_report.FUN_POSTS",
           "quarter": "q4_jul_oct_2026"
@@ -8087,6 +8163,22 @@
       "platform": "instagram",
       "source": "build_public_report.FUN_POSTS",
       "quarter": "q4_jul_oct_2026"
+    },
+    {
+      "shortcode": "DfNAVN7Bnao",
+      "date": "2026-11-01",
+      "title": "Weekend plans: float.",
+      "permalink": "https://www.instagram.com/reel/DfNAVN7Bnao/",
+      "type": "reel",
+      "post_type_raw": "reel",
+      "is_tagged": false,
+      "likes": 263,
+      "comments": 20,
+      "views": 6254,
+      "cover_path": "covers/public-oct-2026/DfNAVN7Bnao.jpg",
+      "platform": "instagram",
+      "source": "build_public_report.FUN_POSTS",
+      "quarter": "q4_jul_oct_2026"
     }
   ],
   "tiktok_quarters": [
@@ -8577,7 +8669,7 @@
     },
     {
       "id": "q4_jul_oct_2026",
-      "label": "2026-07-01 \u2013 2026-10-31",
+      "label": "2026-07-01 \u2013 2026-11-20",
       "post_count": 28,
       "posts": [
         {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build FUNBOY public Instagram + TikTok year dataset (Oct 2025–Oct 2026, quartered).
+"""Build FUNBOY public Instagram + TikTok year dataset (Oct 2025–Nov 20 2026, quartered).
 
 Instagram sources (deduped by shortcode):
   - Notion Nectarine SQL exports in data/sources/nectarine-batch-*.json
@@ -29,16 +29,17 @@ SOURCES_DIR = ROOT / "data" / "sources"
 OUT_PATH = ROOT / "data" / "funboy-ig-year-oct2025-oct2026.json"
 
 WINDOW_START = date(2025, 10, 1)
-WINDOW_END = date(2026, 10, 31)
-# Portal month completeness is evaluated against this date (month must be closed).
-DATA_AS_OF = date(2026, 11, 10)
+WINDOW_END = date(2026, 11, 20)
+DATA_AS_OF = date(2026, 11, 20)
 
 QUARTERS = (
     ("q1_oct_dec_2025", date(2025, 10, 1), date(2025, 12, 31)),
     ("q2_jan_mar_2026", date(2026, 1, 1), date(2026, 3, 31)),
     ("q3_apr_jun_2026", date(2026, 4, 1), date(2026, 6, 30)),
-    ("q4_jul_oct_2026", date(2026, 7, 1), date(2026, 10, 31)),
+    ("q4_jul_oct_2026", date(2026, 7, 1), date(2026, 11, 20)),
 )
+
+PUBLIC_IG_GRID_FILE = SOURCES_DIR / "public-ig-grid-through-2026-11-20.json"
 
 SOURCE_FILES = (
     "nectarine-q1-octdec2025.json",
@@ -277,6 +278,41 @@ def parse_recap_date(label: str) -> date | None:
         return None
     year = 2026
     return date(year, MONTHS[mon], day)
+
+
+def load_public_ig_grid() -> list[dict]:
+    """Optional logged-out grid export (see scripts/fetch_public_ig_grid.py)."""
+    if not PUBLIC_IG_GRID_FILE.is_file():
+        return []
+    payload = json.loads(PUBLIC_IG_GRID_FILE.read_text(encoding="utf-8"))
+    rows: list[dict] = []
+    for raw in payload.get("posts", payload.get("results", [])):
+        if not isinstance(raw, dict):
+            continue
+        sc = raw.get("shortcode") or shortcode_from_permalink(raw.get("permalink") or "")
+        posted = raw.get("date") or raw.get("posted")
+        if not sc or not posted:
+            continue
+        typ = raw.get("type") or "reel"
+        rows.append(
+            {
+                "shortcode": sc,
+                "date": posted[:10],
+                "title": raw.get("caption") or raw.get("title"),
+                "permalink": raw.get("permalink")
+                or f"https://www.instagram.com/{'reel' if typ == 'reel' else 'p'}/{sc}/",
+                "type": typ,
+                "post_type_raw": typ,
+                "is_tagged": False,
+                "likes": raw.get("likes"),
+                "comments": raw.get("comments"),
+                "views": raw.get("views"),
+                "cover_path": raw.get("cover_path"),
+                "platform": "instagram",
+                "source": "public-ig-grid",
+            }
+        )
+    return rows
 
 
 def load_fun_posts() -> list[dict]:
@@ -519,6 +555,7 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
     return {
         "window_start": WINDOW_START.isoformat(),
         "window_end": WINDOW_END.isoformat(),
+        "data_as_of": DATA_AS_OF.isoformat(),
         "months": months,
         "notes": [
             "Posts = public post count in each calendar month (Instagram + TikTok in Both view).",
@@ -549,7 +586,8 @@ def build_dataset() -> dict:
     aug_gap = parse_recap_html(ROOT / "august-2026-recap.html", "august-2026-recap.html")
     sep_gap = parse_recap_html(ROOT / "september-2026-recap.html", "september-2026-recap.html")
     fun_oct = load_fun_posts()
-    all_ig = merge_posts(nectarine, aug_gap, sep_gap, fun_oct)
+    public_grid = load_public_ig_grid()
+    all_ig = merge_posts(nectarine, aug_gap, sep_gap, fun_oct, public_grid)
 
     ig_filtered: list[dict] = []
     for p in all_ig:
@@ -579,15 +617,21 @@ def build_dataset() -> dict:
 
     null_views_tt = sum(1 for p in tt_filtered if p.get("views") is None)
 
+    ig_dates = sorted(p["date"] for p in ig_filtered)
+    tt_dates = sorted(p["date"] for p in tt_filtered)
+    latest_ig = ig_dates[-1] if ig_dates else None
+    latest_tt = tt_dates[-1] if tt_dates else None
+
     gaps = [
-        "Instagram: Nectarine export stops at ~2026-08-25; Aug 26–Sep 2026 from recap HTML; Oct from FUN_POSTS.",
+        "Instagram: Nectarine export stops at ~2026-08-25; Aug 26–Sep 2026 from recap HTML; Oct–Nov 1 from FUN_POSTS / public grid.",
+        f"Instagram: latest owned post in window {latest_ig}; collection through {DATA_AS_OF.isoformat()} (no posts after Nov 1 in this pass).",
         "TikTok: Nectarine batches plus August/September recap HTML (recap date tiles include nested spans).",
-        "TikTok: no Oct 2025–Oct 2026 posts in Nectarine before Nov 12, 2025; no October 2026 TikTok rows collected.",
+        f"TikTok: latest post in window {latest_tt}; no Oct–Nov 2026 TikTok rows (Notion + recap stop Sep 29; grid scrape blocked).",
         "TikTok: logged-out https://www.tiktok.com/@funboy returns HTTP 403 from this environment; no grid scrape.",
         "Public counts only (likes, comments, views on the open video page / recap tiles). No TikTok Insights.",
         "Instagram carousels often have null views in Nectarine; reels use Views (Million).",
         f"{tagged} Instagram Tagged UGC rows included.",
-        "Cover images: Oct 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
+        "Cover images: Oct–Nov 2026 Instagram covers under covers/public-oct-2026/; TikTok uses date tiles.",
     ]
 
     timeline = build_monthly_timeline(ig_filtered, tt_filtered)
@@ -598,6 +642,9 @@ def build_dataset() -> dict:
             "account": "funboy",
             "window_start": WINDOW_START.isoformat(),
             "window_end": WINDOW_END.isoformat(),
+            "data_as_of": DATA_AS_OF.isoformat(),
+            "latest_instagram_post": latest_ig,
+            "latest_tiktok_post": latest_tt,
             "generated_by": "scripts/collect_funboy_ig_year.py",
             "timeline": timeline,
             "instagram": {

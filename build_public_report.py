@@ -152,8 +152,11 @@ BSB_PINNED = {
 }
 
 # @funboy Instagram volume by calendar month (Nectarine Social / IG Post Performance History).
-FUN_IG_YEAR_LABEL = "Oct 2025 – Oct 2026"
-FUN_IG_YEAR_SOURCE = "Nectarine Social · IG Post Performance History (Sep 2026–Oct 2026 from monthly recaps / public grid)"
+FUN_IG_YEAR_LABEL = "Oct 2025 – Nov 20, 2026"
+FUN_IG_YEAR_SOURCE = (
+    "Nectarine Social · IG Post Performance History "
+    "(Sep 2026–Nov 2026 from monthly recaps / public grid)"
+)
 FUN_IG_MONTHLY = [
     {"month": "2025-10", "posts": 10, "reels": 10, "feed_posts": 0, "carousels": 0},
     {"month": "2025-11", "posts": 13, "reels": 7, "feed_posts": 1, "carousels": 5},
@@ -170,10 +173,18 @@ FUN_IG_MONTHLY = [
     {
         "month": "2026-10",
         "posts": 11,
-        "reels": 10,
-        "feed_posts": 1,
+        "reels": 11,
+        "feed_posts": 0,
         "carousels": 0,
-        "note": "Public grid through Oct 29 (closed month; no further owned posts in window)",
+        "note": "Public grid Oct 10–29 (Pacific)",
+    },
+    {
+        "month": "2026-11",
+        "posts": 1,
+        "reels": 1,
+        "feed_posts": 0,
+        "carousels": 0,
+        "note": "Public grid Nov 1 reel; window through Nov 20, 2026",
     },
 ]
 # Optional context before the Oct–Oct year (not in headline totals).
