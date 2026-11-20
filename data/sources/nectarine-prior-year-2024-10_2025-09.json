@@ -1,0 +1,53 @@
+{
+  "source": "notion:nectarine SQL rollup Oct 2024–Sep 2025",
+  "months": {
+    "2024-10": {
+      "instagram": { "posts": 8, "likes": 4076, "comments": 504, "views": 183100 },
+      "tiktok": { "posts": 6, "likes": 290, "comments": 6, "views": 20000 }
+    },
+    "2024-11": {
+      "instagram": { "posts": 12, "likes": 5333, "comments": 414, "views": 849000 },
+      "tiktok": { "posts": 6, "likes": 475, "comments": 26, "views": 20000 }
+    },
+    "2024-12": {
+      "instagram": { "posts": 12, "likes": 1705, "comments": 93, "views": 62800 },
+      "tiktok": { "posts": 8, "likes": 229, "comments": 7, "views": 0 }
+    },
+    "2025-01": {
+      "instagram": { "posts": 7, "likes": 1575, "comments": 785, "views": 31700 },
+      "tiktok": { "posts": 1, "likes": 55, "comments": 2, "views": 0 }
+    },
+    "2025-02": {
+      "instagram": { "posts": 11, "likes": 1480, "comments": 217, "views": 27900 },
+      "tiktok": { "posts": 2, "likes": 17854, "comments": 104, "views": 1400000 }
+    },
+    "2025-03": {
+      "instagram": { "posts": 15, "likes": 1980, "comments": 215, "views": 99800 },
+      "tiktok": { "posts": 4, "likes": 274, "comments": 3, "views": 0 }
+    },
+    "2025-04": {
+      "instagram": { "posts": 27, "likes": 334606, "comments": 997, "views": 9649900 },
+      "tiktok": { "posts": 24, "likes": 5978, "comments": 91, "views": 250000 }
+    },
+    "2025-05": {
+      "instagram": { "posts": 25, "likes": 29587, "comments": 345, "views": 741100 },
+      "tiktok": { "posts": 16, "likes": 1696, "comments": 31, "views": 100000 }
+    },
+    "2025-06": {
+      "instagram": { "posts": 21, "likes": 415269, "comments": 1867, "views": 11732000 },
+      "tiktok": { "posts": 3, "likes": 134027, "comments": 390, "views": 2140000 }
+    },
+    "2025-07": {
+      "instagram": { "posts": 20, "likes": 29183, "comments": 463, "views": 1214900 },
+      "tiktok": { "posts": 5, "likes": 800, "comments": 31, "views": 50000 }
+    },
+    "2025-08": {
+      "instagram": { "posts": 14, "likes": 7458, "comments": 283, "views": 290200 },
+      "tiktok": { "posts": 1, "likes": 69, "comments": 1, "views": 10000 }
+    },
+    "2025-09": {
+      "instagram": { "posts": 11, "likes": 2340, "comments": 171, "views": 177700 },
+      "tiktok": { "posts": 0, "likes": 0, "comments": 0, "views": 0 }
+    }
+  }
+}

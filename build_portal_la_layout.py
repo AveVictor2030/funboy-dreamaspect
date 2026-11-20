@@ -348,9 +348,12 @@ h2 { font-family: Nohemi, sans-serif; font-weight: 500; letter-spacing: -0.02em;
 .year-timeline .tl-bar {
   display: block;
   width: 10px;
-  min-height: 3px;
+  min-height: 0;
   border-radius: 3px 3px 0 0;
   transition: height 0.2s ease;
+}
+.year-timeline .tl-bar.tl-bar-visible {
+  min-height: 2px;
 }
 .year-timeline .tl-tip {
   position: absolute;
@@ -1259,6 +1262,25 @@ YEAR_FILTER_SCRIPT = """
     if (rounded > 0) return { text: "+" + rounded + "%", cls: "tl-yoy-up" };
     return { text: rounded + "%", cls: "tl-yoy-down" };
   }
+  function scaleForChart(value, key) {
+    var v = value || 0;
+    if (key === "views" || key === "likes") return Math.log1p(v);
+    return v;
+  }
+  function barHeightPct(value, maxScaled, key) {
+    if (!maxScaled || maxScaled <= 0 || !value || value <= 0) return 0;
+    return Math.min(100, Math.round((scaleForChart(value, key) / maxScaled) * 100));
+  }
+  function barTag(heightPct, extraClass, visible) {
+    if (!visible || heightPct <= 0) return "";
+    return (
+      '<i class="tl-bar' +
+      extraClass +
+      ' tl-bar-visible" style="height:' +
+      heightPct +
+      '%" aria-hidden="true"></i>'
+    );
+  }
   function escHtml(s) {
     return String(s)
       .replace(/&/g, "&amp;")
@@ -1304,7 +1326,11 @@ YEAR_FILTER_SCRIPT = """
           yoy.cls +
           '">' +
           yoy.text +
-          "</span><br>" +
+          "</span>" +
+          (priRaw == null
+            ? "<br><em>No prior-year " + escHtml(label.toLowerCase()) + " in public export.</em>"
+            : "") +
+          "<br>" +
           escHtml(platformBreakdown(row, key)) +
           "</p>"
       );
@@ -1340,7 +1366,10 @@ YEAR_FILTER_SCRIPT = """
       var cur = combineMonth(row);
       var pri = combinePrior(row);
       activeKeys.forEach(function (key) {
-        maxByMetric[key] = Math.max(maxByMetric[key], cur[key] || 0, pri[key] || 0);
+        var priRaw = priorMetricValue(row, key);
+        var candidates = [scaleForChart(cur[key] || 0, key)];
+        if (priRaw != null) candidates.push(scaleForChart(pri[key] || 0, key));
+        maxByMetric[key] = Math.max(maxByMetric[key], Math.max.apply(null, candidates));
       });
     });
     var html = "";
@@ -1358,11 +1387,11 @@ YEAR_FILTER_SCRIPT = """
         var pv = pri[key] || 0;
         var yoy = formatYoYChange(cv, priRaw);
         var maxV = maxByMetric[key];
-        var hCur = Math.round((cv / maxV) * 100);
-        var hPri = Math.round((pv / maxV) * 100);
+        var hCur = barHeightPct(cv, maxV, key);
+        var hPri = priRaw == null ? 0 : barHeightPct(pv, maxV, key);
         html += '<div class="tl-pair tl-pair-single">';
-        html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
-        html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
+        html += barTag(hPri, " tl-prior", priRaw != null);
+        html += barTag(hCur, curClass, true);
         html += "</div>";
         html += '<span class="tl-lbl">' + row.label + "</span>";
         html += '<span class="tl-sub">vs ' + row.prior_label + "</span>";
@@ -1375,13 +1404,14 @@ YEAR_FILTER_SCRIPT = """
           var cv = cur[key] || 0;
           var pv = pri[key] || 0;
           var yoy = formatYoYChange(cv, priRaw);
-          var hCur = Math.round((cv / maxByMetric[key]) * 100);
-          var hPri = Math.round((pv / maxByMetric[key]) * 100);
+          var maxV = maxByMetric[key];
+          var hCur = barHeightPct(cv, maxV, key);
+          var hPri = priRaw == null ? 0 : barHeightPct(pv, maxV, key);
           html += '<div class="tl-metric">';
           html += '<span class="tl-metric-k">' + metricColLabel(key) + "</span>";
           html += '<div class="tl-pair">';
-          html += '<i class="tl-bar tl-prior" style="height:' + hPri + '%" aria-hidden="true"></i>';
-          html += '<i class="tl-bar' + curClass + '" style="height:' + hCur + '%" aria-hidden="true"></i>';
+          html += barTag(hPri, " tl-prior", priRaw != null);
+          html += barTag(hCur, curClass, true);
           html += "</div>";
           html += '<span class="tl-yoy ' + yoy.cls + '">' + yoy.text + "</span>";
           html += "</div>";

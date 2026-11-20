@@ -52,18 +52,18 @@
           },
           "prior_year": {
             "instagram": {
-              "posts": null,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 8,
+              "likes": 4076,
+              "comments": 504,
+              "views": 183100,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 6,
+              "likes": 290,
+              "comments": 6,
+              "views": 20000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -108,17 +108,17 @@
           "prior_year": {
             "instagram": {
               "posts": 12,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 5333,
+              "comments": 414,
+              "views": 849000,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 6,
+              "likes": 475,
+              "comments": 26,
+              "views": 20000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -163,17 +163,17 @@
           "prior_year": {
             "instagram": {
               "posts": 12,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 1705,
+              "comments": 93,
+              "views": 62800,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 8,
+              "likes": 229,
+              "comments": 7,
+              "views": 0,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -218,17 +218,17 @@
           "prior_year": {
             "instagram": {
               "posts": 7,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 1575,
+              "comments": 785,
+              "views": 31700,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 1,
+              "likes": 55,
+              "comments": 2,
+              "views": 0,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -273,17 +273,17 @@
           "prior_year": {
             "instagram": {
               "posts": 11,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 1480,
+              "comments": 217,
+              "views": 27900,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 2,
+              "likes": 17854,
+              "comments": 104,
+              "views": 1400000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -328,17 +328,17 @@
           "prior_year": {
             "instagram": {
               "posts": 15,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 1980,
+              "comments": 215,
+              "views": 99800,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 4,
+              "likes": 274,
+              "comments": 3,
+              "views": 0,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -383,17 +383,17 @@
           "prior_year": {
             "instagram": {
               "posts": 27,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 334606,
+              "comments": 997,
+              "views": 9649900,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 24,
+              "likes": 5978,
+              "comments": 91,
+              "views": 250000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -438,17 +438,17 @@
           "prior_year": {
             "instagram": {
               "posts": 25,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 29587,
+              "comments": 345,
+              "views": 741100,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 16,
+              "likes": 1696,
+              "comments": 31,
+              "views": 100000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -493,17 +493,17 @@
           "prior_year": {
             "instagram": {
               "posts": 21,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 415269,
+              "comments": 1867,
+              "views": 11732000,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 3,
+              "likes": 134027,
+              "comments": 390,
+              "views": 2140000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -548,17 +548,17 @@
           "prior_year": {
             "instagram": {
               "posts": 20,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 29183,
+              "comments": 463,
+              "views": 1214900,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 5,
+              "likes": 800,
+              "comments": 31,
+              "views": 50000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -603,17 +603,17 @@
           "prior_year": {
             "instagram": {
               "posts": 14,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 7458,
+              "comments": 283,
+              "views": 290200,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 1,
+              "likes": 69,
+              "comments": 1,
+              "views": 10000,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -658,17 +658,17 @@
           "prior_year": {
             "instagram": {
               "posts": 11,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 2340,
+              "comments": 171,
+              "views": 177700,
+              "source": "notion_prior_rollup"
             },
             "tiktok": {
               "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "likes": 0,
+              "comments": 0,
+              "views": 0,
+              "source": "notion_prior_rollup"
             }
           }
         },
@@ -713,17 +713,17 @@
           "prior_year": {
             "instagram": {
               "posts": 10,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 3389,
+              "comments": 4169,
+              "views": 153800,
+              "source": "public_post_rollup"
             },
             "tiktok": {
               "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "likes": 0,
+              "comments": 0,
+              "views": 0,
+              "source": "public_post_rollup"
             }
           }
         },
@@ -768,17 +768,17 @@
           "prior_year": {
             "instagram": {
               "posts": 13,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": "nectarine_monthly_history"
+              "likes": 2582,
+              "comments": 2068,
+              "views": 130000,
+              "source": "public_post_rollup"
             },
             "tiktok": {
-              "posts": 0,
-              "likes": null,
-              "comments": null,
-              "views": null,
-              "source": null
+              "posts": 3,
+              "likes": 136,
+              "comments": 3,
+              "views": 10000,
+              "source": "public_post_rollup"
             }
           }
         }

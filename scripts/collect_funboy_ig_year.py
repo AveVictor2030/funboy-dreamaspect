@@ -40,6 +40,7 @@ QUARTERS = (
 )
 
 PUBLIC_IG_GRID_FILE = SOURCES_DIR / "public-ig-grid-through-2026-11-20.json"
+PRIOR_YEAR_ROLLUP_FILE = SOURCES_DIR / "nectarine-prior-year-2024-10_2025-09.json"
 
 SOURCE_FILES = (
     "nectarine-q1-octdec2025.json",
@@ -495,6 +496,79 @@ def aggregate_posts_by_month(posts: list[dict]) -> dict[str, dict]:
     return out
 
 
+def load_prior_year_rollup() -> dict[str, dict]:
+    if not PRIOR_YEAR_ROLLUP_FILE.is_file():
+        return {}
+    payload = json.loads(PRIOR_YEAR_ROLLUP_FILE.read_text(encoding="utf-8"))
+    return payload.get("months") or {}
+
+
+def prior_year_metrics(
+    pym: str,
+    rollup: dict[str, dict],
+    ig_history: dict[str, dict],
+    ig_by_month: dict[str, dict],
+    tt_by_month: dict[str, dict],
+) -> tuple[dict, dict]:
+    """Prior calendar month pym for YoY (same month one year earlier)."""
+    if pym in ig_by_month or pym in tt_by_month:
+        ig = ig_by_month.get(
+            pym,
+            {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0},
+        )
+        tt = tt_by_month.get(
+            pym,
+            {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0},
+        )
+        return (
+            {
+                "posts": ig["posts"],
+                "likes": ig["likes"],
+                "comments": ig["comments"],
+                "views": ig["views"],
+                "source": "public_post_rollup",
+            },
+            {
+                "posts": tt["posts"],
+                "likes": tt["likes"],
+                "comments": tt["comments"],
+                "views": tt["views"],
+                "source": "public_post_rollup",
+            },
+        )
+    block = rollup.get(pym)
+    hist = ig_history.get(pym)
+    if block:
+        ig = block.get("instagram") or {}
+        tt = block.get("tiktok") or {}
+        prior_ig = {
+            "posts": ig.get("posts"),
+            "likes": ig.get("likes"),
+            "comments": ig.get("comments"),
+            "views": ig.get("views"),
+            "source": "notion_prior_rollup",
+        }
+        prior_tt = {
+            "posts": tt.get("posts", 0),
+            "likes": tt.get("likes"),
+            "comments": tt.get("comments"),
+            "views": tt.get("views"),
+            "source": "notion_prior_rollup",
+        }
+        return prior_ig, prior_tt
+    prior_ig_posts = int(hist["posts"]) if hist else None
+    return (
+        {
+            "posts": prior_ig_posts,
+            "likes": None,
+            "comments": None,
+            "views": None,
+            "source": "nectarine_monthly_history" if hist else None,
+        },
+        {"posts": 0, "likes": None, "comments": None, "views": None, "source": None},
+    )
+
+
 def load_ig_monthly_history() -> dict[str, dict]:
     sys.path.insert(0, str(ROOT))
     from build_public_report import FUN_IG_MONTHLY, FUN_IG_MONTHLY_PRIOR  # noqa: WPS433
@@ -510,21 +584,15 @@ def build_monthly_timeline(ig_posts: list[dict], tt_posts: list[dict]) -> dict:
     tt_by_month = aggregate_posts_by_month(tt_posts)
     ig_history = load_ig_monthly_history()
     ig_current = load_ig_monthly_current()
+    prior_rollup = load_prior_year_rollup()
     months: list[dict] = []
     for ym in iter_year_months(WINDOW_START, WINDOW_END):
         pym = prior_year_month(ym)
         ig = ig_by_month.get(ym, {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0})
         tt = tt_by_month.get(ym, {"posts": 0, "likes": 0, "comments": 0, "views": 0, "views_posts": 0})
-        hist = ig_history.get(pym)
-        prior_ig_posts = int(hist["posts"]) if hist else None
-        prior_ig = {
-            "posts": prior_ig_posts,
-            "likes": None,
-            "comments": None,
-            "views": None,
-            "source": "nectarine_monthly_history" if hist else None,
-        }
-        prior_tt = {"posts": 0, "likes": None, "comments": None, "views": None, "source": None}
+        prior_ig, prior_tt = prior_year_metrics(
+            pym, prior_rollup, ig_history, ig_by_month, tt_by_month
+        )
         ig_cov = month_post_coverage(
             ig_posts,
             ym,
